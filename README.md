@@ -1,0 +1,2 @@
+# dice-colyseus
+Dice server
