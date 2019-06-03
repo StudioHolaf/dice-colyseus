@@ -7,6 +7,7 @@ import { monitor } from '@colyseus/monitor';
 
 // Import demo room handlers
 import { ChatRoom } from "./rooms/01-chat-room";
+import { DemoRoom } from "./rooms/DemoRoom";
 import { StateHandlerRoom } from "./rooms/02-state-handler";
 import { AuthRoom } from "./rooms/03-auth";
 import { CreateOrJoinRoom } from "./rooms/04-create-or-join-room";
@@ -21,6 +22,9 @@ const gameServer = new Server({
 
 // Register ChatRoom as "chat"
 gameServer.register("chat", ChatRoom);
+
+// Register DemoRoom as "demo"
+gameServer.register("demo", DemoRoom);
 
 // Register ChatRoom with initial options, as "chat_with_options"
 // onInit(options) will receive client join options + options registered here.
