@@ -17,12 +17,7 @@ const gameServer = new Server({
 // Register DemoRoom as "demo"
 gameServer.register("demo", DemoRoom);
 
-/**
- * FossilDelta demo (deprecated)
- */
-@serialize(FossilDeltaSerializer)
-class DemoRoomFossilDelta extends DemoRoom {}
-gameServer.register("demo_fossil", DemoRoomFossilDelta);
+
 
 app.use("/", socialRoutes);
 
