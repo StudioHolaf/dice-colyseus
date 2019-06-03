@@ -1,6 +1,6 @@
 import { Room, Client, generateId } from "colyseus";
 import { Schema, type, MapSchema, ArraySchema } from "@colyseus/schema";
-import { verifyToken, User, IUser } from "@colyseus/social";
+//import { verifyToken, User, IUser } from "@colyseus/social";
 
 class Entity extends Schema {
   @type("number")
@@ -40,9 +40,9 @@ export class DemoRoom extends Room {
     this.setSimulationInterval((dt) => this.update(dt));
   }
 
-  async onAuth (options) {
+  /*async onAuth (options) {
     return await User.findById(verifyToken(options.token)._id);
-  }
+  }*/
 
   populateEnemies () {
     for (let i=0; i<=3; i++) {
