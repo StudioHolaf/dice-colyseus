@@ -1,6 +1,6 @@
 import { Room, Client, generateId } from "colyseus";
 import { Schema, type, MapSchema, ArraySchema } from "@colyseus/schema";
-//import { verifyToken, User, IUser } from "@colyseus/social";
+import { verifyToken, User, IUser } from "@colyseus/social";
 
 class Entity extends Schema {
   @type("number")
@@ -33,7 +33,7 @@ export class DemoRoom extends Room {
   onInit (options: any) {
     console.log("DemoRoom created!", options);
 
-    /*this.setState(new State());
+    this.setState(new State());
     this.populateEnemies();
 
     this.setPatchRate(1000 / 20);
@@ -51,7 +51,7 @@ export class DemoRoom extends Room {
       enemy.y = Math.random() * 2;
       this.state.entities[generateId()] = enemy;
       this.state.arrayOfNumbers.push(Math.random());
-    }*/
+    }
   }
 
   requestJoin (options: any) {

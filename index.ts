@@ -2,9 +2,9 @@ import http from "http";
 import express from "express";
 
 import { Server, serialize, FossilDeltaSerializer } from "colyseus";
-import { DemoRoom } from "./rooms/DemoRoom";
+import { DemoRoom } from "./DemoRoom";
 
-//import socialRoutes from "@colyseus/social/express";
+import socialRoutes from "@colyseus/social/express";
 
 const PORT = Number(process.env.PORT || 2567);
 
@@ -17,7 +17,14 @@ const gameServer = new Server({
 // Register DemoRoom as "demo"
 gameServer.register("demo", DemoRoom);
 
-//app.use("/", socialRoutes);
+/**
+ * FossilDelta demo (deprecated)
+ */
+@serialize(FossilDeltaSerializer)
+class DemoRoomFossilDelta extends DemoRoom {}
+gameServer.register("demo_fossil", DemoRoomFossilDelta);
+
+app.use("/", socialRoutes);
 
 app.get("/something", function (req, res) {
     console.log("something!", process.pid);
