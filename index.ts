@@ -17,7 +17,7 @@ const gameServer = new Server({
 // Register DemoRoom as "demo"
 gameServer.register("demo", DemoRoom);
 
-app.use("/", socialRoutes);
+//app.use("/", socialRoutes);
 
 app.get("/something", function (req, res) {
     console.log("something!", process.pid);
