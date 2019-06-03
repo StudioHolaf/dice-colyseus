@@ -2,7 +2,7 @@ import http from "http";
 import express from "express";
 
 import { Server, serialize, FossilDeltaSerializer } from "colyseus";
-import { DemoRoom } from "./DemoRoom";
+import { DemoRoom } from "./rooms/DemoRoom";
 
 import socialRoutes from "@colyseus/social/express";
 
