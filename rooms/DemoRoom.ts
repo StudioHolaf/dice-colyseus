@@ -38,12 +38,13 @@ export class DemoRoom extends Room {
 
   onMessage (client: Client, data: any) {
     console.log(data, "received from", client.sessionId);
+    console.log(data.type, " is type");
 
-    if (data === "move_right") {
-      this.broadcast({ action: "Dice" });
+    if (data.type === "chat") {
+      console.log("Chat : "+data.message);
+      this.broadcast({ type: "chat", message: "this is a chat message from server" });
     }
 
-    this.broadcast({ hello: "hello world" });
   }
 
   update (dt?: number) {
