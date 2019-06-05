@@ -4,9 +4,14 @@ import { Room, Client, generateId } from "colyseus";
 
 export class DemoRoom extends Room {
 
+  nbTirage : number;
+  serverTirageData : any;
+
   onInit (options: any) {
     console.log("DemoRoom created!", options);
     
+    this.nbTirage = 0;
+    this.serverTirageData = {};
     this.setPatchRate(1000 / 20);
     this.setSimulationInterval((dt) => this.update(dt));
   }
@@ -45,7 +50,52 @@ export class DemoRoom extends Room {
       this.broadcast({ type: "chat", message: "this is a chat message from server" });
     }
 
+    if (data.type === "askServerForTirage") {
+      console.log("askServerForTirage : "+data.message);
+
+    var dicesStates = JSON.parse(data.states);
+
+    var rnd1 = Math.floor(Math.random() * 6) + 1;
+    var rnd2 = Math.floor(Math.random() * 6) + 1;
+    var rnd3 = Math.floor(Math.random() * 6) + 1;
+    var rnd4 = Math.floor(Math.random() * 6) + 1;
+    var rnd5 = Math.floor(Math.random() * 6) + 1;
+    
+    if(dicesStates[0] == 0)
+        rnd1 = 0;
+    if(dicesStates[1] == 0)
+        rnd2 = 0;
+    if(dicesStates[2] == 0)
+        rnd3 = 0;
+    if(dicesStates[3] == 0)
+        rnd4 = 0;
+    if(dicesStates[4] == 0)
+        rnd5 = 0;
+
+    if(this.serverTirageData["idT1"] != client.sessionId) //petit bout de code pour savoir si c'est le premier ou 2eme qui demande un tirage
+        this.nbTirage += 1;
+
+    if(this.nbTirage == 1)
+    {
+        console.log("Player pos 1 ask for roll");
+        this.serverTirageData["idT1"] = client.sessionId;
+        this.serverTirageData["tirageT1"] = [rnd1,rnd2,rnd3,rnd4,rnd5];
+    }
+    else if (this.nbTirage == 2)
+    {
+        console.log("Player pos 2 ask for roll");
+        this.serverTirageData["idT2"] = client.sessionId;
+        this.serverTirageData["tirageT2"] = [rnd1,rnd2,rnd3,rnd4,rnd5];
+        
+        //var encoded_rolls = JSON.stringify(this.serverTirageData);
+
+        this.broadcast({ type: "drawsFromServer", idT1: this.serverTirageData["idT1"], idT2 : this.serverTirageData["idT2"], tirageT1 : this.serverTirageData["tirageT1"], tirageT2 : this.serverTirageData["tirageT2"]});
+
+        this.nbTirage = 0;
+        this.serverTirageData = {};
+    }
   }
+}
 
   update (dt?: number) {
     // console.log("num clients:", Object.keys(this.clients).length);
