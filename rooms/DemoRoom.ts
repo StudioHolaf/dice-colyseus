@@ -139,6 +139,14 @@ export class DemoRoom extends Room {
             }
 
         }
+        if(data.type === "sendTargets")
+        {
+            this.broadcast({
+                type: "targetsFromServer",
+                idSender:client.sessionId,
+                targets: data.targets,
+            }, { except: client });
+        }
     }
 
     update(dt?:number) {
