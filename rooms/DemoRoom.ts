@@ -15,6 +15,8 @@ export class DemoRoom extends Room {
 
         this.nbTirage = 0;
         this.serverTirageData = {};
+        this.nbQueueReady = 0;
+        this.serverQueueData = {};
         this.setPatchRate(1000 / 20);
         this.setSimulationInterval((dt) => this.update(dt));
     }
