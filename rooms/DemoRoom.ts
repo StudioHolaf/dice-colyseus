@@ -10,6 +10,8 @@ export class DemoRoom extends Room {
     nbQueueReady:number;
     serverQueueData:any;
 
+    maxClients: number;
+
     onInit(options:any) {
         console.log("DemoRoom created!", options);
 
@@ -17,13 +19,20 @@ export class DemoRoom extends Room {
         this.serverTirageData = {};
         this.nbQueueReady = 0;
         this.serverQueueData = {};
+        this.maxClients = 2;
         this.setPatchRate(1000 / 20);
         this.setSimulationInterval((dt) => this.update(dt));
     }
 
-    requestJoin(options:any) {
+    /*requestJoin(options:any) {
         console.log("request join!", options);
         return true;
+    }*/
+
+    requestJoin (options, isNewRoom: boolean) {
+        return (options.create)
+            ? (options.create && isNewRoom)
+            : this.clients.length > 0;
     }
 
     onJoin(client:Client, options:any, user:IUser) {
