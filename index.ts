@@ -1,6 +1,6 @@
 import path from 'path';
 import express from 'express';
-import  from 'serve-index';
+import serveIndex from 'serve-index';
 import { createServer } from 'http';
 import { Server } from 'colyseus';serveIndex
 import { monitor } from '@colyseus/monitor';

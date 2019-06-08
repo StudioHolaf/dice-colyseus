@@ -86,18 +86,21 @@ export class DemoRoom extends Room {
             if (dicesStates[4] == 0)
                 rnd5 = 0;
 
-            if (this.serverTirageData["idT1"] != client.sessionId) //petit bout de code pour savoir si c'est le premier ou 2eme qui demande un tirage
+
+            if (this.serverTirageData["idT1"] != client.id) //petit bout de code pour savoir si c'est le premier ou 2eme qui demande un tirage
                 this.nbTirage += 1;
 
             if (this.nbTirage == 1) {
                 console.log("Player pos 1 ask for roll");
-                this.serverTirageData["idT1"] = client.sessionId;
+                this.serverTirageData["idT1"] = client.id;
                 this.serverTirageData["tirageT1"] = [rnd1, rnd2, rnd3, rnd4, rnd5];
             }
             else if (this.nbTirage == 2) {
                 console.log("Player pos 2 ask for roll");
-                this.serverTirageData["idT2"] = client.sessionId;
+                this.serverTirageData["idT2"] = client.id;
                 this.serverTirageData["tirageT2"] = [rnd1, rnd2, rnd3, rnd4, rnd5];
+
+                console.log("Server tirage : %o",this.serverTirageData);
 
                 //var encoded_rolls = JSON.stringify(this.serverTirageData);
 
@@ -115,7 +118,7 @@ export class DemoRoom extends Room {
         }
         if (data.type === "askQueueExchange") {
 
-            var senderPlayerId = client.sessionId; // get sender's playerID
+            var senderPlayerId = client.id; // get sender's playerID
             var queueJson = data.queue;
 
             var queue = JSON.parse(queueJson);
