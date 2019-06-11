@@ -139,6 +139,8 @@ export class DemoRoom extends Room {
                 this.serverQueueData["QueueT2"] = queue;
 
                 //var encoded_queues = JSON.stringify(serverQueueData);
+                console.log("queue : %o", this.serverQueueData["QueueT1"]);
+                console.log("queue : %o", this.serverQueueData["QueueT2"]);
 
                 this.broadcast({
                     type: "queuesFromServer",
@@ -153,11 +155,13 @@ export class DemoRoom extends Room {
             }
 
         }
-        if(data.type === "sendTargets")
+        if (data.type === "sendTargets")
         {
+          console.log("inside sendTargets");
+          console.log("target : "+ data.targets);
             this.broadcast({
                 type: "targetsFromServer",
-                idSender:client.sessionId,
+                idSender:client.id,
                 targets: data.targets,
             }, { except: client });
         }
