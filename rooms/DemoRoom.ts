@@ -12,6 +12,9 @@ export class DemoRoom extends Room {
 
     maxClients: number;
 
+    nbIDs:number; // le nombre de joueur (2)
+    serverIDsData:any;
+
     onInit(options:any) {
         console.log("DemoRoom created!", options);
 
@@ -20,6 +23,8 @@ export class DemoRoom extends Room {
         this.nbQueueReady = 0;
         this.serverQueueData = {};
         this.maxClients = 2;
+        this.serverIDsData = {};
+        this.nbIDs = 2;
         this.setPatchRate(1000 / 20);
         this.setSimulationInterval((dt) => this.update(dt));
     }
@@ -62,6 +67,35 @@ export class DemoRoom extends Room {
         if (data.type === "chat") {
             console.log("Chat : " + data.message);
             this.broadcast({type: "chat", message: "this is a chat message from server"});
+        }
+        
+        if (data.type === "sendPlayerIdToServer") {
+            console.log("sendPlayerIdToServer : " + data.message);
+
+            if (this.serverIDsData["C1"] != client.id) //C1 = Challenger One ------ petit bout de code pour savoir si c'est le premier ou 2eme qui demande un tirage 
+                this.nbIDs += 1;
+
+            if (this.nbIDs == 1) {
+                console.log("There is one Challenger");
+                this.serverTirageData["C1"] = client.id;
+            }
+            else if (this.nbTirage == 2) {
+                console.log("There is two Challenger");
+                this.serverTirageData["C2"] = client.id;
+
+                console.log("Server tirage : %o",this.serverIDsData);
+
+                //var encoded_rolls = JSON.stringify(this.serverTirageData);
+
+                this.broadcast({
+                    type: "playerIDFromServer",
+                    idC1: this.serverIDsData["C1"],
+                    idC2: this.serverIDsData["C2"],
+                });
+
+                this.nbIDs = 0;
+                this.serverIDsData = {};
+            }
         }
 
         if (data.type === "askServerForTirage") {
