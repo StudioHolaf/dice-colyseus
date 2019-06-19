@@ -24,7 +24,7 @@ export class DemoRoom extends Room {
         this.serverQueueData = {};
         this.maxClients = 2;
         this.serverIDsData = {};
-        this.nbIDs = 2;
+        this.nbIDs = 0;
         this.setPatchRate(1000 / 20);
         this.setSimulationInterval((dt) => this.update(dt));
     }
@@ -70,29 +70,37 @@ export class DemoRoom extends Room {
         }
         
         if (data.type === "sendPlayerIdToServer") {
-            console.log("sendPlayerIdToServer : " + data.message);
 
             if (this.serverIDsData["C1"] != client.id) //C1 = Challenger One ------ petit bout de code pour savoir si c'est le premier ou 2eme qui demande un tirage 
+            {
                 this.nbIDs += 1;
+                console.log("+1 Challenger");
+            }
+            console.log("AFTER nbIDs : "+ this.nbIDs);
 
             if (this.nbIDs == 1) {
                 console.log("There is one Challenger");
-                this.serverTirageData["C1"] = client.id;
+                this.serverIDsData["C1"] = client.id;
+                this.serverIDsData["playerIDC1"] = data.PlayerID;
+                console.log("C1 : "+ this.serverIDsData["C1"]);
             }
-            else if (this.nbTirage == 2) {
+            else if (this.nbIDs == 2) {
                 console.log("There is two Challenger");
-                this.serverTirageData["C2"] = client.id;
+                this.serverIDsData["C2"] = client.id;
+                this.serverIDsData["playerIDC2"] = data.PlayerID;
+                console.log("C2 : "+ this.serverIDsData["C2"]);
 
-                console.log("Server tirage : %o",this.serverIDsData);
+                console.log("Server nbIDs : %o",this.serverIDsData);
 
                 //var encoded_rolls = JSON.stringify(this.serverTirageData);
 
                 this.broadcast({
                     type: "playerIDFromServer",
-                    idC1: this.serverIDsData["C1"],
-                    idC2: this.serverIDsData["C2"],
+                    C1: this.serverIDsData["C1"],
+                    C2: this.serverIDsData["C2"],
+                    playerIDC1: this.serverIDsData["playerIDC1"],
+                    playerIDC2: this.serverIDsData["playerIDC2"]
                 });
-
                 this.nbIDs = 0;
                 this.serverIDsData = {};
             }
