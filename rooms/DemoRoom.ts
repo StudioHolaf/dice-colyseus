@@ -15,6 +15,8 @@ export class DemoRoom extends Room {
     nbIDs:number; // le nombre de joueur (2)
     serverIDsData:any;
 
+    playerIDConcede:any;
+
     onInit(options:any) {
         console.log("DemoRoom created!", options);
 
@@ -25,6 +27,7 @@ export class DemoRoom extends Room {
         this.maxClients = 2;
         this.serverIDsData = {};
         this.nbIDs = 0;
+        this.playerIDConcede = 0;
         this.setPatchRate(1000 / 20);
         this.setSimulationInterval((dt) => this.update(dt));
     }
@@ -105,7 +108,16 @@ export class DemoRoom extends Room {
                 this.serverIDsData = {};
             }
         }
-
+        if (data.type === "iConcedeTheGame") { //ne marche pas !
+              this.playerIDConcede = data.PlayerID;
+              console.log("id concede : "+ this.playerIDConcede);
+                this.broadcast({
+                    type: "idConcedeFromServ",
+                    playerIDConcede: this.playerIDConcede,
+                });
+                this.playerIDConcede = {};
+         }      
+    
         if (data.type === "askServerForTirage") {
             console.log("askServerForTirage : " + data.message);
 
