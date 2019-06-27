@@ -16,6 +16,7 @@ export class DemoRoom extends Room {
     serverIDsData:any;
 
     playerIDConcede:any;
+    metaData:any
 
     onInit(options:any) {
         console.log("DemoRoom created!", options);
@@ -30,6 +31,7 @@ export class DemoRoom extends Room {
         this.playerIDConcede = 0;
         this.setPatchRate(1000 / 20);
         this.setSimulationInterval((dt) => this.update(dt));
+        this.setMetadata("toto");
     }
 
     /*requestJoin(options:any) {
