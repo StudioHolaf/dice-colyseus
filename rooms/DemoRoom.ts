@@ -2,6 +2,9 @@ import {Room, Client, generateId} from "colyseus";
 //import { Schema, type, MapSchema, ArraySchema } from "@colyseus/schema";
 //import { verifyToken, User, IUser } from "@colyseus/social";
 
+const errorLog = require('../utils/logger').errorlog;
+const successlog = require('../utils/logger').successlog;
+
 export class DemoRoom extends Room {
 
     nbTirage:number;
@@ -68,6 +71,8 @@ export class DemoRoom extends Room {
     onMessage(client:Client, data:any) {
         console.log(data, "received from", client.sessionId);
         console.log(data.type, " is type");
+
+        successlog.info(data, "received from", client.sessionId);
 
         if (data.type === "chat") {
             console.log("Chat : " + data.message);
