@@ -21,9 +21,9 @@ const successLogger = createLogger;
 successLogger.add(winstonRotator, {
     'name': 'access-file',
     'level': 'info',
-    'filename': './static/logs/access.log',
+    'filename': './static/logs/%DATE%-access.log',
     'json': false,
-    'datePattern': 'yyyy-MM-dd-',
+    'datePattern: ': 'YYYY-MM-DD-HH',
     'prepend': true
 });
 
@@ -31,9 +31,9 @@ const errorLogger = createLogger;
 errorLogger.add(winstonRotator, {
     'name': 'error-file',
     'level': 'error',
-    'filename': './static/logs/error.log',
+    'filename': './static/logs/%DATE%-error.log',
     'json': false,
-    'datePattern': 'yyyy-MM-dd-',
+    'datePattern: ': 'YYYY-MM-DD-HH',
     'prepend': true
 });
 
