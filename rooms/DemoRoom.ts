@@ -21,7 +21,7 @@ export class DemoRoom extends Room {
     playerIDConcede:any;
     metaData:any
 
-    onInit(options:any) {
+    onCreate(options:any) {
         console.log("DemoRoom created!", options);
 
         this.nbTirage = 0;
