@@ -33,6 +33,7 @@ gameServer.define("chat_with_options", ChatRoom, {
     custom_options: "you can use me on Room#onInit"
 });
 
+
 // Register StateHandlerRoom as "state_handler"
 gameServer.define("state_handler", StateHandlerRoom);
 
