@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node index.ts",
-    "bundle-colyseus-client": "browserify ./node_modules/colyseus.js/lib/index.js -s Colyseus -o static/colyseus.js",
-    "build": "npm run bundle-colyseus-client"
+    "build": "npm run build"
   },
   "engines": {
     "node": "8.9.1"
