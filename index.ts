@@ -22,25 +22,25 @@ const gameServer = new Server({
 });
 
 // Register ChatRoom as "chat"
-gameServer.register("chat", ChatRoom);
+gameServer.define("chat", ChatRoom);
 
 // Register DemoRoom as "demo"
-gameServer.register("demo", DemoRoom);
+gameServer.define("demo", DemoRoom);
 
 // Register ChatRoom with initial options, as "chat_with_options"
 // onInit(options) will receive client join options + options registered here.
-gameServer.register("chat_with_options", ChatRoom, {
+gameServer.define("chat_with_options", ChatRoom, {
     custom_options: "you can use me on Room#onInit"
 });
 
 // Register StateHandlerRoom as "state_handler"
-gameServer.register("state_handler", StateHandlerRoom);
+gameServer.define("state_handler", StateHandlerRoom);
 
 // Register StateHandlerRoom as "state_handler"
-gameServer.register("auth", AuthRoom);
+gameServer.define("auth", AuthRoom);
 
 // Register CreateOrJoin as "create_or_join"
-gameServer.register("create_or_join", CreateOrJoinRoom);
+gameServer.define("create_or_join", CreateOrJoinRoom);
 
 app.use('/', express.static(path.join(__dirname, "static")));
 app.use('/', serveIndex(path.join(__dirname, "static"), {'icons': true}))
