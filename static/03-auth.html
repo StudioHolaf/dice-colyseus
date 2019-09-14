@@ -7,12 +7,13 @@
       body { font-family: Tahoma, Geneva, sans-serif; text-align: center; }
     </style>
 
-    <!-- colyseus.js client (npm run bundle-colyseus-client) -->
-    <script type="text/javascript" src="colyseus.js"></script>
+    <!-- colyseus.js client -->
+    <script type="text/javascript" src="https://raw.githack.com/colyseus/colyseus.js/master/dist/colyseus.js"></script>
+
   </head>
   <body>
     <h1>
-      <a href="https://github.com/gamestdio/colyseus-examples"><img src="https://cdn.jsdelivr.net/gh/gamestdio/colyseus@master/media/header.png" height="100" alt="colyseus" /></a>
+      <a href="https://github.com/colyseus/colyseus-examples"><img src="https://cdn.jsdelivr.net/gh/colyseus/colyseus@master/media/header.png" height="100" alt="colyseus" /></a>
     </h1>
 
     <p>This example shows how to authenticate and retrieve user data before the websocket handshake.</p>
@@ -40,12 +41,13 @@
       var host = window.document.location.host.replace(/:.*/, '');
 
       var client = new Colyseus.Client(location.protocol.replace("http", "ws") + host + (location.port ? ':' + location.port : ''));
-      var room;
 
       function join_without_token () {
         // Logged into your app and Facebook.
-        room = client.join("auth");
-        room.onError.add(function(e) {
+        client.joinOrCreate("auth").then(room_instance => {
+            console.log("Joined successfully!"); // never reached!
+
+        }).catch(e => {
             console.error("Error", e);
         });
       }
@@ -60,13 +62,11 @@
               // for FB.getLoginStatus().
               if (response.status === 'connected') {
                   // Logged into your app and Facebook.
-                  room = client.join("auth", {
+                  client.joinOrCreate("auth", {
                       accessToken: response.authResponse.accessToken
-                  });
-                  room.onJoin.add(function (e) {
+                  }).then(room => {
                       console.log("Joined successfully!");
-                  });
-                  room.onError.add(function (e) {
+                  }).catch(e => {
                       console.error("Error", e);
                   });
 
