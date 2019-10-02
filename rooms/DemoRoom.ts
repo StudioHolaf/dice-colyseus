@@ -40,9 +40,9 @@ export class DemoRoom extends Room {
     findOpponentID(idJ1:any)
     {
       var oponnentID = 0;
-      this.clients.forEach(function (id) {
-        if (id != idJ1)
-          oponnentID = id;
+      this.clients.forEach(function (client) {
+        if (client.id != idJ1)
+          oponnentID = client.id;
         });
       return oponnentID;
     }
@@ -237,7 +237,7 @@ export class DemoRoom extends Room {
         }
           if (data.type === "readyBtnClicked")
         {
-          debug.log("inside readyBtnClicked");
+          console.log("inside readyBtnClicked");
               this.broadcast({type: "readyBtnClicked", idSender:client.id}, {except:client});
         }
     }
