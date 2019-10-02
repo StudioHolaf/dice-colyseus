@@ -39,7 +39,7 @@ export class DemoRoom extends Room {
 
     findOpponentID(idJ1:any)
     {
-      var oponnentID = 0;
+      var oponnentID:string = "";
       this.clients.forEach(function (client) {
         if (client.id != idJ1)
           oponnentID = client.id;
