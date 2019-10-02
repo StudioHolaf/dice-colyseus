@@ -34,6 +34,16 @@ export class DemoRoom extends Room {
         this.setMetadata("toto");
     }
 
+    findOpponentID(idJ1:any)
+    {
+      var oponnentID = 0;
+      this.clients.forEach(function (id) {
+        if (id != idJ1)
+          oponnentID = id;
+        });
+      return oponnentID;
+    }
+
     /*requestJoin(options:any) {
         console.log("request join!", options);
         return true;
@@ -110,7 +120,7 @@ export class DemoRoom extends Room {
                 this.serverIDsData = {};
             }
         }
-        if (data.type === "iConcedeTheGame") { //ne marche pas !
+        if (data.type === "iConcedeTheGame") {
               this.playerIDConcede = data.PlayerID;
               console.log("id concede : "+ this.playerIDConcede);
                 this.broadcast({
@@ -220,6 +230,11 @@ export class DemoRoom extends Room {
                 idSender:client.id,
                 targets: data.targets,
             }, { except: client });
+        }
+          if (data.type === "readyBtnClicked")
+        {
+          debug.log("inside readyBtnClicked");
+              this.broadcast({type: "readyBtnClicked", idSender:client.id}, {except:client});
         }
     }
 
