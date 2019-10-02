@@ -235,10 +235,15 @@ export class DemoRoom extends Room {
                 targets: data.targets,
             }, { except: client });
         }
-          if (data.type === "readyBtnClicked")
+        if (data.type === "readyBtnClicked")
         {
           console.log("inside readyBtnClicked");
               this.broadcast({type: "readyBtnClicked", idSender:client.id}, {except:client});
+        }
+                if (data.type === "readyQueueBtnClicked")
+        {
+          console.log("inside readyQueueBtnClicked");
+              this.broadcast({type: "readyQueueBtnClicked", idSender:client.id}, {except:client});
         }
     }
 
