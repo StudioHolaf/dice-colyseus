@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Logs</title>
+</head>
+<body>
+
+<script>
+
+    var walk    = require('walk');
+    var files   = [];
+
+    // Walker options
+    var walker  = walk.walk('../logs/', { followLinks: false });
+
+    walker.on('file', function(root, stat, next) {
+        // Add this file to the list of files
+        files.push(root + '/' + stat.name);
+        next();
+    });
+
+    walker.on('end', function() {
+        console.log(files);
+    });
+
+</script>
+
+</body>
+</html>

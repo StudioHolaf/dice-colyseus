@@ -2,6 +2,9 @@ import {Room, Client, generateId} from "colyseus";
 //import { Schema, type, MapSchema, ArraySchema } from "@colyseus/schema";
 //import { verifyToken, User, IUser } from "@colyseus/social";
 
+const errorLog = require('../utils/logger').errorlog;
+const successlog = require('../utils/logger').successlog;
+
 export class DemoRoom extends Room {
 
     nbTirage:number;
@@ -18,7 +21,7 @@ export class DemoRoom extends Room {
     playerIDConcede:any;
     metaData:any
 
-    onInit(options:any) {
+    onCreate(options:any) {
         console.log("DemoRoom created!", options);
 
         this.nbTirage = 0;
@@ -45,9 +48,9 @@ export class DemoRoom extends Room {
     }
 
     /*requestJoin(options:any) {
-        console.log("request join!", options);
-        return true;
-    }*/
+     console.log("request join!", options);
+     return true;
+     }*/
 
     requestJoin (options, isNewRoom: boolean) {
         return (options.create)
@@ -55,7 +58,7 @@ export class DemoRoom extends Room {
             : this.clients.length > 0;
     }
 
-    onJoin(client:Client, options:any, user:IUser) {
+    onJoin(client:Client, options:any, user:any) {
         console.log("client joined!", client.sessionId);
     }
 
@@ -79,14 +82,16 @@ export class DemoRoom extends Room {
         console.log(data, "received from", client.sessionId);
         console.log(data.type, " is type");
 
+        successlog.info("roomId : " + this.roomId , data, "received from", client.sessionId);
+
         if (data.type === "chat") {
             console.log("Chat : " + data.message);
             this.broadcast({type: "chat", message: "this is a chat message from server"});
         }
-        
+
         if (data.type === "sendPlayerIdToServer") {
 
-            if (this.serverIDsData["C1"] != client.id) //C1 = Challenger One ------ petit bout de code pour savoir si c'est le premier ou 2eme qui demande un tirage 
+            if (this.serverIDsData["C1"] != client.id) //C1 = Challenger One ------ petit bout de code pour savoir si c'est le premier ou 2eme qui demande un tirage
             {
                 this.nbIDs += 1;
                 console.log("+1 Challenger");
@@ -129,7 +134,6 @@ export class DemoRoom extends Room {
                 });
                 this.playerIDConcede = {};
          }      
-    
         if (data.type === "askServerForTirage") {
             console.log("askServerForTirage : " + data.message);
 
@@ -223,8 +227,8 @@ export class DemoRoom extends Room {
         }
         if (data.type === "sendTargets")
         {
-          console.log("inside sendTargets");
-          console.log("target : "+ data.targets);
+            console.log("inside sendTargets");
+            console.log("target : "+ data.targets);
             this.broadcast({
                 type: "targetsFromServer",
                 idSender:client.id,
