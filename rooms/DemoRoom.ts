@@ -34,7 +34,7 @@ export class DemoRoom extends Room {
         this.playerIDConcede = 0;
         this.setPatchRate(1000 / 20);
         this.setSimulationInterval((dt) => this.update(dt));
-        //this.setMetadata({"test":string});
+        this.setMetadata({"test":string});
     }
 
     findOpponentID(idJ1:any)
