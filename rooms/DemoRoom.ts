@@ -133,7 +133,7 @@ export class DemoRoom extends Room {
                     playerIDConcede: this.playerIDConcede,
                 });
                 this.playerIDConcede = {};
-         }      
+         }
         if (data.type === "askServerForTirage") {
             console.log("askServerForTirage : " + data.message);
 
@@ -240,10 +240,25 @@ export class DemoRoom extends Room {
           console.log("inside readyBtnClicked");
               this.broadcast({type: "readyBtnClicked", idSender:client.id}, {except:client});
         }
-                if (data.type === "readyQueueBtnClicked")
+        if (data.type === "readyQueueBtnClicked")
         {
           console.log("inside readyQueueBtnClicked");
               this.broadcast({type: "readyQueueBtnClicked", idSender:client.id}, {except:client});
+        }
+        if (data.type === "readyQueueBtnClicked")
+        {
+            console.log("inside readyQueueBtnClicked");
+            this.broadcast({type: "readyQueueBtnClicked", idSender:client.id}, {except:client});
+        }
+        if (data.type === "sendLastHoveredItem")
+        {
+            console.log("inside sendLastHoveredItem");
+            console.log("LastHoveredItem : "+ data.item);
+            this.broadcast({
+                type: "lastHoveredItemFromServer",
+                idSender:client.id,
+                item: data.item,
+            }, { except: client });
         }
     }
 
