@@ -36,7 +36,8 @@ export class DemoRoom extends Room {
         this.playerIDConcede = 0;
         this.setPatchRate(1000 / 20);
         this.setSimulationInterval((dt) => this.update(dt));
-        this.setMetadata("toto");
+        //this.setMetadata({"test":string}); //gros beug quand on le récupère, dommage car on pourrait mettre l'id de l'host
+        //dedans et le display pour afficher l'host de la game, archi stylé. askip faut caster le truc à un moment, ????
     }
 
     findOpponentID(idJ1:any)
