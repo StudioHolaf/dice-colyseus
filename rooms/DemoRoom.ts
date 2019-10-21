@@ -268,7 +268,7 @@ export class DemoRoom extends Room {
         if(data.type == "registerAsSpectator")
         {
             this.spectatorIDs[client.id] = client;
-            this.broadcast({
+            this.send(client,{
                 type: "registeredAsSpectator",
                 C1: this.serverIDsData["C1"],
                 C2: this.serverIDsData["C2"],
