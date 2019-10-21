@@ -17,6 +17,7 @@ export class DemoRoom extends Room {
 
     nbIDs:number; // le nombre de joueur (2)
     serverIDsData:any;
+    spectatorIDs: any;
 
     playerIDConcede:any;
     metaData:any
@@ -28,8 +29,9 @@ export class DemoRoom extends Room {
         this.serverTirageData = {};
         this.nbQueueReady = 0;
         this.serverQueueData = {};
-        this.maxClients = 2;
+        this.maxClients = 3;
         this.serverIDsData = {};
+        this.spectatorIDs = {};
         this.nbIDs = 0;
         this.playerIDConcede = 0;
         this.setPatchRate(1000 / 20);
@@ -102,12 +104,14 @@ export class DemoRoom extends Room {
                 console.log("There is one Challenger");
                 this.serverIDsData["C1"] = client.id;
                 this.serverIDsData["playerIDC1"] = data.PlayerID;
+                this.serverIDsData["clientC1"] = client;
                 console.log("C1 : "+ this.serverIDsData["C1"]);
             }
             else if (this.nbIDs == 2) {
                 console.log("There is two Challenger");
                 this.serverIDsData["C2"] = client.id;
                 this.serverIDsData["playerIDC2"] = data.PlayerID;
+                this.serverIDsData["clientC2"] = client;
                 console.log("C2 : "+ this.serverIDsData["C2"]);
 
                 console.log("Server nbIDs : %o",this.serverIDsData);
@@ -122,7 +126,7 @@ export class DemoRoom extends Room {
                     playerIDC2: this.serverIDsData["playerIDC2"]
                 });
                 this.nbIDs = 0;
-                this.serverIDsData = {};
+                //this.serverIDsData = {};
             }
         }
         if (data.type === "iConcedeTheGame") {
@@ -259,6 +263,33 @@ export class DemoRoom extends Room {
                 idSender:client.id,
                 item: data.item,
             }, { except: client });
+        }
+        if(data.type == "registerAsSpectator")
+        {
+            this.spectatorIDs[client.id] = client;
+            this.broadcast({
+                type: "registeredAsSpectator",
+                C1: this.serverIDsData["C1"],
+                C2: this.serverIDsData["C2"],
+                playerIDC1: this.serverIDsData["playerIDC1"],
+                playerIDC2: this.serverIDsData["playerIDC2"]
+            });
+        }
+        if(data.type == "askGameStateDatas") {
+            console.log("inside askGameStateDatas");
+            this.send(this.serverIDsData["clientC1"], {
+                type: "GameStateDatasAsked",
+                askedBy: client.sessionId
+            });
+        }
+        if (data.type === "sendGameStateDatasTo")
+        {
+            console.log("inside sendGameStateDatasTo");
+            console.log("LastHoveredItem : "+ data.GameStateDatas);
+            this.send(this.spectatorIDs[data.SpectatorId],{
+                type: "gameStateFromServer",
+                item: data.GameState,
+            });
         }
     }
 
