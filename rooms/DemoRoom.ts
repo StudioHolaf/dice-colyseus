@@ -286,10 +286,10 @@ export class DemoRoom extends Room {
         if (data.type == "sendGameStateDatasTo")
         {
             console.log("inside sendGameStateDatasTo");
-            console.log("LastHoveredItem : "+ data.GameStateDatas);
+            console.log("GameStateDatas : "+ data.GameStateDatas);
             this.send(this.spectatorIDs[data.SpectatorId],{
                 type: "gameStateFromServer",
-                item: data.GameState,
+                item: data.GameStateDatas,
             });
         }
     }
