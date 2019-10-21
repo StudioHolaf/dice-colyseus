@@ -283,7 +283,7 @@ export class DemoRoom extends Room {
                 askedBy: client.sessionId
             });
         }
-        if (data.type === "sendGameStateDatasTo")
+        if (data.type == "sendGameStateDatasTo")
         {
             console.log("inside sendGameStateDatasTo");
             console.log("LastHoveredItem : "+ data.GameStateDatas);
