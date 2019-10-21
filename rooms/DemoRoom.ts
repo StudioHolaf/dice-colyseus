@@ -289,7 +289,7 @@ export class DemoRoom extends Room {
             console.log("GameStateDatas : "+ data.GameStateDatas);
             this.send(this.spectatorIDs[data.SpectatorId],{
                 type: "gameStateFromServer",
-                item: data.GameStateDatas,
+                GameState: data.GameStateDatas,
             });
         }
     }
