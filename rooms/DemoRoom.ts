@@ -50,6 +50,15 @@ export class DemoRoom extends Room {
       return oponnentID;
     }
 
+    getPlayerIdFromSessionID(sessionId:string)
+    {
+        if(this.serverIDsData["C1"] == sessionId)
+            return this.serverIDsData["playerIDC1"];
+        if(this.serverIDsData["C2"] == sessionId)
+            return this.serverIDsData["playerIDC2"]
+        else return -1;
+    }
+
     /*requestJoin(options:any) {
      console.log("request join!", options);
      return true;
@@ -60,6 +69,7 @@ export class DemoRoom extends Room {
             ? (options.create && isNewRoom)
             : this.clients.length > 0;
     }
+
 
     onJoin(client:Client, options:any, user:any) {
         console.log("client joined!", client.sessionId);
@@ -80,6 +90,7 @@ export class DemoRoom extends Room {
             console.log("disconnected!", client.sessionId);
         }
     }
+
 
     onMessage(client:Client, data:any) {
         console.log(data, "received from", client.sessionId);
@@ -184,7 +195,8 @@ export class DemoRoom extends Room {
                     idT1: this.serverTirageData["idT1"],
                     idT2: this.serverTirageData["idT2"],
                     tirageT1: this.serverTirageData["tirageT1"],
-                    tirageT2: this.serverTirageData["tirageT2"]
+                    tirageT2: this.serverTirageData["tirageT2"],
+                    idSender:this.getPlayerIdFromSessionID(client.id)
                 });
 
                 this.nbTirage = 0;
@@ -236,24 +248,24 @@ export class DemoRoom extends Room {
             console.log("target : "+ data.targets);
             this.broadcast({
                 type: "targetsFromServer",
-                idSender:client.id,
+                idSender:this.getPlayerIdFromSessionID(client.id),
                 targets: data.targets,
             }, { except: client });
         }
         if (data.type === "readyBtnClicked")
         {
           console.log("inside readyBtnClicked");
-              this.broadcast({type: "readyBtnClicked", idSender:client.id}, {except:client});
+              this.broadcast({type: "readyBtnClicked", idSender:this.getPlayerIdFromSessionID(client.id)}, {except:client});
         }
         if (data.type === "readyQueueBtnClicked")
         {
           console.log("inside readyQueueBtnClicked");
-              this.broadcast({type: "readyQueueBtnClicked", idSender:client.id}, {except:client});
+              this.broadcast({type: "readyQueueBtnClicked", idSender:this.getPlayerIdFromSessionID(client.id)}, {except:client});
         }
         if (data.type === "readyQueueBtnClicked")
         {
             console.log("inside readyQueueBtnClicked");
-            this.broadcast({type: "readyQueueBtnClicked", idSender:client.id}, {except:client});
+            this.broadcast({type: "readyQueueBtnClicked", idSender:this.getPlayerIdFromSessionID(client.id)}, {except:client});
         }
         if (data.type === "sendLastHoveredItem")
         {
@@ -261,7 +273,7 @@ export class DemoRoom extends Room {
             console.log("LastHoveredItem : "+ data.item);
             this.broadcast({
                 type: "lastHoveredItemFromServer",
-                idSender:client.id,
+                idSender:this.getPlayerIdFromSessionID(client.id),
                 item: data.item,
             }, { except: client });
         }
@@ -273,14 +285,15 @@ export class DemoRoom extends Room {
                 C1: this.serverIDsData["C1"],
                 C2: this.serverIDsData["C2"],
                 playerIDC1: this.serverIDsData["playerIDC1"],
-                playerIDC2: this.serverIDsData["playerIDC2"]
+                playerIDC2: this.serverIDsData["playerIDC2"],
+                idSender:this.getPlayerIdFromSessionID(client.id)
             });
         }
         if(data.type == "askGameStateDatas") {
             console.log("inside askGameStateDatas");
             this.send(this.serverIDsData["clientC1"], {
                 type: "GameStateDatasAsked",
-                askedBy: client.sessionId
+                askedBy: client.id
             });
         }
         if (data.type == "sendGameStateDatasTo")
@@ -290,6 +303,7 @@ export class DemoRoom extends Room {
             this.send(this.spectatorIDs[data.SpectatorId],{
                 type: "gameStateFromServer",
                 GameState: data.GameStateDatas,
+                idSender:this.getPlayerIdFromSessionID(client.id)
             });
         }
     }
