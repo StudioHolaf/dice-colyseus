@@ -58,6 +58,16 @@ export class DemoRoom extends Room {
             return this.serverIDsData["playerIDC2"]
         else return -1;
     }
+    isClientChallenger(sessionId:string)
+    {
+        var isChall = false;
+        if(this.serverIDsData["C1"] == sessionId)
+            isChall = true;
+        if(this.serverIDsData["C2"] == sessionId)
+            isChall = true;
+
+        return isChall
+    }
 
     /*requestJoin(options:any) {
      console.log("request join!", options);
@@ -151,131 +161,146 @@ export class DemoRoom extends Room {
                 this.playerIDConcede = {};
          }
         if (data.type === "askServerForTirage") {
-            console.log("askServerForTirage : " + data.message);
 
-            var dicesStates = JSON.parse(data.states);
+            if(this.isClientChallenger(client.id)) {
 
-            var rnd1 = Math.floor(Math.random() * 6) + 1;
-            var rnd2 = Math.floor(Math.random() * 6) + 1;
-            var rnd3 = Math.floor(Math.random() * 6) + 1;
-            var rnd4 = Math.floor(Math.random() * 6) + 1;
-            var rnd5 = Math.floor(Math.random() * 6) + 1;
+                console.log("askServerForTirage : " + data.message);
 
-            if (dicesStates[0] == 0)
-                rnd1 = 0;
-            if (dicesStates[1] == 0)
-                rnd2 = 0;
-            if (dicesStates[2] == 0)
-                rnd3 = 0;
-            if (dicesStates[3] == 0)
-                rnd4 = 0;
-            if (dicesStates[4] == 0)
-                rnd5 = 0;
+                var dicesStates = JSON.parse(data.states);
+
+                var rnd1 = Math.floor(Math.random() * 6) + 1;
+                var rnd2 = Math.floor(Math.random() * 6) + 1;
+                var rnd3 = Math.floor(Math.random() * 6) + 1;
+                var rnd4 = Math.floor(Math.random() * 6) + 1;
+                var rnd5 = Math.floor(Math.random() * 6) + 1;
+
+                if (dicesStates[0] == 0)
+                    rnd1 = 0;
+                if (dicesStates[1] == 0)
+                    rnd2 = 0;
+                if (dicesStates[2] == 0)
+                    rnd3 = 0;
+                if (dicesStates[3] == 0)
+                    rnd4 = 0;
+                if (dicesStates[4] == 0)
+                    rnd5 = 0;
 
 
-            if (this.serverTirageData["idT1"] != client.id) //petit bout de code pour savoir si c'est le premier ou 2eme qui demande un tirage
-                this.nbTirage += 1;
+                if (this.serverTirageData["idT1"] != client.id) //petit bout de code pour savoir si c'est le premier ou 2eme qui demande un tirage
+                    this.nbTirage += 1;
 
-            if (this.nbTirage == 1) {
-                console.log("Player pos 1 ask for roll");
-                this.serverTirageData["idT1"] = client.id;
-                this.serverTirageData["tirageT1"] = [rnd1, rnd2, rnd3, rnd4, rnd5];
-            }
-            else if (this.nbTirage == 2) {
-                console.log("Player pos 2 ask for roll");
-                this.serverTirageData["idT2"] = client.id;
-                this.serverTirageData["tirageT2"] = [rnd1, rnd2, rnd3, rnd4, rnd5];
+                if (this.nbTirage == 1) {
+                    console.log("Player pos 1 ask for roll");
+                    this.serverTirageData["idT1"] = client.id;
+                    this.serverTirageData["tirageT1"] = [rnd1, rnd2, rnd3, rnd4, rnd5];
+                } else if (this.nbTirage == 2) {
+                    console.log("Player pos 2 ask for roll");
+                    this.serverTirageData["idT2"] = client.id;
+                    this.serverTirageData["tirageT2"] = [rnd1, rnd2, rnd3, rnd4, rnd5];
 
-                console.log("Server tirage : %o",this.serverTirageData);
+                    console.log("Server tirage : %o", this.serverTirageData);
 
-                //var encoded_rolls = JSON.stringify(this.serverTirageData);
+                    //var encoded_rolls = JSON.stringify(this.serverTirageData);
 
-                this.broadcast({
-                    type: "drawsFromServer",
-                    idT1: this.serverTirageData["idT1"],
-                    idT2: this.serverTirageData["idT2"],
-                    tirageT1: this.serverTirageData["tirageT1"],
-                    tirageT2: this.serverTirageData["tirageT2"],
-                    idSender:this.getPlayerIdFromSessionID(client.id)
-                });
+                    this.broadcast({
+                        type: "drawsFromServer",
+                        idT1: this.serverTirageData["idT1"],
+                        idT2: this.serverTirageData["idT2"],
+                        tirageT1: this.serverTirageData["tirageT1"],
+                        tirageT2: this.serverTirageData["tirageT2"],
+                        idSender: this.getPlayerIdFromSessionID(client.id)
+                    });
 
-                this.nbTirage = 0;
-                this.serverTirageData = {};
+                    this.nbTirage = 0;
+                    this.serverTirageData = {};
+                }
             }
         }
         if (data.type === "askQueueExchange") {
 
-            var senderPlayerId = client.id; // get sender's playerID
-            var queueJson = data.queue;
+            if(this.isClientChallenger(client.id)) {
 
-            var queue = JSON.parse(queueJson);
+                var senderPlayerId = client.id; // get sender's playerID
+                var queueJson = data.queue;
 
-            if(this.serverQueueData["idT1"] != senderPlayerId)
-                this.nbQueueReady += 1;
+                var queue = JSON.parse(queueJson);
 
-            if(this.nbQueueReady == 1)
-            {
-                console.log("Player pos 1 validate for queue");
-                this.serverQueueData["idT1"] = senderPlayerId;
-                this.serverQueueData["QueueT1"] = queue;
-            }
-            else if (this.nbQueueReady == 2)
-            {
-                console.log("Player pos 2 validate for queue");
-                this.serverQueueData["idT2"] = senderPlayerId;
-                this.serverQueueData["QueueT2"] = queue;
+                if(this.serverQueueData["idT1"] != senderPlayerId)
+                    this.nbQueueReady += 1;
 
-                //var encoded_queues = JSON.stringify(serverQueueData);
-                console.log("queue : %o", this.serverQueueData["QueueT1"]);
-                console.log("queue : %o", this.serverQueueData["QueueT2"]);
+                if(this.nbQueueReady == 1)
+                {
+                    console.log("Player pos 1 validate for queue");
+                    this.serverQueueData["idT1"] = senderPlayerId;
+                    this.serverQueueData["QueueT1"] = queue;
+                }
+                else if (this.nbQueueReady == 2) {
+                    console.log("Player pos 2 validate for queue");
+                    this.serverQueueData["idT2"] = senderPlayerId;
+                    this.serverQueueData["QueueT2"] = queue;
 
-                this.broadcast({
-                    type: "queuesFromServer",
-                    idT1: this.serverQueueData["idT1"],
-                    idT2: this.serverQueueData["idT2"],
-                    QueueT1: this.serverQueueData["QueueT1"],
-                    QueueT2: this.serverQueueData["QueueT2"]
-                });
+                    //var encoded_queues = JSON.stringify(serverQueueData);
+                    console.log("queue : %o", this.serverQueueData["QueueT1"]);
+                    console.log("queue : %o", this.serverQueueData["QueueT2"]);
 
-                this.nbQueueReady = 0;
-                this.serverQueueData = {};
+                    this.broadcast({
+                        type: "queuesFromServer",
+                        idT1: this.serverQueueData["idT1"],
+                        idT2: this.serverQueueData["idT2"],
+                        QueueT1: this.serverQueueData["QueueT1"],
+                        QueueT2: this.serverQueueData["QueueT2"]
+                    });
+
+                    this.nbQueueReady = 0;
+                    this.serverQueueData = {};
+                }
             }
 
         }
         if (data.type === "sendTargets")
         {
-            console.log("inside sendTargets");
-            console.log("target : "+ data.targets);
-            this.broadcast({
-                type: "targetsFromServer",
-                idSender:this.getPlayerIdFromSessionID(client.id),
-                targets: data.targets,
-            }, { except: client });
+            if(this.isClientChallenger(client.id)) {
+                console.log("inside sendTargets");
+                console.log("target : " + data.targets);
+                this.broadcast({
+                    type: "targetsFromServer",
+                    idSender: this.getPlayerIdFromSessionID(client.id),
+                    targets: data.targets,
+                }, {except: client});
+            }
         }
         if (data.type === "readyBtnClicked")
         {
-          console.log("inside readyBtnClicked");
-              this.broadcast({type: "readyBtnClicked", idSender:this.getPlayerIdFromSessionID(client.id)}, {except:client});
+            if(this.isClientChallenger(client.id)) {
+                console.log("inside readyBtnClicked");
+                this.broadcast({type: "readyBtnClicked", idSender: this.getPlayerIdFromSessionID(client.id)}, {except: client});
+            }
         }
         if (data.type === "readyQueueBtnClicked")
         {
-          console.log("inside readyQueueBtnClicked");
-              this.broadcast({type: "readyQueueBtnClicked", idSender:this.getPlayerIdFromSessionID(client.id)}, {except:client});
+            if(this.isClientChallenger(client.id)) {
+                console.log("inside readyQueueBtnClicked");
+                this.broadcast({type: "readyQueueBtnClicked", idSender: this.getPlayerIdFromSessionID(client.id)}, {except: client});
+            }
         }
         if (data.type === "readyQueueBtnClicked")
         {
-            console.log("inside readyQueueBtnClicked");
-            this.broadcast({type: "readyQueueBtnClicked", idSender:this.getPlayerIdFromSessionID(client.id)}, {except:client});
+            if(this.isClientChallenger(client.id)) {
+                console.log("inside readyQueueBtnClicked");
+                this.broadcast({type: "readyQueueBtnClicked", idSender: this.getPlayerIdFromSessionID(client.id)}, {except: client});
+            }
         }
         if (data.type === "sendLastHoveredItem")
         {
-            console.log("inside sendLastHoveredItem");
-            console.log("LastHoveredItem : "+ data.item);
-            this.broadcast({
-                type: "lastHoveredItemFromServer",
-                idSender:this.getPlayerIdFromSessionID(client.id),
-                item: data.item,
-            }, { except: client });
+            if(this.isClientChallenger(client.id)) {
+                console.log("inside sendLastHoveredItem");
+                console.log("LastHoveredItem : " + data.item);
+                this.broadcast({
+                    type: "lastHoveredItemFromServer",
+                    idSender: this.getPlayerIdFromSessionID(client.id),
+                    item: data.item,
+                }, {except: client});
+            }
         }
         if(data.type == "registerAsSpectator")
         {
