@@ -136,7 +136,7 @@ export class DemoRoom extends Room {
                 this.serverIDsData["clientC2"] = client;
                 console.log("C2 : "+ this.serverIDsData["C2"]);
 
-                console.log("Server nbIDs : %o",this.serverIDsData);
+                //console.log("Server nbIDs : %o",this.serverIDsData);
 
                 //var encoded_rolls = JSON.stringify(this.serverTirageData);
 
