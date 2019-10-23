@@ -331,6 +331,12 @@ export class DemoRoom extends Room {
                 idSender:this.getPlayerIdFromSessionID(client.id)
             });
         }
+        if(data.type == "sendInitTourEvent") {
+            console.log("inside sendInitTourEvent");
+            this.broadcast({
+                type: "initTourEvent"
+            });
+        }
     }
 
     update(dt?:number) {
