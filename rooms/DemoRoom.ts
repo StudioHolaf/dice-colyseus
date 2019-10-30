@@ -69,6 +69,15 @@ export class DemoRoom extends Room {
         return isChall
     }
 
+    sendErrorMessage(client:any, error_type:string, error_datas:any)
+    {
+        this.send(client,{
+            type: "serverError",
+            error_type:error_type,
+            error_datas:error_datas
+        });
+    }
+
     /*requestJoin(options:any) {
      console.log("request join!", options);
      return true;
@@ -115,40 +124,49 @@ export class DemoRoom extends Room {
 
         if (data.type === "sendPlayerIdToServer") {
 
-            if (this.serverIDsData["C1"] != client.id) //C1 = Challenger One ------ petit bout de code pour savoir si c'est le premier ou 2eme qui demande un tirage
+            if(this.serverIDsData["C1"] != null || this.serverIDsData["C1"] != 0) {
+
+                if (this.serverIDsData["C1"] != client.id) //C1 = Challenger One ------ petit bout de code pour savoir si c'est le premier ou 2eme qui demande un tirage
+                {
+                    this.nbIDs += 1;
+                    console.log("+1 Challenger");
+                }
+                console.log("AFTER nbIDs : " + this.nbIDs);
+
+                if (this.nbIDs == 1) {
+                    console.log("There is one Challenger");
+                    this.serverIDsData["C1"] = client.id;
+                    this.serverIDsData["playerIDC1"] = data.PlayerID;
+                    this.serverIDsData["clientC1"] = client;
+                    console.log("C1 : " + this.serverIDsData["C1"]);
+                } else if (this.nbIDs == 2) {
+                    console.log("There is two Challenger");
+                    this.serverIDsData["C2"] = client.id;
+                    this.serverIDsData["playerIDC2"] = data.PlayerID;
+                    this.serverIDsData["clientC2"] = client;
+                    console.log("C2 : " + this.serverIDsData["C2"]);
+
+                    //console.log("Server nbIDs : %o",this.serverIDsData);
+
+                    //var encoded_rolls = JSON.stringify(this.serverTirageData);
+
+                    this.broadcast({
+                        type: "playerIDFromServer",
+                        C1: this.serverIDsData["C1"],
+                        C2: this.serverIDsData["C2"],
+                        playerIDC1: this.serverIDsData["playerIDC1"],
+                        playerIDC2: this.serverIDsData["playerIDC2"]
+                    });
+                    this.nbIDs = 0;
+                    //this.serverIDsData = {};
+                }
+            }
+            else
             {
-                this.nbIDs += 1;
-                console.log("+1 Challenger");
-            }
-            console.log("AFTER nbIDs : "+ this.nbIDs);
-
-            if (this.nbIDs == 1) {
-                console.log("There is one Challenger");
-                this.serverIDsData["C1"] = client.id;
-                this.serverIDsData["playerIDC1"] = data.PlayerID;
-                this.serverIDsData["clientC1"] = client;
-                console.log("C1 : "+ this.serverIDsData["C1"]);
-            }
-            else if (this.nbIDs == 2) {
-                console.log("There is two Challenger");
-                this.serverIDsData["C2"] = client.id;
-                this.serverIDsData["playerIDC2"] = data.PlayerID;
-                this.serverIDsData["clientC2"] = client;
-                console.log("C2 : "+ this.serverIDsData["C2"]);
-
-                //console.log("Server nbIDs : %o",this.serverIDsData);
-
-                //var encoded_rolls = JSON.stringify(this.serverTirageData);
-
-                this.broadcast({
-                    type: "playerIDFromServer",
-                    C1: this.serverIDsData["C1"],
-                    C2: this.serverIDsData["C2"],
-                    playerIDC1: this.serverIDsData["playerIDC1"],
-                    playerIDC2: this.serverIDsData["playerIDC2"]
-                });
-                this.nbIDs = 0;
-                //this.serverIDsData = {};
+                var error_datas = {};
+                error_datas["data_name"] = "playerID";
+                error_datas["reason"] = "void";
+                this.sendErrorMessage(client, "DataSentError",error_datas);
             }
         }
         if (data.type === "iConcedeTheGame") {
