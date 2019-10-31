@@ -260,13 +260,17 @@ export class DemoRoom extends Room {
                 try {
                     queue = JSON.parse(queueJson);
                 } catch(e) {
+
                     queue = [];
                     this.resendDataTry++;
                     console.log("PARSE ERROR - Queue not valid JSON resendDataTry = "+this.resendDataTry);
-                    var error_datas = {};
-                    error_datas["data_name"] = "queue";
-                    error_datas["reason"] = "ParseError";
-                    this.sendErrorMessage(client, "DataSentError", JSON.stringify(error_datas));
+
+                    if(this.resendDataTry <= 5) {
+                        var error_datas = {};
+                        error_datas["data_name"] = "queue";
+                        error_datas["reason"] = "ParseError";
+                        this.sendErrorMessage(client, "DataSentError", JSON.stringify(error_datas));
+                    }
                 }
 
                 if(queue.length <= 0 && this.resendDataTry > 5)
