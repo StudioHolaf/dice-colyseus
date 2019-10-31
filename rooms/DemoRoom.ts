@@ -270,12 +270,11 @@ export class DemoRoom extends Room {
 
                 if(queue.length <= 0 && this.resendDataTry > 5)
                 {
-                    this.resendDataTry = 0;
                     console.log("Default queue");
                     queue = [1,2,3,4,5];
                 }
 
-                if(queue.length >= 0) {
+                if(queue.length > 0) {
 
                     this.resendDataTry = 0;
 
