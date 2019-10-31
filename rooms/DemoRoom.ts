@@ -166,7 +166,7 @@ export class DemoRoom extends Room {
                 var error_datas = {};
                 error_datas["data_name"] = "playerID";
                 error_datas["reason"] = "void";
-                this.sendErrorMessage(client, "DataSentError",error_datas);
+                this.sendErrorMessage(client, "DataSentError", JSON.stringify(error_datas));
             }
         }
         if (data.type === "iConcedeTheGame") {
