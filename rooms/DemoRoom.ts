@@ -274,6 +274,7 @@ export class DemoRoom extends Room {
                     queue = [1,2,3,4,5];
                 }
 
+                console.log("Queue = %o",queue);
                 if(queue.length > 0) {
 
                     this.resendDataTry = 0;
