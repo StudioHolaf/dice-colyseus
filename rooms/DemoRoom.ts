@@ -124,7 +124,7 @@ export class DemoRoom extends Room {
 
         if (data.type === "sendPlayerIdToServer") {
 
-            if(this.serverIDsData["C1"] != null || this.serverIDsData["C1"] != 0) {
+            if(data.PlayerID != null || data.PlayerID != 0) {
 
                 if (this.serverIDsData["C1"] != client.id) //C1 = Challenger One ------ petit bout de code pour savoir si c'est le premier ou 2eme qui demande un tirage
                 {
