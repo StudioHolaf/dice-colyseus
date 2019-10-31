@@ -241,7 +241,16 @@ export class DemoRoom extends Room {
                 var senderPlayerId = client.id; // get sender's playerID
                 var queueJson = data.queue;
 
-                var queue = JSON.parse(queueJson);
+
+
+                try {
+                    var queue = JSON.parse(queueJson);
+                } catch(e) {
+                    var error_datas = {};
+                    error_datas["data_name"] = "queue";
+                    error_datas["reason"] = "ParseError";
+                    this.sendErrorMessage(client, "DataSentError", JSON.stringify(error_datas));
+                }
 
                 if(this.serverQueueData["idT1"] != senderPlayerId)
                     this.nbQueueReady += 1;
