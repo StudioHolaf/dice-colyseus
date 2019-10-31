@@ -22,6 +22,8 @@ export class DemoRoom extends Room {
     playerIDConcede:any;
     metaData:any
 
+    resendDataTry:number;
+
     onCreate(options:any) {
         console.log("DemoRoom created!", options);
 
@@ -36,6 +38,7 @@ export class DemoRoom extends Room {
         this.playerIDConcede = 0;
         this.setPatchRate(1000 / 20);
         this.setSimulationInterval((dt) => this.update(dt));
+        this.resendDataTry = 0;
         //this.setMetadata({"test":string}); //gros beug quand on le récupère, dommage car on pourrait mettre l'id de l'host
         //dedans et le display pour afficher l'host de la game, archi stylé. askip faut caster le truc à un moment, ????
     }
@@ -126,6 +129,8 @@ export class DemoRoom extends Room {
 
             if(data.PlayerID != null && data.PlayerID != 0) {
 
+                this.resendDataTry = 0;
+
                 if (this.serverIDsData["C1"] != client.id) //C1 = Challenger One ------ petit bout de code pour savoir si c'est le premier ou 2eme qui demande un tirage
                 {
                     this.nbIDs += 1;
@@ -163,10 +168,19 @@ export class DemoRoom extends Room {
             }
             else
             {
-                var error_datas = {};
-                error_datas["data_name"] = "playerID";
-                error_datas["reason"] = "void";
-                this.sendErrorMessage(client, "DataSentError", JSON.stringify(error_datas));
+                this.resendDataTry++;
+                if(this.resendDataTry <= 5)
+                {
+                    var error_datas = {};
+                    error_datas["data_name"] = "playerID";
+                    error_datas["reason"] = "void";
+                    this.sendErrorMessage(client, "DataSentError", JSON.stringify(error_datas));
+                }
+                else
+                {
+                    console.log("No playerID - Disconnecting player");
+                }
+
             }
         }
         if (data.type === "iConcedeTheGame") {
@@ -241,46 +255,58 @@ export class DemoRoom extends Room {
                 var senderPlayerId = client.id; // get sender's playerID
                 var queueJson = data.queue;
 
-
+                var queue = [];
 
                 try {
-                    var queue = JSON.parse(queueJson);
+                    queue = JSON.parse(queueJson);
                 } catch(e) {
+                    this.resendDataTry++;
                     var error_datas = {};
                     error_datas["data_name"] = "queue";
                     error_datas["reason"] = "ParseError";
                     this.sendErrorMessage(client, "DataSentError", JSON.stringify(error_datas));
                 }
 
-                if(this.serverQueueData["idT1"] != senderPlayerId)
-                    this.nbQueueReady += 1;
-
-                if(this.nbQueueReady == 1)
+                if(queue.length <= 0 && this.resendDataTry > 5)
                 {
-                    console.log("Player pos 1 validate for queue");
-                    this.serverQueueData["idT1"] = senderPlayerId;
-                    this.serverQueueData["QueueT1"] = queue;
+                    this.resendDataTry = 0;
+                    console.log("Default queue");
+                    queue = [1,2,3,4,5];
                 }
-                else if (this.nbQueueReady == 2) {
-                    console.log("Player pos 2 validate for queue");
-                    this.serverQueueData["idT2"] = senderPlayerId;
-                    this.serverQueueData["QueueT2"] = queue;
 
-                    //var encoded_queues = JSON.stringify(serverQueueData);
-                    console.log("queue : %o", this.serverQueueData["QueueT1"]);
-                    console.log("queue : %o", this.serverQueueData["QueueT2"]);
+                if(queue.length <= 0) {
 
-                    this.broadcast({
-                        type: "queuesFromServer",
-                        idT1: this.serverQueueData["idT1"],
-                        idT2: this.serverQueueData["idT2"],
-                        QueueT1: this.serverQueueData["QueueT1"],
-                        QueueT2: this.serverQueueData["QueueT2"]
-                    });
+                    this.resendDataTry = 0;
 
-                    this.nbQueueReady = 0;
-                    this.serverQueueData = {};
+                    if (this.serverQueueData["idT1"] != senderPlayerId)
+                        this.nbQueueReady += 1;
+
+                    if (this.nbQueueReady == 1) {
+                        console.log("Player pos 1 validate for queue");
+                        this.serverQueueData["idT1"] = senderPlayerId;
+                        this.serverQueueData["QueueT1"] = queue;
+                    } else if (this.nbQueueReady == 2) {
+                        console.log("Player pos 2 validate for queue");
+                        this.serverQueueData["idT2"] = senderPlayerId;
+                        this.serverQueueData["QueueT2"] = queue;
+
+                        //var encoded_queues = JSON.stringify(serverQueueData);
+                        console.log("queue : %o", this.serverQueueData["QueueT1"]);
+                        console.log("queue : %o", this.serverQueueData["QueueT2"]);
+
+                        this.broadcast({
+                            type: "queuesFromServer",
+                            idT1: this.serverQueueData["idT1"],
+                            idT2: this.serverQueueData["idT2"],
+                            QueueT1: this.serverQueueData["QueueT1"],
+                            QueueT2: this.serverQueueData["QueueT2"]
+                        });
+
+                        this.nbQueueReady = 0;
+                        this.serverQueueData = {};
+                    }
                 }
+
             }
 
         }
