@@ -261,6 +261,7 @@ export class DemoRoom extends Room {
                     queue = JSON.parse(queueJson);
                 } catch(e) {
                     this.resendDataTry++;
+                    console.log("PARSE ERROR - Queue not valid JSON resendDataTry = "+this.resendDataTry);
                     var error_datas = {};
                     error_datas["data_name"] = "queue";
                     error_datas["reason"] = "ParseError";
@@ -274,7 +275,7 @@ export class DemoRoom extends Room {
                     queue = [1,2,3,4,5];
                 }
 
-                if(queue.length <= 0) {
+                if(queue.length >= 0) {
 
                     this.resendDataTry = 0;
 
