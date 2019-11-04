@@ -142,6 +142,7 @@ export class DemoRoom extends Room {
 
                 if (this.nbIDs == 1) {
                     console.log("There is one Challenger");
+                    this.setMetadata({test:"test"});
                     this.serverIDsData["C1"] = client.id;
                     this.serverIDsData["playerIDC1"] = data.PlayerID;
                     this.serverIDsData["clientC1"] = client;
