@@ -39,7 +39,8 @@ export class DemoRoom extends Room {
         this.setPatchRate(1000 / 20);
         this.setSimulationInterval((dt) => this.update(dt));
         this.resendDataTry = 0;
-        //this.setMetadata({"test":string}); //gros beug quand on le récupère, dommage car on pourrait mettre l'id de l'host
+        console.log("options.creator : "+options.creator);
+        this.setMetadata({creator:options.creator}); //gros beug quand on le récupère, dommage car on pourrait mettre l'id de l'host
         //dedans et le display pour afficher l'host de la game, archi stylé. askip faut caster le truc à un moment, ????
     }
 
