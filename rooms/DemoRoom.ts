@@ -396,13 +396,6 @@ export class DemoRoom extends Room {
                 this.broadcast({type: "readyQueueBtnClicked", idSender: this.getPlayerIdFromSessionID(client.id)}, {except: client});
             }
         }
-        if (data.type === "readyQueueBtnClicked")
-        {
-            if(this.isClientChallenger(client.id)) {
-                console.log("inside readyQueueBtnClicked");
-                this.broadcast({type: "readyQueueBtnClicked", idSender: this.getPlayerIdFromSessionID(client.id)}, {except: client});
-            }
-        }
         if (data.type === "sendLastHoveredItem")
         {
             if(this.isClientChallenger(client.id)) {
