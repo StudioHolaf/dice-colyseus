@@ -353,7 +353,7 @@ export class DemoRoom extends Room {
                 var targets = null;
 
                 try {
-                    targets = JSON.parse(queueJson);
+                    targets = JSON.parse(data.targets);
                 } catch(e) {
                     this.resendDataTry++;
                     console.log("PARSE ERROR - Target not valid JSON resendDataTry = "+this.resendDataTry);
@@ -379,6 +379,13 @@ export class DemoRoom extends Room {
                         idSender: this.getPlayerIdFromSessionID(client.id),
                         targets: data.targets,
                     }, {except: client});
+
+                    this.send(client,
+                        {
+                            type: "PlayerLaunchAuthorization",
+                            idSender: this.getPlayerIdFromSessionID(client.id)
+                        }
+                    )
                 }
             }
         }
