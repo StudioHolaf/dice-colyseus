@@ -40,7 +40,7 @@ export class DemoRoom extends Room {
         this.setSimulationInterval((dt) => this.update(dt));
         this.resendDataTry = 0;
         console.log("options.creator : "+options.creator);
-        this.setMetadata({creator:options.creator});
+        //this.setMetadata({creator:options.creator});
         this.setMetadata({test:"test"});
         //dedans et le display pour afficher l'host de la game, archi stylé. askip faut caster le truc à un moment, ????
     }
