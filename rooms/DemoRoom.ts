@@ -39,10 +39,9 @@ export class DemoRoom extends Room {
         this.setPatchRate(1000 / 20);
         this.setSimulationInterval((dt) => this.update(dt));
         this.resendDataTry = 0;
-        console.log("options.creator : "+options.creator);
+        //console.log("options.creator : "+options.creator);
         //this.setMetadata({creator:options.creator});
-        this.setMetadata({test:"test"});
-        //dedans et le display pour afficher l'host de la game, archi stylé. askip faut caster le truc à un moment, ????
+        //this.setMetadata({test:"test"});
     }
 
     findOpponentID(idJ1:any)
@@ -142,7 +141,6 @@ export class DemoRoom extends Room {
 
                 if (this.nbIDs == 1) {
                     console.log("There is one Challenger");
-                    this.setMetadata({test:"test"});
                     this.serverIDsData["C1"] = client.id;
                     this.serverIDsData["playerIDC1"] = data.PlayerID;
                     this.serverIDsData["clientC1"] = client;
