@@ -384,7 +384,8 @@ export class DemoRoom extends Room {
                     this.send(client,
                         {
                             type: "PlayerLaunchAuthorization",
-                            idSender: this.getPlayerIdFromSessionID(client.id)
+                            idSender: this.getPlayerIdFromSessionID(client.id),
+                            targets: data.targets,
                         }
                     )
                 }
