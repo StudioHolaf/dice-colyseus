@@ -198,53 +198,81 @@ export class DemoRoom extends Room {
 
                 console.log("askServerForTirage : " + data.message);
 
-                var dicesStates = JSON.parse(data.states);
+                var dicesStates = [];
 
-                var rnd1 = Math.floor(Math.random() * 6) + 1;
-                var rnd2 = Math.floor(Math.random() * 6) + 1;
-                var rnd3 = Math.floor(Math.random() * 6) + 1;
-                var rnd4 = Math.floor(Math.random() * 6) + 1;
-                var rnd5 = Math.floor(Math.random() * 6) + 1;
+                try {
+                    dicesStates = JSON.parse(data.states);
+                } catch(e) {
 
-                if (dicesStates[0] == 0)
-                    rnd1 = 0;
-                if (dicesStates[1] == 0)
-                    rnd2 = 0;
-                if (dicesStates[2] == 0)
-                    rnd3 = 0;
-                if (dicesStates[3] == 0)
-                    rnd4 = 0;
-                if (dicesStates[4] == 0)
-                    rnd5 = 0;
+                    dicesStates = [];
+                    this.resendDataTry++;
+                    console.log("PARSE ERROR - dicesStates not valid JSON resendDataTry = "+this.resendDataTry);
+                }
+
+                if(dicesStates.length <= 0 && this.resendDataTry > 5)
+                {
+                    console.log("Default tirage");
+                    queue = [0,0,0,0,0];
+                }
+                else if(dicesStates.length <= 0)
+                {
+                    var error_datas = {};
+                    error_datas["data_name"] = "dicesStates";
+                    error_datas["reason"] = "ParseError";
+                    this.sendErrorMessage(client, "DataSentError", JSON.stringify(error_datas));
+                }
+
+                //var dicesStates = JSON.parse(data.states);
+                if(dicesStates.length > 0) {
+
+                    this.resendDataTry = 0;
+
+                    var rnd1 = Math.floor(Math.random() * 6) + 1;
+                    var rnd2 = Math.floor(Math.random() * 6) + 1;
+                    var rnd3 = Math.floor(Math.random() * 6) + 1;
+                    var rnd4 = Math.floor(Math.random() * 6) + 1;
+                    var rnd5 = Math.floor(Math.random() * 6) + 1;
+
+                    if (dicesStates[0] == 0)
+                        rnd1 = 0;
+                    if (dicesStates[1] == 0)
+                        rnd2 = 0;
+                    if (dicesStates[2] == 0)
+                        rnd3 = 0;
+                    if (dicesStates[3] == 0)
+                        rnd4 = 0;
+                    if (dicesStates[4] == 0)
+                        rnd5 = 0;
 
 
-                if (this.serverTirageData["idT1"] != client.id) //petit bout de code pour savoir si c'est le premier ou 2eme qui demande un tirage
-                    this.nbTirage += 1;
+                    if (this.serverTirageData["idT1"] != client.id) //petit bout de code pour savoir si c'est le premier ou 2eme qui demande un tirage
+                        this.nbTirage += 1;
 
-                if (this.nbTirage == 1) {
-                    console.log("Player pos 1 ask for roll");
-                    this.serverTirageData["idT1"] = client.id;
-                    this.serverTirageData["tirageT1"] = [rnd1, rnd2, rnd3, rnd4, rnd5];
-                } else if (this.nbTirage == 2) {
-                    console.log("Player pos 2 ask for roll");
-                    this.serverTirageData["idT2"] = client.id;
-                    this.serverTirageData["tirageT2"] = [rnd1, rnd2, rnd3, rnd4, rnd5];
+                    if (this.nbTirage == 1) {
+                        console.log("Player pos 1 ask for roll");
+                        this.serverTirageData["idT1"] = client.id;
+                        this.serverTirageData["tirageT1"] = [rnd1, rnd2, rnd3, rnd4, rnd5];
+                    } else if (this.nbTirage == 2) {
+                        console.log("Player pos 2 ask for roll");
+                        this.serverTirageData["idT2"] = client.id;
+                        this.serverTirageData["tirageT2"] = [rnd1, rnd2, rnd3, rnd4, rnd5];
 
-                    console.log("Server tirage : %o", this.serverTirageData);
+                        console.log("Server tirage : %o", this.serverTirageData);
 
-                    //var encoded_rolls = JSON.stringify(this.serverTirageData);
+                        //var encoded_rolls = JSON.stringify(this.serverTirageData);
 
-                    this.broadcast({
-                        type: "drawsFromServer",
-                        idT1: this.serverTirageData["idT1"],
-                        idT2: this.serverTirageData["idT2"],
-                        tirageT1: this.serverTirageData["tirageT1"],
-                        tirageT2: this.serverTirageData["tirageT2"],
-                        idSender: this.getPlayerIdFromSessionID(client.id)
-                    });
+                        this.broadcast({
+                            type: "drawsFromServer",
+                            idT1: this.serverTirageData["idT1"],
+                            idT2: this.serverTirageData["idT2"],
+                            tirageT1: this.serverTirageData["tirageT1"],
+                            tirageT2: this.serverTirageData["tirageT2"],
+                            idSender: this.getPlayerIdFromSessionID(client.id)
+                        });
 
-                    this.nbTirage = 0;
-                    this.serverTirageData = {};
+                        this.nbTirage = 0;
+                        this.serverTirageData = {};
+                    }
                 }
             }
         }
@@ -321,11 +349,37 @@ export class DemoRoom extends Room {
             if(this.isClientChallenger(client.id)) {
                 console.log("inside sendTargets");
                 console.log("target : " + data.targets);
-                this.broadcast({
-                    type: "targetsFromServer",
-                    idSender: this.getPlayerIdFromSessionID(client.id),
-                    targets: data.targets,
-                }, {except: client});
+
+                var targets = null;
+
+                try {
+                    targets = JSON.parse(queueJson);
+                } catch(e) {
+                    this.resendDataTry++;
+                    console.log("PARSE ERROR - Target not valid JSON resendDataTry = "+this.resendDataTry);
+                }
+
+                if(targets == null && this.resendDataTry > 5)
+                {
+                    console.log("Default Target");
+                    data.targets = '{"launching":false,"targets":[]}';
+                }
+                else if(targets == null)
+                {
+                    var error_datas = {};
+                    error_datas["data_name"] = "targets";
+                    error_datas["reason"] = "ParseError";
+                    this.sendErrorMessage(client, "DataSentError", JSON.stringify(error_datas));
+                }
+
+                if(targets != null) {
+
+                    this.broadcast({
+                        type: "targetsFromServer",
+                        idSender: this.getPlayerIdFromSessionID(client.id),
+                        targets: data.targets,
+                    }, {except: client});
+                }
             }
         }
         if (data.type === "readyBtnClicked")
