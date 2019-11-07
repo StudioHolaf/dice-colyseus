@@ -41,7 +41,7 @@ export class DemoRoom extends Room {
         this.resendDataTry = 0;
         //console.log("options.creator : "+options.creator);
         //this.setMetadata({creator:options.creator});
-        //this.setMetadata({test:"test"});
+        this.setMetadata({test:"test"});
     }
 
     findOpponentID(idJ1:any)
