@@ -105,7 +105,7 @@ export class DemoRoom extends Room {
                 throw new Error("consented leave!");
                 this.broadcast({
                     type: "idConcedeFromServ",
-                    playerIDConcede: this.playerIDConcede,
+                    playerIDConcede: this.getPlayerIdFromSessionID(client.id),
                 });
                 this.playerIDConcede = {};
             }
@@ -118,7 +118,7 @@ export class DemoRoom extends Room {
             console.log("disconnected!", client.sessionId);
             this.broadcast({
                 type: "idConcedeFromServ",
-                playerIDConcede: this.playerIDConcede,
+                playerIDConcede: this.getPlayerIdFromSessionID(client.id),
             });
             this.playerIDConcede = {};
 
