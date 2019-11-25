@@ -103,14 +103,25 @@ export class DemoRoom extends Room {
         try {
             if (consented) {
                 throw new Error("consented leave!");
+                this.broadcast({
+                    type: "idConcedeFromServ",
+                    playerIDConcede: this.playerIDConcede,
+                });
+                this.playerIDConcede = {};
             }
 
             console.log("let's wait for reconnection!")
-            const newClient = await this.allowReconnection(client, 10);
+            const newClient = await this.allowReconnection(client, 30);
             console.log("reconnected!", newClient.sessionId);
 
         } catch (e) {
             console.log("disconnected!", client.sessionId);
+            this.broadcast({
+                type: "idConcedeFromServ",
+                playerIDConcede: this.playerIDConcede,
+            });
+            this.playerIDConcede = {};
+
         }
     }
 
