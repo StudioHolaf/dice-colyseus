@@ -463,6 +463,12 @@ export class DemoRoom extends Room {
                 type: "initTourEvent"
             });
         }
+        if(data.type == "AskForContemplationEvent") {
+            console.log("inside AskForContemplationEvent");
+            this.broadcast({
+                type: "contemplationEvent"
+            });
+        }
     }
 
     update(dt?:number) {
