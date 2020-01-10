@@ -466,8 +466,8 @@ export class DemoRoom extends Room {
         if(data.type == "AskForContemplationEvent") {
             console.log("inside AskForContemplationEvent");
             this.broadcast({
-                type: "contemplationEvent"
-            });
+                type: "contemplationEvent",
+                }, {except: client});
         }
     }
 
