@@ -469,6 +469,12 @@ export class DemoRoom extends Room {
                 type: "contemplationEvent",
                 }, {except: client});
         }
+        if(data.type == "sendSwapDiceEvent") {
+            console.log("inside sendSwapDiceEvent");
+            this.broadcast({
+                type: "swapDiceEvent"
+            });
+        }
     }
 
     update(dt?:number) {
