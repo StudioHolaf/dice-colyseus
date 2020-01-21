@@ -472,6 +472,7 @@ export class DemoRoom extends Room {
         if(data.type == "sendSwapDiceEvent") {
             console.log("inside sendSwapDiceEvent");
             this.broadcast({
+                idSender: this.getPlayerIdFromSessionID(client.id),
                 type: "swapDiceEvent"
             });
         }
