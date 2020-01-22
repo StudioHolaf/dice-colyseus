@@ -476,6 +476,20 @@ export class DemoRoom extends Room {
                 type: "swapDiceEvent"
             });
         }
+       	 if(data.type == "sendRerollCardClicked") {
+	        console.log("inside sendRerollCardClicked");
+	        this.broadcast({
+	            idSender: this.getPlayerIdFromSessionID(client.id),
+	            type: "sendRerollCardClicked"
+	        });
+	    }
+        if(data.type == "sendManaCardClicked") {
+	        console.log("inside sendManaCardClicked");
+	        this.broadcast({
+	            idSender: this.getPlayerIdFromSessionID(client.id),
+	            type: "sendManaCardClicked"
+	        });
+	    }
     }
 
     update(dt?:number) {
