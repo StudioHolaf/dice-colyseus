@@ -31,7 +31,7 @@ export class MatchmakingRoom extends Room {
         this.serverTirageData = {};
         this.nbQueueReady = 0;
         this.serverQueueData = {};
-        this.maxClients = 3;
+        this.maxClients = 2;
         this.serverIDsData = {};
         this.spectatorIDs = {};
         this.nbIDs = 0;
