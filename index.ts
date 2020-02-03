@@ -2,7 +2,7 @@ import path from 'path';
 import express from 'express';
 import serveIndex from 'serve-index';
 import { createServer } from 'http';
-import { Server } from 'colyseus';serveIndex
+import { Server } from 'colyseus';
 import { monitor } from '@colyseus/monitor';
 
 // Import demo room handlers
@@ -26,6 +26,9 @@ gameServer.define("chat", ChatRoom);
 
 // Register DemoRoom as "demo"
 gameServer.define("demo", DemoRoom);
+
+// Register DemoRoom as "demo"
+gameServer.define("matchmaking", MatchmakingRoom);
 
 // Register ChatRoom with initial options, as "chat_with_options"
 // onInit(options) will receive client join options + options registered here.
