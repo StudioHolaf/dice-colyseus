@@ -8,6 +8,7 @@ import { monitor } from '@colyseus/monitor';
 // Import demo room handlers
 import { ChatRoom } from "./rooms/01-chat-room";
 import { DemoRoom } from "./rooms/DemoRoom";
+import { MatchmakingRoom } from "./rooms/MatchmakingRoom";
 import { StateHandlerRoom } from "./rooms/02-state-handler";
 import { AuthRoom } from "./rooms/03-auth";
 import { CreateOrJoinRoom } from "./rooms/04-create-or-join-room";
@@ -27,7 +28,7 @@ gameServer.define("chat", ChatRoom);
 // Register DemoRoom as "demo"
 gameServer.define("demo", DemoRoom);
 
-// Register DemoRoom as "demo"
+// Register MatchmakingRoom as "matchmaking"
 gameServer.define("matchmaking", MatchmakingRoom);
 
 // Register ChatRoom with initial options, as "chat_with_options"
