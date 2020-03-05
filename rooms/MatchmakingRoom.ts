@@ -4,6 +4,7 @@ import {Room, Client, generateId} from "colyseus";
 
 const errorLog = require('../utils/logger').errorlog;
 const successlog = require('../utils/logger').successlog;
+const connexion = require('../utils/database-stats').connexion;
 
 export class MatchmakingRoom extends Room {
 
@@ -24,6 +25,8 @@ export class MatchmakingRoom extends Room {
 
     resendDataTry:number;
 
+    game_id:any;
+
     onCreate(options:any) {
         console.log("MatchmakingRoom created!", options);
 
@@ -42,6 +45,7 @@ export class MatchmakingRoom extends Room {
         //console.log("options.creator : "+options.creator);
         //this.setMetadata({creator:options.creator});
         this.setMetadata({test:"test"});
+        this.game_id = this.roomId;
     }
 
     findOpponentID(idJ1:any)
@@ -370,7 +374,7 @@ export class MatchmakingRoom extends Room {
                     this.resendDataTry++;
                     console.log("PARSE ERROR - Target not valid JSON resendDataTry = "+this.resendDataTry);
                 }
-
+                this.recordFaceUsage(data.facId, this.getPlayerIdFromSessionID(client.id), this.game_id,0);
                 if(targets == null && this.resendDataTry > 5)
                 {
                     console.log("Default Target");
@@ -499,5 +503,19 @@ export class MatchmakingRoom extends Room {
     onDispose() {
         console.log("disposing MatchmakingRoom...");
     }
+
+
+    /* SQL FUNCTIONS */
+
+    recordFaceUsage(face_id:number, player_id:number, game_id:any, tour_number:number)
+    {
+        const face = { face_id: face_id, player_id: player_id, game_id: game_id, tour_number: tour_number };
+        connexion.query('INSERT INTO Face_usage SET ?', face, (err, res) => {
+            if(err) throw err;
+
+            console.log('Last insert ID:', res.insertId);
+        });
+    }
+
 
 }
