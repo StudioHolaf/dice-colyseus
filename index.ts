@@ -65,3 +65,15 @@ gameServer.listen(port);
 // });
 
 console.log(`Listening on http://localhost:${ port }`);
+
+const mysql = require('mysql');
+const connection = mysql.createConnection({
+    host: 'oathrcombjdiceoo.mysql.db',
+    user: 'oathrcombjdiceoo',
+    password: 'Hmermbxk17',
+    database: 'oathrcombjdiceoo'
+});
+connection.connect((err) => {
+    if (err) throw err;
+    console.log('Connected!');
+});
