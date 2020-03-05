@@ -218,6 +218,7 @@ export class MatchmakingRoom extends Room {
                     type: "idConcedeFromServ",
                     playerIDConcede: this.playerIDConcede,
                 });
+                console.log("gonna call : updateGameEnd");
                 this.updateGameEnd(this.getOpponentPlayerIdFromSessionID(client.id), 0,0,10,true);
                 this.playerIDConcede = {};
          }
@@ -544,8 +545,10 @@ export class MatchmakingRoom extends Room {
     {
         connexion.query('UPDATE Game SET winner_player_id = ? end_hp_player_1 = ? end_hp_player_2 = ? total_tour = ? conceded = ? WHERE game_id = ?',
             [winner_player_id,end_hp_player_1,end_hp_player_2,total_tour,conceded, this.game_id], (err, res) => {
-            if(err) throw err;
-
+            if(err)
+            {   throw err;
+                errorLog.info(err);
+            }
             console.log(`Changed ${res.changedRows} row(s)`);
         });
     }
