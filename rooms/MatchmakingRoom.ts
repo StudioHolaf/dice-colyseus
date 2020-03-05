@@ -179,6 +179,7 @@ export class MatchmakingRoom extends Room {
                         playerIDC2: this.serverIDsData["playerIDC2"]
                     });
                     this.nbIDs = 0;
+                    this.recordGameCreation(this.game_id, this.serverIDsData["C1"], this.serverIDsData["C2"], 1, 2);
                     //this.serverIDsData = {};
                 }
             }
@@ -511,6 +512,16 @@ export class MatchmakingRoom extends Room {
     {
         const face = { face_id: face_id, player_id: player_id, game_id: game_id, tour_number: tour_number };
         connexion.query('INSERT INTO Face_usage SET ?', face, (err, res) => {
+            if(err) throw err;
+
+            console.log('Last insert ID:', res.insertId);
+        });
+    }
+
+    recordGameCreation(game_id:number, player_1_id:number, player_2_id:number, god_player_1:number, god_player_2:number)
+    {
+        const game = { game_id: game_id, player_1_id: player_1_id, player_2_id: player_2_id, god_player_1: god_player_1,  god_player_2:god_player_2};
+        connexion.query('INSERT INTO Game SET ?', game, (err, res) => {
             if(err) throw err;
 
             console.log('Last insert ID:', res.insertId);
