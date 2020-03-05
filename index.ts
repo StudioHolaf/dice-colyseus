@@ -68,7 +68,7 @@ console.log(`Listening on http://localhost:${ port }`);
 
 const mysql = require('mysql');
 const connection = mysql.createConnection({
-    host: 'dice_stats',
+    host: 'db4free.net',
     user: 'dice_stats',
     password: 'Hmermbxk17',
     database: 'dice_stats'
