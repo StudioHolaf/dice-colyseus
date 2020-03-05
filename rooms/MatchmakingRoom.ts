@@ -48,6 +48,7 @@ export class MatchmakingRoom extends Room {
         this.game_id = this.roomId;
     }
 
+
     findOpponentID(idJ1:any)
     {
       var oponnentID:string = "";
@@ -66,6 +67,16 @@ export class MatchmakingRoom extends Room {
             return this.serverIDsData["playerIDC2"]
         else return -1;
     }
+
+    getOpponentPlayerIdFromSessionID(sessionId:string)
+    {
+        if(this.serverIDsData["C2"] == sessionId)
+            return this.serverIDsData["playerIDC1"];
+        if(this.serverIDsData["C1"] == sessionId)
+            return this.serverIDsData["playerIDC2"]
+        else return -1;
+    }
+
     isClientChallenger(sessionId:string)
     {
         var isChall = false;
@@ -179,7 +190,7 @@ export class MatchmakingRoom extends Room {
                         playerIDC2: this.serverIDsData["playerIDC2"]
                     });
                     this.nbIDs = 0;
-                    this.recordGameCreation(this.game_id, this.serverIDsData["C1"], this.serverIDsData["C2"], 1, 2);
+                    this.recordGameCreation(this.game_id, this.serverIDsData["playerIDC1"], this.serverIDsData["playerIDC2"], 1, 2);
                     //this.serverIDsData = {};
                 }
             }
@@ -207,6 +218,7 @@ export class MatchmakingRoom extends Room {
                     type: "idConcedeFromServ",
                     playerIDConcede: this.playerIDConcede,
                 });
+                this.updateGameEnd(this.getOpponentPlayerIdFromSessionID(client.id), 0,0,10,true);
                 this.playerIDConcede = {};
          }
         if (data.type === "askServerForTirage") {
