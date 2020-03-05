@@ -543,8 +543,8 @@ export class MatchmakingRoom extends Room {
 
     updateGameEnd(winner_player_id:any, end_hp_player_1:number, end_hp_player_2:number, total_tour:number, conceded:boolean)
     {
-        connexion.query("UPDATE Game SET winner_player_id = ? end_hp_player_1 = ? end_hp_player_2 = ? total_tour = ? conceded = ? WHERE game_id = '"+this.game_id+"'",
-            [winner_player_id,end_hp_player_1,end_hp_player_2,total_tour,conceded], (err, res) => {
+        connexion.query("UPDATE Game SET winner_player_id = ? end_hp_player_1 = ? end_hp_player_2 = ? total_tour = ? conceded = ? WHERE game_id = ?",
+            [winner_player_id,end_hp_player_1,end_hp_player_2,total_tour,conceded, this.game_id], (err, res) => {
             if(err)
             {
                 console.log("err : %o ",err);
