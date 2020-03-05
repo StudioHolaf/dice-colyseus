@@ -68,10 +68,10 @@ console.log(`Listening on http://localhost:${ port }`);
 
 const mysql = require('mysql');
 const connection = mysql.createConnection({
-    host: 'oathrcombjdiceoo.mysql.db',
-    user: 'oathrcombjdiceoo',
-    password: 'Hmermbxk17',
-    database: 'oathrcombjdiceoo'
+    host: 'sql7.freesqldatabase.com',
+    user: 'sql7325929',
+    password: 'P8JSxBzKVP',
+    database: 'sql7325929'
 });
 connection.connect((err) => {
     if (err) throw err;
