@@ -190,7 +190,7 @@ export class MatchmakingRoom extends Room {
                         playerIDC2: this.serverIDsData["playerIDC2"]
                     });
                     this.nbIDs = 0;
-                    this.recordGameCreation(this.game_id, this.serverIDsData["playerIDC1"], this.serverIDsData["playerIDC2"], 1, 2);
+                    this.recordGameCreation(this.game_id, this.serverIDsData["playerIDC1"], this.serverIDsData["playerIDC2"], 0, 0);
                     //this.serverIDsData = {};
                 }
             }
@@ -508,6 +508,14 @@ export class MatchmakingRoom extends Room {
 	            type: "sendManaCardClicked"
 	        });
 	    }
+        if(data.type == "sendIdOfGods") {
+            console.log("inside sendIdOfGods");
+            /*this.broadcast({
+                idSender: this.getPlayerIdFromSessionID(client.id),
+                type: "sendManaCardClicked"
+            });*/
+            this.updateGameCreationWithGods(data.godPlayer1,data.godPlayer2);
+        }
     }
 
     update(dt?:number) {
@@ -539,6 +547,19 @@ export class MatchmakingRoom extends Room {
 
             console.log('Last insert ID:', res.insertId);
         });
+    }
+
+    updateGameCreationWithGods(god_player_1:number, god_player_2:number)
+    {
+        connexion.query("UPDATE Game SET god_player_1 = ?, god_player_2 = ? WHERE game_id = ?",
+            [god_player_1,god_player_2, this.game_id], (err, res) => {
+                if(err)
+                {
+                    console.log("err : %o ",err);
+                    throw err;
+                }
+                console.log(`Changed ${res.changedRows} row(s)`);
+            });
     }
 
     updateGameEnd(winner_player_id:any, end_hp_player_1:number, end_hp_player_2:number, total_tour:number, conceded:any)
