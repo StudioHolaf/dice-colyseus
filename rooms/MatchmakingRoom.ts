@@ -383,9 +383,9 @@ export class MatchmakingRoom extends Room {
                 console.log("target : " + data.targets);
 
                 var targets = null;
-
+                var dataParsed = null;
                 try {
-                    var dataParsed = JSON.parse(data);
+                    dataParsed = JSON.parse(data);
                     targets = dataParsed.targets;
 
                 } catch(e) {
