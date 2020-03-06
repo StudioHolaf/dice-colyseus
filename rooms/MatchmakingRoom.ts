@@ -395,7 +395,8 @@ export class MatchmakingRoom extends Room {
                     launched = "true";
                 else if (targets.launching != null && targets.launching == false)
                     launched = "false";
-                var faceUsageID = this.recordFaceUsage(data.facId, this.getPlayerIdFromSessionID(client.id), this.game_id,0, launched);
+                var faceUsageID = Date.now();
+                this.recordFaceUsage(data.facId, this.getPlayerIdFromSessionID(client.id), this.game_id,0, launched, faceUsageID);
 
                 if(targets == null && this.resendDataTry > 5)
                 {
@@ -541,16 +542,16 @@ export class MatchmakingRoom extends Room {
 
     /* SQL FUNCTIONS */
 
-    recordFaceUsage(face_id:number, player_id:number, game_id:any, tour_number:number, launched:string)
+    recordFaceUsage(face_id:number, player_id:number, game_id:any, tour_number:number, launched:string, date:number)
     {
         var retured = 0;
-        const face = { face_id: face_id, player_id: player_id, game_id: game_id, tour_number: tour_number, launched:launched};
+        const face = { face_id: face_id, player_id: player_id, game_id: game_id, tour_number: tour_number, launched:launched, date:date};
         connexion.query('INSERT INTO Face_usage SET ?', face, (err, res) => {
             if(err)
             {
                 throw err;
             }
-            console.log('Last insert ID:', res.insertId);
+            console.log('recordFaceUsage - Last insert ID:', res.insertId);
             retured = res.insertId;
         });
         return retured;
@@ -563,7 +564,7 @@ export class MatchmakingRoom extends Room {
         connexion.query('INSERT INTO Game SET ?', game, (err, res) => {
             if(err) throw err;
 
-            console.log('Last insert ID:', res.insertId);
+            console.log('recordGameCreation - Last insert ID:', res.insertId);
         });
     }
 
@@ -573,7 +574,7 @@ export class MatchmakingRoom extends Room {
         connexion.query('INSERT INTO Target SET ?', target, (err, res) => {
             if(err) throw err;
 
-            console.log('Last insert ID:', res.insertId);
+            console.log('recordTarget - Last insert ID:', res.insertId);
         });
     }
 
