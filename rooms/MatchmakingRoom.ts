@@ -414,7 +414,7 @@ export class MatchmakingRoom extends Room {
                 if(targets != null) {
                     for (var i = 0; i < targets.targets.length; i++)
                     {
-                        this.recordTarget(this.game_id, faceUsageID, this.getPlayerIdFromSessionID(client.id), targets[i]._type,targets[i]._playerPosition, targets[i].itemPosition);
+                        this.recordTarget(this.game_id, faceUsageID, this.getPlayerIdFromSessionID(client.id), targets.targets[i]._type,targets.targets[i]._playerPosition, targets.targets[i].itemPosition);
                     }
                     this.broadcast({
                         type: "targetsFromServer",
