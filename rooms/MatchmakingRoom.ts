@@ -523,11 +523,11 @@ export class MatchmakingRoom extends Room {
 	    }
         if(data.type == "sendIdOfGods") {
             console.log("inside sendIdOfGods");
-            /*this.broadcast({
-                idSender: this.getPlayerIdFromSessionID(client.id),
-                type: "sendManaCardClicked"
-            });*/
             this.updateGameCreationWithGods(data.godPlayer1,data.godPlayer2);
+        }
+        if(data.type == "infoAboutEndGame") {
+            console.log("inside sendIdOfGods");
+            this.updateGameEnd(data.winner_player_id, data.end_hp_player1, data.end_hp_player2, data.totalTour, data.isConcede);
         }
     }
 
@@ -590,6 +590,8 @@ export class MatchmakingRoom extends Room {
                 console.log(`Changed ${res.changedRows} row(s)`);
             });
     }
+
+
 
     updateGameEnd(winner_player_id:any, end_hp_player_1:number, end_hp_player_2:number, total_tour:number, conceded:any)
     {
