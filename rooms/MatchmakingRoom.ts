@@ -526,8 +526,11 @@ export class MatchmakingRoom extends Room {
             this.updateGameCreationWithGods(data.godPlayer1,data.godPlayer2);
         }
         if(data.type == "infoAboutEndGame") {
-            console.log("inside sendIdOfGods");
-            this.updateGameEnd(data.winner_player_id, data.end_hp_player1, data.end_hp_player2, data.totalTour, data.isConcede);
+            console.log("inside infoAboutEndGame");
+            if (data.isConcede == "true")
+                this.updateGameEnd(data.winner_player_id, data.end_hp_player1, data.end_hp_player2, data.totalTour, "true");
+            else
+                this.updateGameEnd(data.winner_player_id, data.end_hp_player1, data.end_hp_player2, data.totalTour, "false");
         }
     }
 
