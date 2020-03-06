@@ -383,19 +383,17 @@ export class MatchmakingRoom extends Room {
                 console.log("target : " + data.targets);
 
                 var targets = null;
-                var dataParsed = null;
-                try {
-                    dataParsed = JSON.parse(data);
-                    targets = dataParsed.targets;
 
+                try {
+                    targets = JSON.parse(data.targets);
                 } catch(e) {
                     this.resendDataTry++;
                     console.log("PARSE ERROR - Target not valid JSON resendDataTry = "+this.resendDataTry);
                 }
                 var launched = "none";
-                if (dataParsed.launching != null && dataParsed.launching == true)
+                if (targets.launching != null && targets.launching == true)
                     launched = "true";
-                else if (dataParsed.launching != null && dataParsed.launching == false)
+                else if (targets.launching != null && targets.launching == false)
                     launched = "false";
                 var faceUsageID = this.recordFaceUsage(data.facId, this.getPlayerIdFromSessionID(client.id), this.game_id,0, launched);
 
@@ -414,9 +412,8 @@ export class MatchmakingRoom extends Room {
                 }
 
                 if(targets != null) {
-                    for (var i = 0; i < targets.length; i++)
+                    for (var i = 0; i < targets.targets.length; i++)
                     {
-                        console.log("FOR recordTarget");
                         this.recordTarget(this.game_id, faceUsageID, this.getPlayerIdFromSessionID(client.id), targets[i]._type,targets[i]._playerPosition, targets[i].itemPosition);
                     }
                     this.broadcast({
