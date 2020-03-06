@@ -538,7 +538,7 @@ export class MatchmakingRoom extends Room {
 
     recordFaceUsage(face_id:number, player_id:number, game_id:any, tour_number:number, launched:string)
     {
-        const face = { face_id: face_id, player_id: player_id, game_id: game_id, tour_number: tour_number, launched};
+        const face = { face_id: face_id, player_id: player_id, game_id: game_id, tour_number: tour_number, launched:launched};
         connexion.query('INSERT INTO Face_usage SET ?', face, (err, res) => {
             if(err)
             {
