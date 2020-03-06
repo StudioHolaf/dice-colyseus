@@ -390,7 +390,7 @@ export class MatchmakingRoom extends Room {
                     this.resendDataTry++;
                     console.log("PARSE ERROR - Target not valid JSON resendDataTry = "+this.resendDataTry);
                 }
-                var faceUsageID = this.recordFaceUsage(data.facId, this.getPlayerIdFromSessionID(client.id), this.game_id,0, data.launching.toString());
+                var faceUsageID = this.recordFaceUsage(data.facId, this.getPlayerIdFromSessionID(client.id), this.game_id,0, data.launching);
 
                 if(targets == null && this.resendDataTry > 5)
                 {
