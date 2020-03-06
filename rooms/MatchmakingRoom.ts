@@ -543,18 +543,19 @@ export class MatchmakingRoom extends Room {
 
     recordFaceUsage(face_id:number, player_id:number, game_id:any, tour_number:number, launched:string)
     {
+        var retured = null;
         const face = { face_id: face_id, player_id: player_id, game_id: game_id, tour_number: tour_number, launched:launched};
         connexion.query('INSERT INTO Face_usage SET ?', face, (err, res) => {
             if(err)
             {
                 throw err;
-                return 0;
+                retured = 0;
             }
 
             console.log('Last insert ID:', res.insertId);
-            return res.insertId;
+            retured = res.insertId;
         });
-        return 0;
+        return retured;
     }
 
     recordGameCreation(game_id:number, player_1_id:number, player_2_id:number, god_player_1:number, god_player_2:number, date:any)
