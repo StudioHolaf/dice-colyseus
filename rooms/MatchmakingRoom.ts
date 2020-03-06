@@ -385,15 +385,17 @@ export class MatchmakingRoom extends Room {
                 var targets = null;
 
                 try {
-                    targets = JSON.parse(data.targets);
+                    var dataParsed = JSON.parse(data);
+                    targets = dataParsed.targets;
+
                 } catch(e) {
                     this.resendDataTry++;
                     console.log("PARSE ERROR - Target not valid JSON resendDataTry = "+this.resendDataTry);
                 }
                 var launched = "none";
-                if (data.launching != null && data.launching == true)
+                if (dataParsed.launching != null && dataParsed.launching == true)
                     launched = "true";
-                else if (data.launching != null && data.launching == false)
+                else if (dataParsed.launching != null && dataParsed.launching == false)
                     launched = "false";
                 var faceUsageID = this.recordFaceUsage(data.facId, this.getPlayerIdFromSessionID(client.id), this.game_id,0, launched);
 
@@ -414,6 +416,7 @@ export class MatchmakingRoom extends Room {
                 if(targets != null) {
                     for (var i = 0; i < targets.length; i++)
                     {
+                        console.log("FOR recordTarget");
                         this.recordTarget(this.game_id, faceUsageID, this.getPlayerIdFromSessionID(client.id), targets[i]._type,targets[i]._playerPosition, targets[i].itemPosition);
                     }
                     this.broadcast({
@@ -570,8 +573,8 @@ export class MatchmakingRoom extends Room {
 
     recordTarget(game_id:number, launch_id:number, player_launcher_id:number, target_type:string, target_player_pos:number, target_item_pos:number)
     {
-        const game = { game_id: game_id, launch_id: launch_id, player_launcher_id: player_launcher_id, target_type: target_type,  target_player_pos:target_player_pos,target_item_pos:target_item_pos};
-        connexion.query('INSERT INTO Target SET ?', game, (err, res) => {
+        const target = { game_id: game_id, launch_id: launch_id, player_launcher_id: player_launcher_id, target_type: target_type,  target_player_pos:target_player_pos,target_item_pos:target_item_pos};
+        connexion.query('INSERT INTO Target SET ?', target, (err, res) => {
             if(err) throw err;
 
             console.log('Last insert ID:', res.insertId);
