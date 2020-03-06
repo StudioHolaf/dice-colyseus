@@ -219,7 +219,7 @@ export class MatchmakingRoom extends Room {
                     playerIDConcede: this.playerIDConcede,
                 });
                 console.log("gonna call : updateGameEnd");
-                this.updateGameEnd(this.getOpponentPlayerIdFromSessionID(client.id), 0,0,10,true);
+                this.updateGameEnd(this.getOpponentPlayerIdFromSessionID(client.id), 0,0,10,'true');
                 this.playerIDConcede = {};
          }
         if (data.type === "askServerForTirage") {
@@ -541,7 +541,7 @@ export class MatchmakingRoom extends Room {
         });
     }
 
-    updateGameEnd(winner_player_id:any, end_hp_player_1:number, end_hp_player_2:number, total_tour:number, conceded:boolean)
+    updateGameEnd(winner_player_id:any, end_hp_player_1:number, end_hp_player_2:number, total_tour:number, conceded:any)
     {
         connexion.query("UPDATE Game SET winner_player_id = ? end_hp_player_1 = ? end_hp_player_2 = ? total_tour = ? conceded = ? WHERE game_id = ?",
             [winner_player_id,end_hp_player_1,end_hp_player_2,total_tour,conceded, this.game_id], (err, res) => {
