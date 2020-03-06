@@ -550,8 +550,8 @@ export class MatchmakingRoom extends Room {
             {
                 throw err;
             }
-            console.log('Last insert ID:', res.face_usage_id);
-            retured = res.face_usage_id;
+            console.log('Last insert ID:', res.insertId);
+            retured = res.insertId;
         });
         return retured;
     }
