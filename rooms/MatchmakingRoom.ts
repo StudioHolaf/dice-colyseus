@@ -27,6 +27,8 @@ export class MatchmakingRoom extends Room {
 
     game_id:any;
 
+    someoneConcede:string;
+
     onCreate(options:any) {
         console.log("MatchmakingRoom created!", options);
 
@@ -46,6 +48,7 @@ export class MatchmakingRoom extends Room {
         //this.setMetadata({creator:options.creator});
         this.setMetadata({test:"test"});
         this.game_id = this.roomId;
+        this.someoneConcede = "false";
     }
 
 
@@ -215,13 +218,14 @@ export class MatchmakingRoom extends Room {
         }
         if (data.type === "iConcedeTheGame") {
               this.playerIDConcede = data.PlayerID;
+            this.someoneConcede = "true";
               console.log("id concede : "+ this.playerIDConcede);
                 this.broadcast({
                     type: "idConcedeFromServ",
                     playerIDConcede: this.playerIDConcede,
                 });
                 console.log("gonna call : updateGameEnd");
-                this.updateGameEnd(this.getOpponentPlayerIdFromSessionID(client.id), 0,0,10,'true');
+                //this.updateGameEnd(this.getOpponentPlayerIdFromSessionID(client.id), 0,0,10,'true');
                 this.playerIDConcede = {};
          }
         if (data.type === "askServerForTirage") {
@@ -527,10 +531,12 @@ export class MatchmakingRoom extends Room {
         }
         if(data.type == "infoAboutEndGame") {
             console.log("inside infoAboutEndGame");
-            if (data.isConcede == "true")
+            if (this.someoneConcede == "true")
                 this.updateGameEnd(data.winner_player_id, data.end_hp_player1, data.end_hp_player2, data.totalTour, "true");
             else
                 this.updateGameEnd(data.winner_player_id, data.end_hp_player1, data.end_hp_player2, data.totalTour, "false");
+
+
         }
     }
 
