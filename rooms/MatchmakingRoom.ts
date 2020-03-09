@@ -296,7 +296,7 @@ export class MatchmakingRoom extends Room {
                         console.log("Server tirage : %o", this.serverTirageData);
                         console.log("Server tirage T1 : %o", this.serverTirageData["tirageT1"]);
 
-                        this.recordTirage(this.game_id, this.serverTirageData["tirageT1"], this.serverTirageData["TirageT1"][0], this.serverTirageData["tirageT2"], this.serverTirageData["TirageT2"][0]);
+                        this.recordTirage(this.game_id, this.serverTirageData["tirageT1"], this.serverTirageData["tirageT1"][0], this.serverTirageData["tirageT2"], this.serverTirageData["tirageT2"][0]);
                         //var encoded_rolls = JSON.stringify(this.serverTirageData);
 
                         this.broadcast({
@@ -591,8 +591,8 @@ export class MatchmakingRoom extends Room {
 
     recordTirage(game_id:number, tirage_player_1:any, mana_player_1:number, tirage_player_2:any, mana_player_2:number)
     {
-        const target = { game_id: game_id, tirage_player_1:tirage_player_1, mana_player_1: mana_player_1, tirage_player_2:tirage_player_2, mana_player_2:mana_player_2};
-        connexion.query('INSERT INTO Tirage SET ?', target, (err, res) => {
+        const tirage = { game_id: game_id, tirage_player_1:tirage_player_1, mana_player_1: mana_player_1, tirage_player_2:tirage_player_2, mana_player_2:mana_player_2};
+        connexion.query('INSERT INTO Tirage SET ?', tirage, (err, res) => {
             if(err) throw err;
 
             console.log('recordTirage - Last insert ID:', res.insertId);
