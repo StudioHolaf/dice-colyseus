@@ -129,7 +129,7 @@ export class MatchmakingRoom extends Room {
             }
 
             console.log("let's wait for reconnection!")
-            const newClient = await this.allowReconnection(client, 30);
+            const newClient = await this.allowReconnection(client, 0);
             console.log("reconnected!", newClient.sessionId);
 
         } catch (e) {
