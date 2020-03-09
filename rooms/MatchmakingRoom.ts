@@ -129,7 +129,7 @@ export class MatchmakingRoom extends Room {
             }
 
             console.log("let's wait for reconnection!")
-            const newClient = await this.allowReconnection(client, 0);
+            const newClient = await this.allowReconnection(client, 0); //a changer pour permettre un timming de reco
             console.log("reconnected!", newClient.sessionId);
 
         } catch (e) {
@@ -295,6 +295,7 @@ export class MatchmakingRoom extends Room {
 
                         console.log("Server tirage : %o", this.serverTirageData);
 
+                        this.recordTirage(this.game_id, this.serverTirageData["tirageT1"], this.serverTirageData["TirageT1"][0], this.serverTirageData["tirageT2"], this.serverTirageData["TirageT2"][0]);
                         //var encoded_rolls = JSON.stringify(this.serverTirageData);
 
                         this.broadcast({
@@ -581,6 +582,16 @@ export class MatchmakingRoom extends Room {
     {
         const target = { game_id: game_id, launch_id: launch_id, player_launcher_id: player_launcher_id, target_type: target_type,  target_player_pos:target_player_pos,target_item_pos:target_item_pos};
         connexion.query('INSERT INTO Target SET ?', target, (err, res) => {
+            if(err) throw err;
+
+            console.log('recordTarget - Last insert ID:', res.insertId);
+        });
+    }
+
+    recordTirage(game_id:number, tirage_player_1:any, mana_player_1:number, tirage_player_2:any, mana_player_2:number)
+    {
+        const target = { game_id: game_id, tirage_player_1:tirage_player_1, mana_player_1: mana_player_1, tirage_player_2:tirage_player_2, mana_player_2:mana_player_2};
+        connexion.query('INSERT INTO Tirage SET ?', target, (err, res) => {
             if(err) throw err;
 
             console.log('recordTarget - Last insert ID:', res.insertId);
