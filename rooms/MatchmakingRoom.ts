@@ -373,7 +373,7 @@ export class MatchmakingRoom extends Room {
                             QueueT1: this.serverQueueData["QueueT1"],
                             QueueT2: this.serverQueueData["QueueT2"]
                         });
-
+                        this.recordSpellOrder(this.game_id,JSON.stringify(this.serverQueueData["QueueT1"]),JSON.stringify(this.serverQueueData["QueueT2"]));
                         this.nbQueueReady = 0;
                         this.serverQueueData = {};
                     }
@@ -596,6 +596,16 @@ export class MatchmakingRoom extends Room {
             if(err) throw err;
 
             console.log('recordTirage - Last insert ID:', res.insertId);
+        });
+    }
+
+    recordSpellOrder(game_id:number, order_player_1:any, order_player_2:any)
+    {
+        const order = { game_id: game_id, order_player_1:order_player_1, order_player_2: order_player_2};
+        connexion.query('INSERT INTO Spell_order SET ?', order, (err, res) => {
+            if(err) throw err;
+
+            console.log('recordSpellOrder - Last insert ID:', res.insertId);
         });
     }
 
