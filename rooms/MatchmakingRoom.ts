@@ -294,6 +294,7 @@ export class MatchmakingRoom extends Room {
                         this.serverTirageData["tirageT2"] = [rnd1, rnd2, rnd3, rnd4, rnd5];
 
                         console.log("Server tirage : %o", this.serverTirageData);
+                        console.log("Server tirage T1 : %o", this.serverTirageData["tirageT1"]);
 
                         this.recordTirage(this.game_id, this.serverTirageData["tirageT1"], this.serverTirageData["TirageT1"][0], this.serverTirageData["tirageT2"], this.serverTirageData["TirageT2"][0]);
                         //var encoded_rolls = JSON.stringify(this.serverTirageData);
@@ -594,7 +595,7 @@ export class MatchmakingRoom extends Room {
         connexion.query('INSERT INTO Tirage SET ?', target, (err, res) => {
             if(err) throw err;
 
-            console.log('recordTarget - Last insert ID:', res.insertId);
+            console.log('recordTirage - Last insert ID:', res.insertId);
         });
     }
 
