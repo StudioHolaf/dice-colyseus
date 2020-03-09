@@ -296,7 +296,7 @@ export class MatchmakingRoom extends Room {
                         console.log("Server tirage : %o", this.serverTirageData);
                         console.log("Server tirage T1 : %o", this.serverTirageData["tirageT1"]);
 
-                        this.recordTirage(this.game_id, this.serverTirageData["tirageT1"], this.serverTirageData["tirageT1"][0], this.serverTirageData["tirageT2"], this.serverTirageData["tirageT2"][0]);
+                        this.recordTirage(this.game_id, JSON.stringify(this.serverTirageData["tirageT1"]), this.serverTirageData["tirageT1"][0], JSON.stringify(this.serverTirageData["tirageT2"]), this.serverTirageData["tirageT2"][0]);
                         //var encoded_rolls = JSON.stringify(this.serverTirageData);
 
                         this.broadcast({
