@@ -195,7 +195,12 @@ export class MatchmakingRoom extends Room {
                     this.nbIDs = 0;
                     var date = new Date();
                     var formatted_date = new Intl.DateTimeFormat('fr-FR').format(date);
-                    this.recordGameCreation(this.game_id, this.serverIDsData["playerIDC1"], this.serverIDsData["playerIDC2"], 0, 0,formatted_date);
+                    try {
+                        this.recordGameCreation(this.game_id, this.serverIDsData["playerIDC1"], this.serverIDsData["playerIDC2"], 0, 0,formatted_date);
+                    }
+                    catch (e) {
+
+                    }
                     //this.serverIDsData = {};
                 }
             }
@@ -296,7 +301,13 @@ export class MatchmakingRoom extends Room {
                         console.log("Server tirage : %o", this.serverTirageData);
                         console.log("Server tirage T1 : %o", this.serverTirageData["tirageT1"]);
 
-                        this.recordTirage(this.game_id, JSON.stringify(this.serverTirageData["tirageT1"]), this.serverTirageData["tirageT1"][0], JSON.stringify(this.serverTirageData["tirageT2"]), this.serverTirageData["tirageT2"][0]);
+
+                        try {
+                            this.recordTirage(this.game_id, JSON.stringify(this.serverTirageData["tirageT1"]), this.serverTirageData["tirageT1"][0], JSON.stringify(this.serverTirageData["tirageT2"]), this.serverTirageData["tirageT2"][0]);
+                        }
+                        catch (e) {
+
+                        }
                         //var encoded_rolls = JSON.stringify(this.serverTirageData);
 
                         this.broadcast({
@@ -373,7 +384,13 @@ export class MatchmakingRoom extends Room {
                             QueueT1: this.serverQueueData["QueueT1"],
                             QueueT2: this.serverQueueData["QueueT2"]
                         });
-                        this.recordSpellOrder(this.game_id,JSON.stringify(this.serverQueueData["QueueT1"]),JSON.stringify(this.serverQueueData["QueueT2"]));
+
+                        try {
+                            this.recordSpellOrder(this.game_id,JSON.stringify(this.serverQueueData["QueueT1"]),JSON.stringify(this.serverQueueData["QueueT2"]));
+                        }
+                        catch (e) {
+
+                        }
                         this.nbQueueReady = 0;
                         this.serverQueueData = {};
                     }
@@ -402,12 +419,24 @@ export class MatchmakingRoom extends Room {
                 else if (targets.launching != null && targets.launching == false)
                     launched = "false";
                 var faceUsageID = Date.now();
-                this.recordFaceUsage(data.facId, this.getPlayerIdFromSessionID(client.id), this.game_id,0, launched, faceUsageID);
+
+                try {
+                    this.recordFaceUsage(data.facId, this.getPlayerIdFromSessionID(client.id), this.game_id,0, launched, faceUsageID);
+                }
+                catch (e) {
+
+                }
 
                 if(targets == null && this.resendDataTry > 5)
                 {
                     console.log("Default Target");
-                    this.recordTarget(this.game_id, faceUsageID, this.getPlayerIdFromSessionID(client.id), "default", -1, -1);
+
+                    try {
+                        this.recordTarget(this.game_id, faceUsageID, this.getPlayerIdFromSessionID(client.id), "default", -1, -1);
+                    }
+                    catch (e) {
+
+                    }
                     data.targets = '{"launching":false,"targets":[]}';
                 }
                 else if(targets == null)
@@ -421,7 +450,12 @@ export class MatchmakingRoom extends Room {
                 if(targets != null) {
                     for (var i = 0; i < targets.targets.length; i++)
                     {
-                        this.recordTarget(this.game_id, faceUsageID, this.getPlayerIdFromSessionID(client.id), targets.targets[i]._type,targets.targets[i]._playerPosition, targets.targets[i]._itemPosition);
+                        try {
+                            this.recordTarget(this.game_id, faceUsageID, this.getPlayerIdFromSessionID(client.id), targets.targets[i]._type,targets.targets[i]._playerPosition, targets.targets[i]._itemPosition);
+                        }
+                        catch (e) {
+
+                        }
                     }
                     this.broadcast({
                         type: "targetsFromServer",
@@ -556,7 +590,7 @@ export class MatchmakingRoom extends Room {
     recordFaceUsage(face_id:number, player_id:number, game_id:any, tour_number:number, launched:string, date:number)
     {
         var retured = 0;
-        const face = { face_id: face_id, player_id: player_id, game_id: game_id, tour_number: tour_number, launched:launched, face_usage_id:date};
+        const face = { face_id: face_id, player_id: player_id, game_id: game_id, tour_number: tour_number, launched:launched, date:date};
         connexion.query('INSERT INTO Face_usage SET ?', face, (err, res) => {
             if(err)
             {

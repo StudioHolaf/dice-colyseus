@@ -1,9 +1,10 @@
 const mysql = require('mysql');
 const connexion = mysql.createConnection({
-    host: 'db4free.net',
-    user: 'dice_stats',
-    password: 'Hmermbxk17',
-    database: 'dice_stats'
+    host: 'dt152773-001.privatesql',
+    port: '35661',
+    user: 'dicedbmaster',
+    password: 'yhikDoC7',
+    database: 'dicedb'
 });
 connexion.connect((err) => {
     if (err) throw err;
