@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 const connexion = mysql.createConnection({
-    host: 'dt152773-001.privatesql.ovh.net',
-    port: '35661',
+    host: 'dt152773-002.dbaas.ovh.net',
+    port: '35888',
     user: 'dicedbmaster',
     password: 'yhikDoC7',
     database: 'dicedb'
