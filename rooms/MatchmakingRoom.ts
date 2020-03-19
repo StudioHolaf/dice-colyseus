@@ -591,7 +591,7 @@ export class MatchmakingRoom extends Room {
     {
         var retured = 0;
         const face = { face_id: face_id, player_id: player_id, game_id: game_id, tour_number: tour_number, launched:launched, date:date};
-        connexion.query('INSERT INTO Face_usage SET ?', face, (err, res) => {
+        connexion.query('INSERT INTO stats_face_usage SET ?', face, (err, res) => {
             if(err)
             {
                 throw err;
@@ -606,7 +606,7 @@ export class MatchmakingRoom extends Room {
     {
 
         const game = { game_id: game_id, player_1_id: player_1_id, player_2_id: player_2_id, god_player_1: god_player_1,  god_player_2:god_player_2, date:date};
-        connexion.query('INSERT INTO Game SET ?', game, (err, res) => {
+        connexion.query('INSERT INTO stats_game SET ?', game, (err, res) => {
             if(err) throw err;
 
             console.log('recordGameCreation - Last insert ID:', res.insertId);
@@ -616,7 +616,7 @@ export class MatchmakingRoom extends Room {
     recordTarget(game_id:number, launch_id:number, player_launcher_id:number, target_type:string, target_player_pos:number, target_item_pos:number)
     {
         const target = { game_id: game_id, launch_id: launch_id, player_launcher_id: player_launcher_id, target_type: target_type,  target_player_pos:target_player_pos,target_item_pos:target_item_pos};
-        connexion.query('INSERT INTO Target SET ?', target, (err, res) => {
+        connexion.query('INSERT INTO stats_target SET ?', target, (err, res) => {
             if(err) throw err;
 
             console.log('recordTarget - Last insert ID:', res.insertId);
@@ -626,7 +626,7 @@ export class MatchmakingRoom extends Room {
     recordTirage(game_id:number, tirage_player_1:any, mana_player_1:number, tirage_player_2:any, mana_player_2:number)
     {
         const tirage = { game_id: game_id, tirage_player_1:tirage_player_1, mana_player_1: mana_player_1, tirage_player_2:tirage_player_2, mana_player_2:mana_player_2};
-        connexion.query('INSERT INTO Tirage SET ?', tirage, (err, res) => {
+        connexion.query('INSERT INTO stats_tirage SET ?', tirage, (err, res) => {
             if(err) throw err;
 
             console.log('recordTirage - Last insert ID:', res.insertId);
@@ -636,7 +636,7 @@ export class MatchmakingRoom extends Room {
     recordSpellOrder(game_id:number, order_player_1:any, order_player_2:any)
     {
         const order = { game_id: game_id, order_player_1:order_player_1, order_player_2: order_player_2};
-        connexion.query('INSERT INTO Spell_order SET ?', order, (err, res) => {
+        connexion.query('INSERT INTO stats_spell_order SET ?', order, (err, res) => {
             if(err) throw err;
 
             console.log('recordSpellOrder - Last insert ID:', res.insertId);
@@ -645,7 +645,7 @@ export class MatchmakingRoom extends Room {
 
     updateGameCreationWithGods(god_player_1:number, god_player_2:number)
     {
-        connexion.query("UPDATE Game SET god_player_1 = ?, god_player_2 = ? WHERE game_id = ?",
+        connexion.query("UPDATE stats_game SET god_player_1 = ?, god_player_2 = ? WHERE game_id = ?",
             [god_player_1,god_player_2, this.game_id], (err, res) => {
                 if(err)
                 {
@@ -661,7 +661,7 @@ export class MatchmakingRoom extends Room {
     updateGameEnd(winner_player_id:any, end_hp_player_1:number, end_hp_player_2:number, total_tour:number, conceded:any)
     {
 
-        connexion.query("UPDATE Game SET winner_player_id = ?, end_hp_player_1 = ?, end_hp_player_2 = ?, total_tour = ?, conceded = ? WHERE game_id = ?",
+        connexion.query("UPDATE stats_game SET winner_player_id = ?, end_hp_player_1 = ?, end_hp_player_2 = ?, total_tour = ?, conceded = ? WHERE game_id = ?",
             [winner_player_id,end_hp_player_1,end_hp_player_2,total_tour,conceded, this.game_id], (err, res) => {
             if(err)
             {
