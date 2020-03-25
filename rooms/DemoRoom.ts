@@ -195,14 +195,13 @@ export class DemoRoom extends Room {
                     this.nbIDs = 0;
                     var date = new Date();
                     var formatted_date = new Intl.DateTimeFormat('fr-FR').format(date);
-
-                    //this.serverIDsData = {};
                     try {
                         this.recordGameCreation(this.game_id, this.serverIDsData["playerIDC1"], this.serverIDsData["playerIDC2"], 0, 0,formatted_date);
                     }
                     catch (e) {
 
                     }
+                    //this.serverIDsData = {};
                 }
             }
             else
@@ -451,9 +450,8 @@ export class DemoRoom extends Room {
                 if(targets != null) {
                     for (var i = 0; i < targets.targets.length; i++)
                     {
-                        this.recordTarget(this.game_id, faceUsageID, this.getPlayerIdFromSessionID(client.id), targets.targets[i]._type,targets.targets[i]._playerPosition, targets.targets[i]._itemPosition);
                         try {
-                            this.recordGameCreation(this.game_id, this.serverIDsData["playerIDC1"], this.serverIDsData["playerIDC2"], 0, 0,formatted_date);
+                            this.recordTarget(this.game_id, faceUsageID, this.getPlayerIdFromSessionID(client.id), targets.targets[i]._type,targets.targets[i]._playerPosition, targets.targets[i]._itemPosition);
                         }
                         catch (e) {
 
