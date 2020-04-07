@@ -94,7 +94,7 @@ export class DemoRoom extends Room {
     sendErrorMessage(client:any, error_type:string, error_datas:any)
     {
         this.send(client,{
-            type: "MatchmakingRoom - serverError",
+            type: "CustomGame - serverError",
             error_type:error_type,
             error_datas:error_datas
         });
@@ -586,7 +586,7 @@ export class DemoRoom extends Room {
     }
 
     onDispose() {
-        console.log("disposing MatchmakingRoom...");
+        console.log("disposing DemoRoom...");
     }
 
 
@@ -676,6 +676,4 @@ export class DemoRoom extends Room {
                 console.log(`Changed ${res.changedRows} row(s)`);
             });
     }
-
-
 }
