@@ -173,12 +173,15 @@ export class DemoRoom extends Room {
                     this.serverIDsData["C1"] = client.id;
                     this.serverIDsData["playerIDC1"] = data.PlayerID;
                     this.serverIDsData["clientC1"] = client;
+                    this.serverIDsData["deckIDC1"] = data.deckID;
                     console.log("C1 : " + this.serverIDsData["C1"]);
                 } else if (this.nbIDs == 2) {
                     console.log("There is two Challenger");
                     this.serverIDsData["C2"] = client.id;
                     this.serverIDsData["playerIDC2"] = data.PlayerID;
                     this.serverIDsData["clientC2"] = client;
+                    this.serverIDsData["deckIDC2"] = data.deckID;
+
                     console.log("C2 : " + this.serverIDsData["C2"]);
 
                     //console.log("Server nbIDs : %o",this.serverIDsData);
@@ -190,7 +193,9 @@ export class DemoRoom extends Room {
                         C1: this.serverIDsData["C1"],
                         C2: this.serverIDsData["C2"],
                         playerIDC1: this.serverIDsData["playerIDC1"],
-                        playerIDC2: this.serverIDsData["playerIDC2"]
+                        playerIDC2: this.serverIDsData["playerIDC2"],
+                        deckIDC1: this.serverIDsData["deckIDC1"],
+                        deckIDC2: this.serverIDsData["deckIDC2"]
                     });
                     this.nbIDs = 0;
                     var date = new Date();
