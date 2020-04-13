@@ -94,7 +94,7 @@ export class DemoRoom extends Room {
     sendErrorMessage(client:any, error_type:string, error_datas:any)
     {
         this.send(client,{
-            type: "CustomGame - serverError",
+            type: "DemoRoom - serverError",
             error_type:error_type,
             error_datas:error_datas
         });
@@ -495,8 +495,6 @@ export class DemoRoom extends Room {
         if (data.type === "sendLastHoveredItem")
         {
             if(this.isClientChallenger(client.id)) {
-                console.log("inside sendLastHoveredItem");
-                console.log("LastHoveredItem : " + data.item);
                 this.broadcast({
                     type: "lastHoveredItemFromServer",
                     idSender: this.getPlayerIdFromSessionID(client.id),
@@ -601,7 +599,6 @@ export class DemoRoom extends Room {
             {
                 throw err;
             }
-            console.log('recordFaceUsage - Last insert ID:', res.insertId);
             retured = res.insertId;
         });
         return retured;
@@ -614,7 +611,6 @@ export class DemoRoom extends Room {
         connexion.query('INSERT INTO stats_game SET ?', game, (err, res) => {
             if(err) throw err;
 
-            console.log('recordGameCreation - Last insert ID:', res.insertId);
         });
     }
 
@@ -624,7 +620,6 @@ export class DemoRoom extends Room {
         connexion.query('INSERT INTO stats_target SET ?', target, (err, res) => {
             if(err) throw err;
 
-            console.log('recordTarget - Last insert ID:', res.insertId);
         });
     }
 
@@ -634,7 +629,6 @@ export class DemoRoom extends Room {
         connexion.query('INSERT INTO stats_tirage SET ?', tirage, (err, res) => {
             if(err) throw err;
 
-            console.log('recordTirage - Last insert ID:', res.insertId);
         });
     }
 
@@ -644,7 +638,6 @@ export class DemoRoom extends Room {
         connexion.query('INSERT INTO stats_spell_order SET ?', order, (err, res) => {
             if(err) throw err;
 
-            console.log('recordSpellOrder - Last insert ID:', res.insertId);
         });
     }
 
