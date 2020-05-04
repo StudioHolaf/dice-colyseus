@@ -511,6 +511,8 @@ export class DemoRoom extends Room {
                 C2: this.serverIDsData["C2"],
                 playerIDC1: this.serverIDsData["playerIDC1"],
                 playerIDC2: this.serverIDsData["playerIDC2"],
+                deckIDC1: this.serverIDsData["deckIDC1"],
+                deckIDC2: this.serverIDsData["deckIDC2"],
                 idSender:this.getPlayerIdFromSessionID(client.id)
             });
         }
