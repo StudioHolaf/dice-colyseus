@@ -36,7 +36,7 @@ export class DemoRoom extends Room {
         this.serverTirageData = {};
         this.nbQueueReady = 0;
         this.serverQueueData = {};
-        this.maxClients = 2;
+        this.maxClients = 3;
         this.serverIDsData = {};
         this.spectatorIDs = {};
         this.nbIDs = 0;
