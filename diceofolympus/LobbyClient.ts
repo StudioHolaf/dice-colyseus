@@ -1,5 +1,4 @@
 import {Room, Client, generateId} from "colyseus";
-import {LobbyClient} from "../diceofolympus/LobbyClient";
 //import { Schema, type, MapSchema, ArraySchema } from "@colyseus/schema";
 //import { verifyToken, User, IUser } from "@colyseus/social";
 
@@ -20,14 +19,15 @@ export class DemoRoom extends Room {
     nbIDs:number; // le nombre de joueur (2)
     serverIDsData:any;
     spectatorIDs: any;
+
     playerIDConcede:any;
     metaData:any
+
     resendDataTry:number;
+
     game_id:any;
+
     someoneConcede:string;
-
-
-    LobbyClient:any
 
     onCreate(options:any) {
         console.log("DemoRoom created!", options);
@@ -49,7 +49,6 @@ export class DemoRoom extends Room {
         this.setMetadata({test:"test"});
         this.game_id = this.roomId;
         this.someoneConcede = "false";
-        this.LobbyClient = {};
     }
 
 
@@ -580,18 +579,7 @@ export class DemoRoom extends Room {
 
 
         }
-                if(data.type == "hostingRoom") {
-            console.log("inside hostingRoom");
-            this.LobbyClient["hostOfTheRoom"] == hostOfTheRoom;
-        }
     }
-
-
-
-/* LOBBY FUNCTIONS */
-
-
-
 
     update(dt?:number) {
         // console.log("num clients:", Object.keys(this.clients).length);
