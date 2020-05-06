@@ -583,7 +583,8 @@ export class DemoRoom extends Room {
         }
                 if(data.type == "hostingRoom") {
             console.log("inside hostingRoom");
-            //this.LobbyClient["hostOfTheRoom"] == hostOfTheRoom;
+            console.log("host : "data.hostOfTheRoom);
+            this.LobbyClient[0] = data.hostOfTheRoom;
         }
     }
 
