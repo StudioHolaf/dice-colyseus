@@ -49,7 +49,8 @@ export class DemoRoom extends Room {
         this.setMetadata({test:"test"});
         this.game_id = this.roomId;
         this.someoneConcede = "false";
-        this.LobbyClient = {new LobbyClient()};
+        //this.LobbyClient = {new LobbyClient()};
+        this.LobbyClient = {};
     }
 
 
@@ -582,7 +583,7 @@ export class DemoRoom extends Room {
         }
                 if(data.type == "hostingRoom") {
             console.log("inside hostingRoom");
-            this.LobbyClient["hostOfTheRoom"] == hostOfTheRoom;
+            //this.LobbyClient["hostOfTheRoom"] == hostOfTheRoom;
         }
     }
 
