@@ -578,12 +578,10 @@ export class DemoRoom extends Room {
                 this.updateGameEnd(data.winner_player_id, data.end_hp_player1, data.end_hp_player2, data.totalTour, "true");
             else
                 this.updateGameEnd(data.winner_player_id, data.end_hp_player1, data.end_hp_player2, data.totalTour, "false");
-
-
         }
                 if(data.type == "hostingRoom") {
             console.log("inside hostingRoom");
-            console.log("host : "data.hostOfTheRoom);
+            console.log("host : "+data.hostOfTheRoom);
             this.LobbyClient[0] = data.hostOfTheRoom;
         }
     }
