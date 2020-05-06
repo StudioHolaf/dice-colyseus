@@ -1,5 +1,5 @@
 import {Room, Client, generateId} from "colyseus";
-import {LobbyClient} from "../diceofolympus/LobbyClient";
+import {LobbyClient} from "./../diceofolympus/LobbyClient";
 //import { Schema, type, MapSchema, ArraySchema } from "@colyseus/schema";
 //import { verifyToken, User, IUser } from "@colyseus/social";
 
@@ -49,7 +49,7 @@ export class DemoRoom extends Room {
         this.setMetadata({test:"test"});
         this.game_id = this.roomId;
         this.someoneConcede = "false";
-        this.LobbyClient = {};
+        this.LobbyClient = {new LobbyClient()};
     }
 
 
