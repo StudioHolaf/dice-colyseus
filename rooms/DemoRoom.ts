@@ -1,5 +1,5 @@
 import {Room, Client, generateId} from "colyseus";
-import LobbyClient from "../diceofolympus/LobbyClient";
+import {} from "../diceofolympus/LobbyClient";
 //import { Schema, type, MapSchema, ArraySchema } from "@colyseus/schema";
 //import { verifyToken, User, IUser } from "@colyseus/social";
 
