@@ -115,7 +115,7 @@ export class DemoRoom extends Room {
 
     onJoin(client:Client, options:any, user:any) {
         console.log("client joined!", client.sessionId);
-        broadcastLobbyDatasToAllPlayers();
+        this.broadcastLobbyDatasToAllPlayers();
     }
 
     async onLeave(client:Client, consented:boolean) {
