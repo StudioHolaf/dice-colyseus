@@ -49,7 +49,7 @@ export class DemoRoom extends Room {
         this.setMetadata({test:"test"});
         this.game_id = this.roomId;
         this.someoneConcede = "false";
-        this.LobbyClients = {};
+        this.LobbyClients =[];
     }
 
 
@@ -114,7 +114,7 @@ export class DemoRoom extends Room {
 
 
     onJoin(client:Client, options:any, user:any) {
-        //broadcastLobbyDatasToAllPlayers();
+        //askLobbyDatasToAllPlayers();
         console.log("client joined!", client.sessionId);
     }
 
@@ -579,10 +579,13 @@ export class DemoRoom extends Room {
             else
                 this.updateGameEnd(data.winner_player_id, data.end_hp_player1, data.end_hp_player2, data.totalTour, "false");
         }
-                if(data.type == "hostingRoom") {
+        if(data.type == "hostingRoom") {
             console.log("inside hostingRoom");
-            console.log("host : "+data.hostOfTheRoom);
-            this.LobbyClients[0] = data.hostOfTheRoom;
+            this.LobbyClients.push(data.hostOfTheRoom);
+        }
+        if(data.type == "someoneJoinTheRoom") {
+            console.log("inside someoneJoinTheRoom");
+            addANewPlayerInLobbyClientsList(data.someoneJoinTheRoom);
         }
     }
 
@@ -594,8 +597,13 @@ broadcastLobbyDatasToAllPlayers()
 {
         this.broadcast({
         LobbyClients: this.LobbyClients,
-        type: "askListLobbyClient"
+        type: "broadcastLobbyDatasToAllPlayers"
     });
+}
+
+addANewPlayerInLobbyClientsList(player)
+{
+    this.LobbyClients.push(player);
 }
 
 
