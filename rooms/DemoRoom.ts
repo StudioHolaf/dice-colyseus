@@ -115,7 +115,7 @@ export class DemoRoom extends Room {
 
     onJoin(client:Client, options:any, user:any) {
         console.log("client joined!", client.sessionId);
-        this.broadcastLobbyDatasToAllPlayers();
+        //this.broadcastLobbyDatasToAllPlayers();
     }
 
     async onLeave(client:Client, consented:boolean) {
@@ -586,6 +586,7 @@ export class DemoRoom extends Room {
         if(data.type == "someoneJoinTheRoom") {
             console.log("inside someoneJoinTheRoom");
             this.addANewPlayerInLobbyClientsList(data.someoneJoinTheRoom);
+            this.broadcastLobbyDatasToAllPlayers()
         }
     }
 
@@ -596,7 +597,7 @@ export class DemoRoom extends Room {
 broadcastLobbyDatasToAllPlayers()
 {
         this.broadcast({
-        LobbyClients: this.LobbyClients,
+        LobbyClients: JSON.stringify(this.LobbyClients),
         type: "broadcastLobbyDatasToAllPlayers"
     });
 }
