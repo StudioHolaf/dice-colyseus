@@ -591,7 +591,6 @@ export class DemoRoom extends Room {
     }
 
 
-
 /* LOBBY FUNCTIONS */
 
 broadcastLobbyDatasToAllPlayers()
