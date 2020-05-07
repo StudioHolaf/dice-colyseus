@@ -27,7 +27,7 @@ export class DemoRoom extends Room {
     someoneConcede:string;
 
 
-    LobbyClient:any
+    LobbyClients:any
 
     onCreate(options:any) {
         console.log("DemoRoom created!", options);
@@ -114,8 +114,8 @@ export class DemoRoom extends Room {
 
 
     onJoin(client:Client, options:any, user:any) {
-        //askLobbyDatasToAllPlayers();
         console.log("client joined!", client.sessionId);
+        broadcastLobbyDatasToAllPlayers();
     }
 
     async onLeave(client:Client, consented:boolean) {
