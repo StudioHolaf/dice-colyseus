@@ -592,10 +592,6 @@ export class DemoRoom extends Room {
             console.log("inside someoneChangeHisStatus");
             this.changeTheStatusOfThePlayer(data.playerID, data.status);
         }
-        /*if(data.type == "updateLobbyInfos") {
-            console.log("inside updateLobbyInfos");
-            this.broadcastLobbyDatasToAllPlayersWithNewDatas(data.lobbyInfos);
-        }*/
     }
 
 
@@ -609,31 +605,15 @@ broadcastLobbyDatasToAllPlayers()
     });
 }
 
-/*broadcastLobbyDatasToAllPlayersWithNewDatas(lobbyInfos)
-{
-var i = this.LobbyClients.length;
-while (i--) {
-        this.LobbyClients.splice(i, 1);
-    }
-    //this.LobbyClients.splice(this.LobbyClients.length - 1, 1); // premier ]
-    //this.LobbyClients.splice(0, 1); // premier [
-    this.LobbyClients.push(lobbyInfos);
-    console.log("lobbyInfos : "+lobbyInfos);
-        this.broadcast({
-        LobbyClients: JSON.stringify(this.LobbyClients),
-        type: "broadcastLobbyDatasToAllPlayersWithNewDatas"
-    });
-}*/
-
 changeTheStatusOfThePlayer(playerID:any, status:string)
 {
     console.log("PLAYER ID : "+playerID + " STATUS : "+status);
         this.LobbyClients.forEach(function (client) {
-            console.log("client.clientPlayerID" + client.clientPlayerID);
+            console.log("client.clientPlayerID " + this.client.clientPlayerID);
             if (client.clientPlayerID == playerID)
             {
                 console.log("CORRESPONDANCE");
-                client.status = status;
+                this.client.status = status;
             }
         });
         console.log("NO CORRESPONDANCE");
