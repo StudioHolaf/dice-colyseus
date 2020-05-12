@@ -610,7 +610,9 @@ broadcastLobbyDatasToAllPlayersWithNewDatas(lobbyInfos)
 var i = this.LobbyClients.length;
 while (i--) {
         this.LobbyClients.splice(i, 1);
-    } 
+    }
+    this.LobbyClients(this.LobbyClients.length - 1, 1); // premier ]
+    this.LobbyClients(0, 1); // premier [
     this.LobbyClients.push(lobbyInfos);
         this.broadcast({
         LobbyClients: JSON.stringify(this.LobbyClients),
