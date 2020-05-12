@@ -627,9 +627,13 @@ while (i--) {
 
 changeTheStatusOfThePlayer(playerID:any, status:string)
 {
+    console.log("PLAYER ID : "+playerID + "STATUS : "+status);
         this.LobbyClients.forEach(function (client) {
             if (client.clientPlayerID == playerID)
+            {
+                debug.log("CORRESPONDANCE");
                 client.status = status;
+            }
         });
     this.broadcastLobbyDatasToAllPlayers();
 }
