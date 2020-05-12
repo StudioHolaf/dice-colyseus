@@ -608,9 +608,9 @@ broadcastLobbyDatasToAllPlayers()
 broadcastLobbyDatasToAllPlayersWithNewDatas(lobbyInfos)
 {
     //this.LobbyClients = [];
-    //this.LobbyClients.push(lobbyInfos);
+    this.LobbyClients.push(lobbyInfos);
         this.broadcast({
-        LobbyClients: JSON.stringify(this.lobbyInfos),
+        LobbyClients: JSON.stringify(this.LobbyClients),
         type: "broadcastLobbyDatasToAllPlayersWithNewDatas"
     });
 }
