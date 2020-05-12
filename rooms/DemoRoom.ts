@@ -605,13 +605,13 @@ broadcastLobbyDatasToAllPlayers()
     });
 }
 
-broadcastLobbyDatasToAllPlayersWithNewDatas(data)
+broadcastLobbyDatasToAllPlayersWithNewDatas(lobbyInfos)
 {
     //this.LobbyClients = [];
-    //this.LobbyClients.push(data);
+    //this.LobbyClients.push(lobbyInfos);
         this.broadcast({
-        LobbyClients: JSON.stringify(this.LobbyClients),
-        type: "broadcastLobbyDatasToAllPlayers"
+        LobbyClients: JSON.stringify(this.lobbyInfos),
+        type: "broadcastLobbyDatasToAllPlayersWithNewDatas"
     });
 }
 
