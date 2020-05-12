@@ -631,7 +631,7 @@ changeTheStatusOfThePlayer(playerID:any, status:string)
         this.LobbyClients.forEach(function (client) {
             if (client.clientPlayerID == playerID)
             {
-                debug.log("CORRESPONDANCE");
+                console.log("CORRESPONDANCE");
                 client.status = status;
             }
         });
