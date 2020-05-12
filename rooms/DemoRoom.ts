@@ -609,7 +609,7 @@ broadcastLobbyDatasToAllPlayersWithNewDatas(lobbyInfos)
 {
     this.LobbyClients.forEach( (element) => {
         console.log("DELETED");
-    delete this.LobbyClients[element];
+    delete element;
 });
     this.LobbyClients.push(lobbyInfos);
         this.broadcast({
