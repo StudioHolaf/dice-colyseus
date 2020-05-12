@@ -609,7 +609,7 @@ broadcastLobbyDatasToAllPlayersWithNewDatas(lobbyInfos)
 {
 var i = this.LobbyClients.length;
 while (i--) {
-        array.splice(i, 1);
+        this.LobbyClients.splice(i, 1);
     } 
     this.LobbyClients.push(lobbyInfos);
         this.broadcast({
