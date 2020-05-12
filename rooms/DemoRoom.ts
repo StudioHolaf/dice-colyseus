@@ -1,5 +1,5 @@
 import {Room, Client, generateId} from "colyseus";
-import {} from "../diceofolympus/LobbyClient";
+import {LobbyClient} from "../diceofolympus/LobbyClient";
 //import { Schema, type, MapSchema, ArraySchema } from "@colyseus/schema";
 //import { verifyToken, User, IUser } from "@colyseus/social";
 
@@ -621,9 +621,11 @@ changeTheStatusOfThePlayer(playerID:any, status:string)
     this.broadcastLobbyDatasToAllPlayers();
 }
 
-addANewPlayerInLobbyClientsList(player)
+addANewPlayerInLobbyClientsList(player:LobbyClient)
 {
-    this.LobbyClients.push(player);
+    let tmp = new LobbyClient(player.clientID, player.clientName, player.clientPlayerID, player.status, player.isHost);
+
+    this.LobbyClients.push(tmp);
 }
 
 
