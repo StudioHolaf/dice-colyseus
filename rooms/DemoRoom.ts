@@ -590,7 +590,7 @@ export class DemoRoom extends Room {
         }
         if(data.type == "updateLobbyInfos") {
             console.log("inside updateLobbyInfos");
-            this.broadcastLobbyDatasToAllPlayers(data.lobbyInfos);
+            this.broadcastLobbyDatasToAllPlayersWithNewDatas(data.lobbyInfos);
         }
     }
 
@@ -605,7 +605,7 @@ broadcastLobbyDatasToAllPlayers()
     });
 }
 
-broadcastLobbyDatasToAllPlayers(data)
+broadcastLobbyDatasToAllPlayersWithNewDatas(data)
 {
     this.LobbyClients = [];
     this.LobbyClients.push(data);
