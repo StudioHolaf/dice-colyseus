@@ -588,6 +588,10 @@ export class DemoRoom extends Room {
             this.addANewPlayerInLobbyClientsList(data.someoneJoinTheRoom);
             this.broadcastLobbyDatasToAllPlayers()
         }
+        if(data.type == "updateLobbyInfos") {
+            console.log("inside updateLobbyInfos");
+            this.broadcastLobbyDatasToAllPlayers()
+        }
     }
 
 
