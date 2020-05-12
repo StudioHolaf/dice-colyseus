@@ -581,7 +581,7 @@ export class DemoRoom extends Room {
         }
         if(data.type == "hostingRoom") {
             console.log("inside hostingRoom");
-            this.LobbyClients.push(data.hostOfTheRoom);
+            this.addANewPlayerInLobbyClientsList(data.hostOfTheRoom);
         }
         if(data.type == "someoneJoinTheRoom") {
             console.log("inside someoneJoinTheRoom");
