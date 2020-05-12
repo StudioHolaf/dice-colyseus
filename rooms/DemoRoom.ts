@@ -588,10 +588,14 @@ export class DemoRoom extends Room {
             this.addANewPlayerInLobbyClientsList(data.someoneJoinTheRoom);
             this.broadcastLobbyDatasToAllPlayers()
         }
-        if(data.type == "updateLobbyInfos") {
+        if(data.type == "someoneChangeHisStatus") {
+            console.log("inside someoneChangeHisStatus");
+            this.changeTheStatusOfThePlayer(data.PlayerID, data.status);
+        }
+        /*if(data.type == "updateLobbyInfos") {
             console.log("inside updateLobbyInfos");
             this.broadcastLobbyDatasToAllPlayersWithNewDatas(data.lobbyInfos);
-        }
+        }*/
     }
 
 
@@ -605,7 +609,7 @@ broadcastLobbyDatasToAllPlayers()
     });
 }
 
-broadcastLobbyDatasToAllPlayersWithNewDatas(lobbyInfos)
+/*broadcastLobbyDatasToAllPlayersWithNewDatas(lobbyInfos)
 {
 var i = this.LobbyClients.length;
 while (i--) {
@@ -619,6 +623,15 @@ while (i--) {
         LobbyClients: JSON.stringify(this.LobbyClients),
         type: "broadcastLobbyDatasToAllPlayersWithNewDatas"
     });
+}*/
+
+changeTheStatusOfThePlayer(int playerID, string status)
+{
+        this.LobbyClients.forEach(function (client) {
+            if (client.clientPlayerID == playerID)
+                client.status = status;
+        });
+    broadcastLobbyDatasToAllPlayers();
 }
 
 addANewPlayerInLobbyClientsList(player)
