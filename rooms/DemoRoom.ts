@@ -631,7 +631,7 @@ changeTheStatusOfThePlayer(int playerID, string status)
             if (client.clientPlayerID == playerID)
                 client.status = status;
         });
-    broadcastLobbyDatasToAllPlayers();
+    this.broadcastLobbyDatasToAllPlayers();
 }
 
 addANewPlayerInLobbyClientsList(player)
