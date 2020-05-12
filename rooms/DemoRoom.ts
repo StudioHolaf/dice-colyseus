@@ -611,9 +611,10 @@ var i = this.LobbyClients.length;
 while (i--) {
         this.LobbyClients.splice(i, 1);
     }
-    this.LobbyClients.splice(this.LobbyClients.length - 1, 1); // premier ]
-    this.LobbyClients.splice(0, 1); // premier [
+    //this.LobbyClients.splice(this.LobbyClients.length - 1, 1); // premier ]
+    //this.LobbyClients.splice(0, 1); // premier [
     this.LobbyClients.push(lobbyInfos);
+    console.log("lobbyInfos : "+lobbyInfos);
         this.broadcast({
         LobbyClients: JSON.stringify(this.LobbyClients),
         type: "broadcastLobbyDatasToAllPlayersWithNewDatas"
