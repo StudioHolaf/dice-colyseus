@@ -607,8 +607,8 @@ broadcastLobbyDatasToAllPlayers()
 
 broadcastLobbyDatasToAllPlayersWithNewDatas(data)
 {
-    this.LobbyClients = [];
-    this.LobbyClients.push(data);
+    //this.LobbyClients = [];
+    //this.LobbyClients.push(data);
         this.broadcast({
         LobbyClients: JSON.stringify(this.LobbyClients),
         type: "broadcastLobbyDatasToAllPlayers"
