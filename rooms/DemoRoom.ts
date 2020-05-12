@@ -590,7 +590,7 @@ export class DemoRoom extends Room {
         }
         if(data.type == "someoneChangeHisStatus") {
             console.log("inside someoneChangeHisStatus");
-            this.changeTheStatusOfThePlayer(data.PlayerID, data.status);
+            this.changeTheStatusOfThePlayer(data.playerID, data.status);
         }
         /*if(data.type == "updateLobbyInfos") {
             console.log("inside updateLobbyInfos");
@@ -627,7 +627,7 @@ while (i--) {
 
 changeTheStatusOfThePlayer(playerID:any, status:string)
 {
-    console.log("PLAYER ID : "+playerID + "STATUS : "+status);
+    console.log("PLAYER ID : "+playerID + " STATUS : "+status);
         this.LobbyClients.forEach(function (client) {
             if (client.clientPlayerID == playerID)
             {
