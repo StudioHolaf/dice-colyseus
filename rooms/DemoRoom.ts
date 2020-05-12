@@ -635,6 +635,7 @@ changeTheStatusOfThePlayer(playerID:any, status:string)
                 client.status = status;
             }
         });
+        console.log("NO CORRESPONDANCE");
     this.broadcastLobbyDatasToAllPlayers();
 }
 
