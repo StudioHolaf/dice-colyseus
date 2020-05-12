@@ -608,7 +608,7 @@ broadcastLobbyDatasToAllPlayers()
 broadcastLobbyDatasToAllPlayersWithNewDatas(lobbyInfos)
 {
     this.LobbyClients.forEach( (element) => {
-    delete LobbyClients[element];
+    delete this.LobbyClients[element];
 });
     this.LobbyClients.push(lobbyInfos);
         this.broadcast({
