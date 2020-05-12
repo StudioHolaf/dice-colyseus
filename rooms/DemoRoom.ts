@@ -625,7 +625,7 @@ while (i--) {
     });
 }*/
 
-changeTheStatusOfThePlayer(int playerID, string status)
+changeTheStatusOfThePlayer(playerID:any, status:string)
 {
         this.LobbyClients.forEach(function (client) {
             if (client.clientPlayerID == playerID)
