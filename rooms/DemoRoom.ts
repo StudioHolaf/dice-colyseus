@@ -625,6 +625,7 @@ broadcastLobbyDatasToAllPlayers()
     console.log("broadcastLobbyDatasToAllPlayers : %o",JSON.stringify(this.LobbyClients));
         this.broadcast({
         LobbyClients: JSON.stringify(this.LobbyClients),
+        RoomID: this.game_id,
         type: "broadcastLobbyDatasToAllPlayers"
     });
 }
