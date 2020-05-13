@@ -28,6 +28,7 @@ export class DemoRoom extends Room {
 
 
     LobbyClients:any
+    isgameStarted:boolean
 
     onCreate(options:any) {
         console.log("DemoRoom created!", options);
@@ -50,6 +51,7 @@ export class DemoRoom extends Room {
         this.game_id = this.roomId;
         this.someoneConcede = "false";
         this.LobbyClients =[];
+        this.isgameStarted = false;
     }
 
 
@@ -143,13 +145,17 @@ export class DemoRoom extends Room {
     async onLeave(client:Client, consented:boolean) {
 
         try {
-            if (consented) {
+            if (consented && this.isgameStarted == true) {
                 throw new Error("consented leave!");
                 this.broadcast({
                     type: "idConcedeFromServ",
                     playerIDConcede: this.getPlayerIdFromSessionID(client.id),
                 });
                 this.playerIDConcede = {};
+            }
+            if (this.isgameStarted == false) {
+                throw new Error("Leave Lobby");
+                this.removeMeFromLobbyClients(client.id);
             }
 
             console.log("let's wait for reconnection!")
@@ -158,12 +164,18 @@ export class DemoRoom extends Room {
 
         } catch (e) {
             console.log("disconnected!", client.sessionId);
-            this.broadcast({
-                type: "idConcedeFromServ",
-                playerIDConcede: this.getPlayerIdFromSessionID(client.id),
-            });
-            this.playerIDConcede = {};
-
+            //déconnection involontaire - On concede pour le moment
+            if (this.isgameStarted == false) {
+                this.removeMeFromLobbyClients(client.id);
+            }
+            if (consented && this.isgameStarted == true)
+            {
+                this.broadcast({
+                    type: "idConcedeFromServ",
+                    playerIDConcede: this.getPlayerIdFromSessionID(client.id),
+                });
+                this.playerIDConcede = {};
+            }
         }
     }
 
@@ -618,6 +630,15 @@ export class DemoRoom extends Room {
     }
 
 
+
+/* */
+
+startGame()
+{
+    this.isgameStarted = true;
+}
+
+
 /* LOBBY FUNCTIONS */
 
 broadcastLobbyDatasToAllPlayers()
@@ -650,6 +671,17 @@ addANewPlayerInLobbyClientsList(player:any, clientID:any)
 {
     let tmp = new LobbyClient(clientID, player._clientName, player._clientPlayerID, player._status, player._isHost);
     this.LobbyClients.push(tmp);
+}
+
+removeMeFromLobbyClients(clientID:number)
+{
+    this.LobbyClients.forEach(function (item, index, object) {
+            if (item.clientID == clientID)
+            {
+                object.splice(index, 1);
+            }
+        });
+    this.broadcastLobbyDatasToAllPlayers();
 }
 
     update(dt?:number) {
