@@ -616,7 +616,7 @@ changeTheStatusOfThePlayer(playerID:any, status:string)
             if (item.clientPlayerID == playerID)
             {
                 console.log("CORRESPONDANCE");
-                this.client.status = status;
+                this.item.status = status;
             }
         });
         console.log("NO CORRESPONDANCE");
