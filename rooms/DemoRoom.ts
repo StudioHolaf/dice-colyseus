@@ -627,6 +627,7 @@ addANewPlayerInLobbyClientsList(player:any, clientID:any)
 {
     let tmp = new LobbyClient(clientID, player.clientName, player.clientPlayerID, player.status, player.isHost);
     console.log("tmp %o",tmp);
+    console.log("player %o",player);
     this.LobbyClients.push(tmp);
 }
 
