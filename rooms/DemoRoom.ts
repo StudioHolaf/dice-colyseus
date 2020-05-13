@@ -611,9 +611,9 @@ changeTheStatusOfThePlayer(playerID:any, status:string)
 {
     console.log("PLAYER ID : "+playerID + " STATUS : "+status);
     console.log("this.LobbyClients : "+this.LobbyClients);
-        this.LobbyClients.forEach(function (client) {
-            console.log("client.clientPlayerID " + client.clientPlayerID);
-            if (client.clientPlayerID == playerID)
+        this.LobbyClients.forEach(function (item) {
+            console.log("client.clientPlayerID " + item.clientPlayerID);
+            if (item.clientPlayerID == playerID)
             {
                 console.log("CORRESPONDANCE");
                 this.client.status = status;
