@@ -584,7 +584,9 @@ export class DemoRoom extends Room {
             //console.log("zeffzef : ", data.hostOfTheRoom);
             //console.log("zeffzef : ", data.hostOfTheRoom.clientName);
             let tmp = new LobbyClient(data.hostOfTheRoom.clientID, data.hostOfTheRoom.clientName, data.hostOfTheRoom.clientPlayerID, data.hostOfTheRoom.status, data.hostOfTheRoom.isHost);
-            console.log("TEST FINAL "+ tmp);
+            console.log("TEST TMP "+ tmp);
+            console.log("TEST DATA "+ data.hostOfTheRoom);
+            console.log("TEST DATA Name"+ data.hostOfTheRoom.clientName);
             this.addANewPlayerInLobbyClientsList(tmp);
         }
         if(data.type == "someoneJoinTheRoom") {
