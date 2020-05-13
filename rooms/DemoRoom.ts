@@ -623,7 +623,7 @@ changeTheStatusOfThePlayer(playerID:any, status:string)
     this.broadcastLobbyDatasToAllPlayers();
 }
 
-addANewPlayerInLobbyClientsList(player:any, clientID:any)
+addANewPlayerInLobbyClientsList(clientID:any, player:any)
 {
     let tmp = new LobbyClient(clientID, player.clientName, player.clientPlayerID, player.status, player.isHost);
     console.log("tmp %o",tmp);
