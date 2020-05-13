@@ -586,6 +586,8 @@ export class DemoRoom extends Room {
         if(data.type == "someoneJoinTheRoom") {
             console.log("inside someoneJoinTheRoom");
             this.addANewPlayerInLobbyClientsList(data.someoneJoinTheRoom);
+            console.log("zeffzef : ", data.someoneJoinTheRoom);
+            console.log("zeffzef : ", data.someoneJoinTheRoom.clientName);
             this.broadcastLobbyDatasToAllPlayers()
         }
         if(data.type == "someoneChangeHisStatus") {
@@ -626,8 +628,8 @@ addANewPlayerInLobbyClientsList(player:LobbyClient)
     let tmp = new LobbyClient(player.clientID, player.clientName, player.clientPlayerID, player.status, player.isHost);
     console.log("player.clientName : ",player.clientName);
     console.log("tmp.clientName : ",tmp.clientName);
-    console.log("player : "+JSON.parse(JSON.stringify(player)));
-    console.log("tmp : "+JSON.parse(JSON.stringify(tmp)));
+    console.log("player : ",JSON.parse(JSON.stringify(player)));
+    console.log("tmp : ",JSON.parse(JSON.stringify(tmp)));
     this.LobbyClients.push(tmp);
 }
 
