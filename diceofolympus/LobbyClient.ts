@@ -7,8 +7,7 @@ export class LobbyClient {
     public status:any;
     public isHost:boolean;
 
-
-    constructor (clientID: any , clientName: any, clientPlayerID: any, status: any, isHost: boolean) {
+    constructor (clientID: any, clientName: any, clientPlayerID: any, status: any, isHost: boolean) {
 	 this.clientID = clientID;
 	 this.clientName = clientName;
 	 this.clientPlayerID = clientPlayerID;
