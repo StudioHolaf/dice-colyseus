@@ -67,7 +67,7 @@ export class DemoRoom extends Room {
     {
         var tmp = 0;
         this.LobbyClients.forEach(function (item) {
-            if (item.clientID == sessionId)
+            if (item.clientPlayerID == sessionId)
                 tmp = item.playerID;
         });
         return tmp;
@@ -77,7 +77,7 @@ export class DemoRoom extends Room {
     {
         var tmp = false;
         this.LobbyClients.forEach(function (item) {
-            if (item._isHost == true && item.clientID == sessionId)
+            if (item.isHost == true && item.clientPlayerID == sessionId)
                 tmp = true;
         });
         return tmp;
