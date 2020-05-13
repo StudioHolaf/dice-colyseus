@@ -673,7 +673,7 @@ addANewPlayerInLobbyClientsList(player:any, clientID:any)
     this.LobbyClients.push(tmp);
 }
 
-removeMeFromLobbyClients(clientID:number)
+removeMeFromLobbyClients(clientID:string)
 {
     this.LobbyClients.forEach(function (item, index, object) {
             if (item.clientID == clientID)
