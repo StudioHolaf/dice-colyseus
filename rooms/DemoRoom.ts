@@ -581,13 +581,17 @@ export class DemoRoom extends Room {
         }
         if(data.type == "hostingRoom") {
             console.log("inside hostingRoom");
-            this.addANewPlayerInLobbyClientsList(data.hostOfTheRoom);
+            //console.log("zeffzef : ", data.hostOfTheRoom);
+            //console.log("zeffzef : ", data.hostOfTheRoom.clientName);
+            let tmp = new LobbyClient(data.hostOfTheRoom.clientID, data.hostOfTheRoom.clientName, data.hostOfTheRoom.clientPlayerID, data.hostOfTheRoom.status, data.hostOfTheRoom.isHost);
+            console.log("TEST FINAL"+JSON.stringify(tmp))
+            this.addANewPlayerInLobbyClientsList(tmp);
         }
         if(data.type == "someoneJoinTheRoom") {
             console.log("inside someoneJoinTheRoom");
-            this.addANewPlayerInLobbyClientsList(data.someoneJoinTheRoom);
-            console.log("zeffzef : ", data.someoneJoinTheRoom);
+             console.log("zeffzef : ", data.someoneJoinTheRoom);
             console.log("zeffzef : ", data.someoneJoinTheRoom.clientName);
+            this.addANewPlayerInLobbyClientsList(data.someoneJoinTheRoom);
             this.broadcastLobbyDatasToAllPlayers()
         }
         if(data.type == "someoneChangeHisStatus") {
@@ -625,12 +629,12 @@ changeTheStatusOfThePlayer(playerID:any, status:string)
 
 addANewPlayerInLobbyClientsList(player:LobbyClient)
 {
-    let tmp = new LobbyClient(player.clientID, player.clientName, player.clientPlayerID, player.status, player.isHost);
+    //let tmp = new LobbyClient(player.clientID, player.clientName, player.clientPlayerID, player.status, player.isHost);
     console.log("player.clientName : ",player.clientName);
-    console.log("tmp.clientName : ",tmp.clientName);
-    console.log("player : ",JSON.parse(JSON.stringify(player)));
-    console.log("tmp : ",JSON.parse(JSON.stringify(tmp)));
-    this.LobbyClients.push(tmp);
+    //console.log("tmp.clientName : ",tmp.clientName);
+    //console.log("player : ",JSON.parse(JSON.stringify(player)));
+    //console.log("tmp : ",JSON.parse(JSON.stringify(tmp)));
+    this.LobbyClients.push(player);
 }
 
 
