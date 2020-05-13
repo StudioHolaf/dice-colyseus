@@ -155,7 +155,7 @@ export class DemoRoom extends Room {
             }
             if (this.isgameStarted == false) {
                 throw new Error("Leave Lobby");
-                this.removeMeFromLobbyClients(client.id);
+                this.removeClientFromLobbyClientsBySessionID(client.id);
             }
 
             console.log("let's wait for reconnection!")
@@ -166,7 +166,7 @@ export class DemoRoom extends Room {
             console.log("disconnected!", client.sessionId);
             //déconnection involontaire - On concede pour le moment
             if (this.isgameStarted == false) {
-                this.removeMeFromLobbyClients(client.id);
+                this.removeClientFromLobbyClientsBySessionID(client.id);
             }
             if (consented && this.isgameStarted == true)
             {
@@ -627,6 +627,11 @@ export class DemoRoom extends Room {
             console.log("inside someoneChangeHisStatus");
             this.changeTheStatusOfThePlayer(data.playerID, data.status, client.id);
         }
+        if (data.type == "kickPlayerFromLobby")
+        {
+            console.log("inside kickPlayerFromLobby");
+            this.kickPlayerFromLobby(data.kickedClientID, client.id);
+        }
     }
 
 
@@ -673,7 +678,7 @@ addANewPlayerInLobbyClientsList(player:any, clientID:any)
     this.LobbyClients.push(tmp);
 }
 
-removeMeFromLobbyClients(clientID:string)
+removeClientFromLobbyClientsBySessionID(clientID:string)
 {
     this.LobbyClients.forEach(function (item, index, object) {
             if (item.clientID == clientID)
@@ -682,6 +687,17 @@ removeMeFromLobbyClients(clientID:string)
             }
         });
     this.broadcastLobbyDatasToAllPlayers();
+}
+
+kickPlayerFromLobby(kickedClientID:string, clientID:string)
+{
+    var fromAdmin = this.isCurrentClienHost(clientID);
+
+    if (fromAdmin)
+    {
+        this.removeClientFromLobbyClientsBySessionID(kickedClientID);
+    }
+    this.broadcastLobbyDatasToAllPlayers()
 }
 
     update(dt?:number) {
