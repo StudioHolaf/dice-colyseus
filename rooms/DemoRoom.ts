@@ -581,18 +581,11 @@ export class DemoRoom extends Room {
         }
         if(data.type == "hostingRoom") {
             console.log("inside hostingRoom");
-            //console.log("zeffzef : ", data.hostOfTheRoom);
-            //console.log("zeffzef : ", data.hostOfTheRoom.clientName);
-            let tmp = new LobbyClient(data.hostOfTheRoom.clientID, data.hostOfTheRoom.clientName, data.hostOfTheRoom.clientPlayerID, data.hostOfTheRoom.status, data.hostOfTheRoom.isHost);
-            console.log("TEST TMP "+ tmp);
-            console.log("TEST DATA "+ data.hostOfTheRoom);
-            console.log("TEST DATA Name"+ data.hostOfTheRoom.clientName);
-            this.addANewPlayerInLobbyClientsList(tmp);
+            this.addANewPlayerInLobbyClientsList(data.hostOfTheRoom);
+            this.broadcastLobbyDatasToAllPlayers();
         }
         if(data.type == "someoneJoinTheRoom") {
             console.log("inside someoneJoinTheRoom");
-             console.log("zeffzef : ", data.someoneJoinTheRoom);
-            console.log("zeffzef : ", data.someoneJoinTheRoom.clientName);
             this.addANewPlayerInLobbyClientsList(data.someoneJoinTheRoom);
             this.broadcastLobbyDatasToAllPlayers()
         }
@@ -607,6 +600,7 @@ export class DemoRoom extends Room {
 
 broadcastLobbyDatasToAllPlayers()
 {
+    console.log("broadcastLobbyDatasToAllPlayers : %o",JSON.stringify(this.LobbyClients));
         this.broadcast({
         LobbyClients: JSON.stringify(this.LobbyClients),
         type: "broadcastLobbyDatasToAllPlayers"
@@ -629,16 +623,11 @@ changeTheStatusOfThePlayer(playerID:any, status:string)
     this.broadcastLobbyDatasToAllPlayers();
 }
 
-addANewPlayerInLobbyClientsList(player:LobbyClient)
+addANewPlayerInLobbyClientsList(player:any)
 {
-    //let tmp = new LobbyClient(player.clientID, player.clientName, player.clientPlayerID, player.status, player.isHost);
-    console.log("player.clientName : ",player.clientName);
-    //console.log("tmp.clientName : ",tmp.clientName);
-    //console.log("player : ",JSON.parse(JSON.stringify(player)));
-    //console.log("tmp : ",JSON.parse(JSON.stringify(tmp)));
+    let tmp = new LobbyClient(player.clientID, player.clientName, player.clientPlayerID, player.status, player.isHost);
     this.LobbyClients.push(player);
 }
-
 
     update(dt?:number) {
         // console.log("num clients:", Object.keys(this.clients).length);
