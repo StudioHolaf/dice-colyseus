@@ -63,6 +63,26 @@ export class DemoRoom extends Room {
         return oponnentID;
     }
 
+    getPlayerIDInLobbyBySessionID(sessionId:string)
+    {
+        var tmp = 0;
+        this.LobbyClients.forEach(function (item) {
+            if (item.clientID == sessionId)
+                tmp = item.playerID;
+        });
+        return tmp;
+    }
+
+    isCurrentClienHost(sessionId:string)
+    {
+        var tmp = false;
+        this.LobbyClients.forEach(function (item) {
+            if (item._isHost == true && item.clientID == sessionId)
+                tmp = true;
+        });
+        return tmp;
+    }
+
     getPlayerIdFromSessionID(sessionId:string)
     {
         if(this.serverIDsData["C1"] == sessionId)
@@ -591,7 +611,7 @@ export class DemoRoom extends Room {
         }
         if(data.type == "someoneChangeHisStatus") {
             console.log("inside someoneChangeHisStatus");
-            this.changeTheStatusOfThePlayer(data.playerID, data.status);
+            this.changeTheStatusOfThePlayer(data.playerID, data.status, client.id);
         }
     }
 
@@ -607,27 +627,25 @@ broadcastLobbyDatasToAllPlayers()
     });
 }
 
-changeTheStatusOfThePlayer(playerID:any, status:string)
+changeTheStatusOfThePlayer(playerID:any, status:string, clientID:string)
 {
-    console.log("PLAYER ID : "+playerID + " STATUS : "+status);
-    console.log("this.LobbyClients : %o"+this.LobbyClients);
+    var fromAdmin = this.isCurrentClienHost(clientID);
+
+    if (playerID == this.getPlayerIDInLobbyBySessionID(clientID) || fromAdmin)
+    {
         this.LobbyClients.forEach(function (item) {
-            console.log("client.clientPlayerID " + item.clientPlayerID);
             if (item.clientPlayerID == playerID)
             {
-                console.log("CORRESPONDANCE");
                 item.status = status;
             }
         });
-        console.log("NO CORRESPONDANCE");
-    this.broadcastLobbyDatasToAllPlayers();
+        this.broadcastLobbyDatasToAllPlayers();
+    }
 }
 
 addANewPlayerInLobbyClientsList(player:any, clientID:any)
 {
     let tmp = new LobbyClient(clientID, player._clientName, player._clientPlayerID, player._status, player._isHost);
-    console.log("tmp %o",tmp);
-    console.log("player %o",player);
     this.LobbyClients.push(tmp);
 }
 
