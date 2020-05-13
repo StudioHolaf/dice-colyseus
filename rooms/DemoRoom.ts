@@ -610,13 +610,13 @@ broadcastLobbyDatasToAllPlayers()
 changeTheStatusOfThePlayer(playerID:any, status:string)
 {
     console.log("PLAYER ID : "+playerID + " STATUS : "+status);
-    console.log("this.LobbyClients : "+this.LobbyClients);
+    console.log("this.LobbyClients : %o"+this.LobbyClients);
         this.LobbyClients.forEach(function (item) {
             console.log("client.clientPlayerID " + item.clientPlayerID);
             if (item.clientPlayerID == playerID)
             {
                 console.log("CORRESPONDANCE");
-                this.item.status = status;
+                item.status = status;
             }
         });
         console.log("NO CORRESPONDANCE");
