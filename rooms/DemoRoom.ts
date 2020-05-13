@@ -581,12 +581,12 @@ export class DemoRoom extends Room {
         }
         if(data.type == "hostingRoom") {
             console.log("inside hostingRoom");
-            this.addANewPlayerInLobbyClientsList(data.hostOfTheRoom);
+            this.addANewPlayerInLobbyClientsList(data.hostOfTheRoom, client.id);
             this.broadcastLobbyDatasToAllPlayers();
         }
         if(data.type == "someoneJoinTheRoom") {
             console.log("inside someoneJoinTheRoom");
-            this.addANewPlayerInLobbyClientsList(data.someoneJoinTheRoom);
+            this.addANewPlayerInLobbyClientsList(data.someoneJoinTheRoom, client.id);
             this.broadcastLobbyDatasToAllPlayers()
         }
         if(data.type == "someoneChangeHisStatus") {
@@ -623,9 +623,9 @@ changeTheStatusOfThePlayer(playerID:any, status:string)
     this.broadcastLobbyDatasToAllPlayers();
 }
 
-addANewPlayerInLobbyClientsList(player:any)
+addANewPlayerInLobbyClientsList(player:any, clientID:any)
 {
-    let tmp = new LobbyClient(client.id, player.clientName, player.clientPlayerID, player.status, player.isHost);
+    let tmp = new LobbyClient(clientID, player.clientName, player.clientPlayerID, player.status, player.isHost);
     this.LobbyClients.push(tmp);
 }
 
