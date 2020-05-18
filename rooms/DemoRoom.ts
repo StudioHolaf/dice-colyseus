@@ -518,6 +518,7 @@ export class DemoRoom extends Room {
                 idSender: this.getPlayerIdFromSessionID(client.id)
             });
         }
+        // NOT USED
         if (data.type == "askGameStateDatas") {
             console.log("inside askGameStateDatas");
             this.send(this.serverIDsData["clientC1"], {
@@ -525,6 +526,7 @@ export class DemoRoom extends Room {
                 askedBy: client.id
             });
         }
+        // NOT USED
         if (data.type == "sendGameStateDatasTo") {
             console.log("inside sendGameStateDatasTo");
             console.log("GameStateDatas : " + data.GameStateDatas);
@@ -609,7 +611,7 @@ export class DemoRoom extends Room {
         }
         if (data.type == "someoneChangeHisRole") {
             console.log("inside someoneChangeHisRole");
-            this.changeRoleOfThePlayer(data.playerID, data.status, client.id);
+            this.changeRoleOfThePlayer(data.playerID, data.role, client.id);
         }
         if (data.type == "kickPlayerFromLobby") {
             console.log("inside kickPlayerFromLobby");
@@ -646,6 +648,7 @@ export class DemoRoom extends Room {
             this.LobbyClients.forEach(function (item) {
                 if (item.clientPlayerID == playerID) {
                     item.role = role;
+                    console.log("Changing role of : "+playerID+" to "+role);
                 }
             });
             this.broadcastLobbyDatasToAllPlayers();
