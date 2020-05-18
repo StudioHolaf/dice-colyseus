@@ -607,9 +607,9 @@ export class DemoRoom extends Room {
             this.addANewPlayerInLobbyClientsList(data.someoneJoinTheRoom, client.id);
             this.broadcastLobbyDatasToAllPlayers()
         }
-        if (data.type == "someoneChangeHisStatus") {
-            console.log("inside someoneChangeHisStatus");
-            this.changeTheStatusOfThePlayer(data.playerID, data.status, client.id);
+        if (data.type == "someoneChangeHisRole") {
+            console.log("inside someoneChangeHisRole");
+            this.changeRoleOfThePlayer(data.playerID, data.status, client.id);
         }
         if (data.type == "kickPlayerFromLobby") {
             console.log("inside kickPlayerFromLobby");
@@ -639,13 +639,13 @@ export class DemoRoom extends Room {
         });
     }
 
-    changeTheStatusOfThePlayer(playerID: any, status: string, clientID: string) {
+    changeRoleOfThePlayer(playerID: any, role: string, clientID: string) {
         var fromAdmin = this.isCurrentClienHost(clientID);
 
         if (playerID == this.getPlayerIDInLobbyBySessionID(clientID) || fromAdmin) {
             this.LobbyClients.forEach(function (item) {
                 if (item.clientPlayerID == playerID) {
-                    item.status = status;
+                    item.role = role;
                 }
             });
             this.broadcastLobbyDatasToAllPlayers();
