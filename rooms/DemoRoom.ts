@@ -577,9 +577,9 @@ export class DemoRoom extends Room {
             var allPlayersReady = true;
             this.LobbyClients.forEach(function (item) {
                 if (item.clientPlayerID == data.PlayerID) {
-                    item.status == "ready";
+                    item.status = "Ready";
                 }
-                if (item.status != "ready") {
+                if (item.status != "Ready") {
                     allPlayersReady = false;
                 }
             })
