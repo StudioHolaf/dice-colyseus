@@ -578,7 +578,7 @@ export class MatchmakingRoom extends Room {
             if(data.PlayerID == this.serverIDsData["playerIDC2"])
                 this.serverIDsData["readyC2"] = true;
 
-            if (this.serverIDsData["readyC1"] == "Ready" && this.serverIDsData["readyC2"] == "Ready") {
+            if (this.serverIDsData["readyC1"] && this.serverIDsData["readyC2"]) {
                 this.broadcast({
                     type: "allPlayersReadyFromServer"
                 });
