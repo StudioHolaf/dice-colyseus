@@ -13,7 +13,7 @@ export class LobbyClient {
 	 this.clientName = clientName;
 	 this.clientPlayerID = clientPlayerID;
 	 this.status = status;
-	 this.role = status;
+	 this.role = role;
 	 this.isHost = isHost;
 	}
 }
