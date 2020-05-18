@@ -174,6 +174,7 @@ export class MatchmakingRoom extends Room {
                     this.serverIDsData["playerIDC1"] = data.PlayerID;
                     this.serverIDsData["clientC1"] = client;
                     this.serverIDsData["deckIDC1"] = data.deckID;
+                    this.serverIDsData["readyC1"] = false;
                     console.log("C1 : " + this.serverIDsData["C1"]);
                 } else if (this.nbIDs == 2) {
                     console.log("There is two Challenger");
@@ -181,6 +182,7 @@ export class MatchmakingRoom extends Room {
                     this.serverIDsData["playerIDC2"] = data.PlayerID;
                     this.serverIDsData["clientC2"] = client;
                     this.serverIDsData["deckIDC2"] = data.deckID;
+                    this.serverIDsData["readyC2"] = false;
 
                     console.log("C2 : " + this.serverIDsData["C2"]);
 
@@ -568,14 +570,26 @@ export class MatchmakingRoom extends Room {
             console.log("inside sendIdOfGods");
             this.updateGameCreationWithGods(data.godPlayer1,data.godPlayer2);
         }
+        if (data.type == "SendReadyStatus") {
+            console.log("inside SendReadyStatus");
+
+            if(data.PlayerID == this.serverIDsData["playerIDC1"])
+                this.serverIDsData["readyC1"] = true;
+            if(data.PlayerID == this.serverIDsData["playerIDC2"])
+                this.serverIDsData["readyC2"] = true;
+
+            if (this.serverIDsData["readyC1"] == "Ready" && this.serverIDsData["readyC2"] == "Ready") {
+                this.broadcast({
+                    type: "allPlayersReadyFromServer"
+                });
+            }
+        }
         if(data.type == "infoAboutEndGame") {
             console.log("inside infoAboutEndGame");
             if (this.someoneConcede == "true")
                 this.updateGameEnd(data.winner_player_id, data.end_hp_player1, data.end_hp_player2, data.totalTour, "true");
             else
                 this.updateGameEnd(data.winner_player_id, data.end_hp_player1, data.end_hp_player2, data.totalTour, "false");
-
-
         }
     }
 
