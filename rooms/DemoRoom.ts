@@ -606,6 +606,29 @@ export class DemoRoom extends Room {
             console.log("inside sendIdOfGods");
             this.updateGameCreationWithGods(data.godPlayer1,data.godPlayer2);
         }
+        if(data.type == "SendReadyStatus") {
+            console.log("inside SendReadyStatus");
+
+            var allPlayersReady = true;
+            this.LobbyClients.forEach(function(item)
+            {
+                if(item.clientPlayerID == data.PlayerID)
+                {
+                    item.status == "ready";
+                }
+                if(item.status != "ready")
+                {
+                    allPlayersReady = false;
+                }
+            })
+
+            if(allPlayersReady)
+            {
+                this.broadcast({
+                    type: "allPlayersReadyFromServer"
+                });
+            }
+        }
         if(data.type == "infoAboutEndGame") {
             console.log("inside infoAboutEndGame");
             if (this.someoneConcede == "true")
@@ -674,7 +697,7 @@ changeTheStatusOfThePlayer(playerID:any, status:string, clientID:string)
 
 addANewPlayerInLobbyClientsList(player:any, clientID:any)
 {
-    let tmp = new LobbyClient(clientID, player._clientName, player._clientPlayerID, player._status, player._isHost);
+    let tmp = new LobbyClient(clientID, player._clientName, player._clientPlayerID, player._status, player._role, player._isHost);
     this.LobbyClients.push(tmp);
 }
 
