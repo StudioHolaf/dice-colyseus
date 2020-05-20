@@ -689,6 +689,11 @@ export class DemoRoom extends Room {
                 type: "SendHostLeaveLobby",
             });
         }
+        var room = this;
+        setTimeout(function()
+        {
+            room.disconnect();
+        },5000);
     }
 
     kickPlayerFromLobby(kickedClientID: string, clientID: string) {
