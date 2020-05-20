@@ -680,6 +680,7 @@ export class DemoRoom extends Room {
 
     kickAllFromLobby()
     {
+        console.log("kickAllFromLobby");
         if(this.isgameStarted = false)
         {
             this.broadcast({
