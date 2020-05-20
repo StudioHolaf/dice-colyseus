@@ -168,7 +168,7 @@ export class DemoRoom extends Room {
                 });
                 this.playerIDConcede = {};
             }
-            else if (consented && this.isgameStarted == false && this.isCurrentClienHost(client.sessionId)) {
+            else if (consented && this.isgameStarted == false && this.isCurrentClienHost(client.id)) {
                 this.kickAllFromLobby();
             }
         }
