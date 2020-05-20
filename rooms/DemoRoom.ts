@@ -690,6 +690,17 @@ export class DemoRoom extends Room {
         }
     }
 
+    kickAllFromLobby()
+    {
+        if(this.isgameStarted = false)
+        {
+            this.broadcast({
+                RoomID: this.game_id,
+                type: "SendHostLeaveLobby",
+            });
+        }
+    }
+
     kickPlayerFromLobby(kickedClientID: string, clientID: string) {
         var fromAdmin = this.isCurrentClienHost(clientID);
 
@@ -705,6 +716,7 @@ export class DemoRoom extends Room {
 
     onDispose() {
         console.log("disposing DemoRoom...");
+        this.kickAllFromLobby();
     }
 
 
