@@ -74,10 +74,10 @@ export class DemoRoom extends Room {
         return tmp;
     }
 
-    isCurrentClienHost(sessionId: string) {
+    isCurrentClienHost(Id: string) {
         var tmp = false;
         this.LobbyClients.forEach(function (item) {
-            if (item.isHost == true && item.clientID == sessionId)
+            if (item.isHost == true && item.clientID == Id)
                 tmp = true;
         });
         console.log("isCurrentClienHost :", tmp);
@@ -168,7 +168,7 @@ export class DemoRoom extends Room {
                 });
                 this.playerIDConcede = {};
             }
-            else if (consented && this.isgameStarted == false && this.isCurrentClienHost(client.id)) {
+            if (this.isgameStarted == false && this.isCurrentClienHost(client.id)) {
                 console.log("Host quitted the Lobby");
                 this.kickAllFromLobby();
             }
