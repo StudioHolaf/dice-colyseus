@@ -68,7 +68,7 @@ export class DemoRoom extends Room {
         var tmp = 0;
         this.LobbyClients.forEach(function (item) {
             if (item.clientID == clientId)
-                tmp = item.playerID;
+                tmp = item.clientPlayerID;
         });
         console.log("getPlayerIDInLobbyByClientID :", tmp);
         return tmp;
