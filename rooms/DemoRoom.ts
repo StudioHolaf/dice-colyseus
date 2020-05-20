@@ -84,6 +84,16 @@ export class DemoRoom extends Room {
         return tmp;
     }
 
+    isCurrentClientSpectator(clientId: string) {
+        var tmp = false;
+        this.LobbyClients.forEach(function (item) {
+            if (item.role == "Spectator" && item.clientID == clientId)
+                tmp = true;
+        });
+        console.log("isCurrentClientSpectator :", tmp);
+        return tmp;
+    }
+
     getPlayerIdFromSessionID(sessionId: string) {
         if (this.serverIDsData["C1"] == sessionId)
             return this.serverIDsData["playerIDC1"];
@@ -253,18 +263,22 @@ export class DemoRoom extends Room {
             }
         }
         if (data.type === "iConcedeTheGame") {
-            this.playerIDConcede = data.PlayerID;
-            this.someoneConcede = "true";
-            console.log("id concede : " + this.playerIDConcede);
-            this.broadcast({
-                type: "idConcedeFromServ",
-                playerIDConcede: this.playerIDConcede,
-            });
-            console.log("gonna call : updateGameEnd");
-            //this.updateGameEnd(this.getOpponentPlayerIdFromSessionID(client.id), 0,0,10,'true');
-            this.playerIDConcede = {};
+            if (this.isClientChallenger(client.id)) {
+
+                this.playerIDConcede = data.PlayerID;
+                this.someoneConcede = "true";
+                console.log("id concede : " + this.playerIDConcede);
+                this.broadcast({
+                    type: "idConcedeFromServ",
+                    playerIDConcede: this.playerIDConcede,
+                });
+                console.log("gonna call : updateGameEnd");
+                //this.updateGameEnd(this.getOpponentPlayerIdFromSessionID(client.id), 0,0,10,'true');
+                this.playerIDConcede = {};
+            }
         }
         if (data.type === "askServerForTirage") {
+
 
             if (this.isClientChallenger(client.id)) {
 
