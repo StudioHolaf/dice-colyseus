@@ -169,6 +169,7 @@ export class DemoRoom extends Room {
                 this.playerIDConcede = {};
             }
             else if (consented && this.isgameStarted == false && this.isCurrentClienHost(client.id)) {
+                console.log("Host quitted the Lobby");
                 this.kickAllFromLobby();
             }
         }
@@ -681,7 +682,7 @@ export class DemoRoom extends Room {
     kickAllFromLobby()
     {
         console.log("kickAllFromLobby");
-        if(this.isgameStarted = false)
+        if(this.isgameStarted == false)
         {
             this.broadcast({
                 RoomID: this.game_id,
