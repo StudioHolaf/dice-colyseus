@@ -168,6 +168,9 @@ export class DemoRoom extends Room {
                 });
                 this.playerIDConcede = {};
             }
+            else if (consented && this.isgameStarted == false && this.isCurrentClienHost(client.sessionId)) {
+                this.kickAllFromLobby();
+            }
         }
     }
 
@@ -617,10 +620,6 @@ export class DemoRoom extends Room {
             console.log("inside kickPlayerFromLobby");
             this.kickPlayerFromLobby(data.kickedClientID, client.id);
         }
-        if (data.type == "hostLeaveLobby") {
-            console.log("inside hostLeaveLobby");
-            this.hostLeaveLobby(client);
-        }
         if (data.type == "hostStartLobby") {
             console.log("inside hostStartLobby");
             this.hostStartLobby();
@@ -677,17 +676,6 @@ export class DemoRoom extends Room {
             RoomID: this.game_id,
             type: "SendLobbyGameStart"
         });
-    }
-
-    hostLeaveLobby(client: Client)
-    {
-        if(this.isgameStarted = false)
-        {
-            this.broadcast({
-                RoomID: this.game_id,
-                type: "SendHostLeaveLobby",
-            }, {except: client});
-        }
     }
 
     kickAllFromLobby()
