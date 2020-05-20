@@ -64,20 +64,20 @@ export class DemoRoom extends Room {
         return oponnentID;
     }
 
-    getPlayerIDInLobbyBySessionID(sessionId: string) {
+    getPlayerIDInLobbyByClientID(clientId: string) {
         var tmp = 0;
         this.LobbyClients.forEach(function (item) {
-            if (item.clientID == sessionId)
+            if (item.clientID == clientId)
                 tmp = item.playerID;
         });
-        console.log("getPlayerIDInLobbyBySessionID :", tmp);
+        console.log("getPlayerIDInLobbyByClientID :", tmp);
         return tmp;
     }
 
-    isCurrentClienHost(Id: string) {
+    isCurrentClienHost(clientId: string) {
         var tmp = false;
         this.LobbyClients.forEach(function (item) {
-            if (item.isHost == true && item.clientID == Id)
+            if (item.isHost == true && item.clientID == clientId)
                 tmp = true;
         });
         console.log("isCurrentClienHost :", tmp);
@@ -158,6 +158,10 @@ export class DemoRoom extends Room {
         } catch (e) {
             console.log("disconnected!", client.sessionId);
             //déconnection involontaire - On concede pour le moment
+            if (this.isgameStarted == false && this.isCurrentClienHost(client.id)) {
+                console.log("Host quitted the Lobby");
+                this.kickAllFromLobby();
+            }
             if (this.isgameStarted == false) {
                 this.removeClientFromLobbyClientsBySessionID(client.id);
             }
@@ -167,10 +171,6 @@ export class DemoRoom extends Room {
                     playerIDConcede: this.getPlayerIdFromSessionID(client.id),
                 });
                 this.playerIDConcede = {};
-            }
-            if (this.isgameStarted == false && this.isCurrentClienHost(client.id)) {
-                console.log("Host quitted the Lobby");
-                this.kickAllFromLobby();
             }
         }
     }
@@ -644,7 +644,7 @@ export class DemoRoom extends Room {
     changeRoleOfThePlayer(playerID: any, role: string, clientID: string) {
         var fromAdmin = this.isCurrentClienHost(clientID);
 
-        if (playerID == this.getPlayerIDInLobbyBySessionID(clientID) || fromAdmin) {
+        if (playerID == this.getPlayerIDInLobbyByClientID(clientID) || fromAdmin) {
             this.LobbyClients.forEach(function (item) {
                 if (item.clientPlayerID == playerID) {
                     item.role = role;
