@@ -617,9 +617,9 @@ export class DemoRoom extends Room {
             console.log("inside kickPlayerFromLobby");
             this.kickPlayerFromLobby(data.kickedClientID, client.id);
         }
-        if (data.type == "kickPlayerFromLobby") {
-            console.log("inside kickPlayerFromLobby");
-            this.kickPlayerFromLobby(data.kickedClientID, client.id);
+        if (data.type == "hostLeaveLobby") {
+            console.log("inside hostLeaveLobby");
+            this.hostLeaveLobby(client);
         }
         if (data.type == "hostStartLobby") {
             console.log("inside hostStartLobby");
@@ -677,6 +677,17 @@ export class DemoRoom extends Room {
             RoomID: this.game_id,
             type: "SendLobbyGameStart"
         });
+    }
+
+    hostLeaveLobby(client: Client)
+    {
+        if(this.isgameStarted = false)
+        {
+            this.broadcast({
+                RoomID: this.game_id,
+                type: "SendHostLeaveLobby",
+            }, {except: client});
+        }
     }
 
     kickPlayerFromLobby(kickedClientID: string, clientID: string) {
