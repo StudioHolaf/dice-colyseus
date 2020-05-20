@@ -74,16 +74,6 @@ export class DemoRoom extends Room {
         return tmp;
     }
 
-    getPlayerIDInLobbyByPlayerID(playerId: string) {
-        var tmp = 0;
-        this.LobbyClients.forEach(function (item) {
-            if (item.clientPlayerID == playerId)
-                tmp = item.clientPlayerID;
-        });
-        console.log("getPlayerIDInLobbyByPlayerID :", tmp);
-        return tmp;
-    }
-
     isCurrentClienHost(clientId: string) {
         var tmp = false;
         this.LobbyClients.forEach(function (item) {
@@ -668,7 +658,7 @@ export class DemoRoom extends Room {
     changeRoleOfThePlayer(playerID: any, role: string, clientID: string) {
         var fromAdmin = this.isCurrentClienHost(clientID);
 
-        if (playerID == this.getPlayerIDInLobbyByPlayerID(clientID) || fromAdmin) {
+        if (playerID == this.getPlayerIDInLobbyByClientID(clientID) || fromAdmin) {
             this.LobbyClients.forEach(function (item) {
                 if (item.clientPlayerID == playerID) {
                     item.role = role;
