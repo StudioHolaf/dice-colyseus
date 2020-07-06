@@ -626,7 +626,7 @@ export class DemoRoom extends Room {
         }
         if(data.type == "someoneChangeHisRole") { // old = someoneChangeHisStatus //
             console.log("inside someoneChangeHisRole");
-            this.changeTheRoleOfThePlayer(data.playerID, data.status, client.id);
+            this.changeTheRoleOfThePlayer(data.playerID, data.role, client.id);
         }
         if (data.type == "kickPlayerFromLobby")
         {
@@ -657,7 +657,7 @@ broadcastLobbyDatasToAllPlayers()
     });
 }
 
-changeTheRoleOfThePlayer(playerID:any, status:string, clientID:string)
+changeTheRoleOfThePlayer(playerID:any, role:string, clientID:string)
 {
     var fromAdmin = this.isCurrentClienHost(clientID);
 
@@ -666,7 +666,7 @@ changeTheRoleOfThePlayer(playerID:any, status:string, clientID:string)
         this.LobbyClients.forEach(function (item) {
             if (item.clientPlayerID == playerID)
             {
-                item.status = status;
+                item.role = role;
             }
         });
         this.broadcastLobbyDatasToAllPlayers();
@@ -675,7 +675,7 @@ changeTheRoleOfThePlayer(playerID:any, status:string, clientID:string)
 
 addANewPlayerInLobbyClientsList(player:any, clientID:any)
 {
-    let tmp = new LobbyClient(clientID, player._clientName, player._clientPlayerID, player._status, player._type ,player._isHost);
+    let tmp = new LobbyClient(clientID, player._clientName, player._clientPlayerID, player._status, clientID.role ,player._isHost);
     this.LobbyClients.push(tmp);
 }
 
