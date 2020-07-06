@@ -675,7 +675,7 @@ changeTheStatusOfThePlayer(playerID:any, status:string, clientID:string)
 
 addANewPlayerInLobbyClientsList(player:any, clientID:any)
 {
-    let tmp = new LobbyClient(clientID, player._clientName, player._clientPlayerID, player._status ,player._isHost);
+    let tmp = new LobbyClient(clientID, player._clientName, player._clientPlayerID, player._status, player._type ,player._isHost);
     this.LobbyClients.push(tmp);
 }
 
