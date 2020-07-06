@@ -310,7 +310,8 @@ export class DemoRoom extends Room {
 
                     this.resendDataTry = 0;
 
-                    var rnd1 = Math.floor(Math.random() * data.dicesPossibilitiesJsoned[0].length) + 1;
+                    var rnd1 = Math.floor(Math.random() * data.dicesPossibilitiesJsoned[0].length) + 1; // le dé était sur 1 et n'a jamais changer en 15 rerolls
+                    console.log("rnd1 : "+rnd1);
                     var rnd2 = Math.floor(Math.random() * 6) + 1;
                     var rnd3 = Math.floor(Math.random() * 6) + 1;
                     var rnd4 = Math.floor(Math.random() * 6) + 1;
