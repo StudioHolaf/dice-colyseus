@@ -283,6 +283,7 @@ export class DemoRoom extends Room {
             if (this.isClientChallenger(client.id)) {
 
                 console.log("askServerForTirage : " + data.message);
+                console.log("askServerForTirage dicesPossibilitiesJsoned : " + data.dicesPossibilitiesJsoned);
 
                 var dicesStates = [];
 
