@@ -624,9 +624,9 @@ export class DemoRoom extends Room {
             this.addANewPlayerInLobbyClientsList(data.someoneJoinTheRoom, client.id);
             this.broadcastLobbyDatasToAllPlayers()
         }
-        if(data.type == "someoneChangeHisStatus") {
-            console.log("inside someoneChangeHisStatus");
-            this.changeTheStatusOfThePlayer(data.playerID, data.status, client.id);
+        if(data.type == "someoneChangeHisRole") { // old = someoneChangeHisStatus //
+            console.log("inside someoneChangeHisRole");
+            this.changeTheRoleOfThePlayer(data.playerID, data.status, client.id);
         }
         if (data.type == "kickPlayerFromLobby")
         {
@@ -657,7 +657,7 @@ broadcastLobbyDatasToAllPlayers()
     });
 }
 
-changeTheStatusOfThePlayer(playerID:any, status:string, clientID:string)
+changeTheRoleOfThePlayer(playerID:any, status:string, clientID:string)
 {
     var fromAdmin = this.isCurrentClienHost(clientID);
 
