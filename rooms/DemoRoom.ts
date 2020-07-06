@@ -283,8 +283,7 @@ export class DemoRoom extends Room {
             if (this.isClientChallenger(client.id)) {
 
                 console.log("askServerForTirage : " + data.message);
-                console.log("askServerForTirage dicesPossibilitiesJsoned : " + data.dicesPossibilitiesJsoned);
-
+                console.log("askServerForTirage dicesPossibilitiesJsoned : " + data.dicesPossibilitiesJsoned); // GOOD
                 var dicesStates = [];
 
                 try {
@@ -311,7 +310,7 @@ export class DemoRoom extends Room {
 
                     this.resendDataTry = 0;
 
-                    var rnd1 = Math.floor(Math.random() * 6) + 1;
+                    var rnd1 = Math.floor(Math.random() * data.dicesPossibilitiesJsoned[0].length) + 1;
                     var rnd2 = Math.floor(Math.random() * 6) + 1;
                     var rnd3 = Math.floor(Math.random() * 6) + 1;
                     var rnd4 = Math.floor(Math.random() * 6) + 1;
