@@ -310,7 +310,7 @@ export class DemoRoom extends Room {
 
                     this.resendDataTry = 0;
 
-                    var arrayOfPossibilities = [];
+                    var arrayOfPossibilities = []; // est-ce que c'est une bonne idée de reset ici ?
                     arrayOfPossibilities = JSON.parse(data.dicesPossibilitiesJsoned);
                     //console.log("arrayOfPossibilities : " + arrayOfPossibilities);
                     //console.log("possibilities : "+ arrayOfPossibilities.length);
