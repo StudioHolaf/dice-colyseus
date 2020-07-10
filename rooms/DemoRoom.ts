@@ -312,12 +312,13 @@ export class DemoRoom extends Room {
 
                     var arrayOfPossibilities = [];
                     arrayOfPossibilities = JSON.parse(data.dicesPossibilitiesJsoned);
-                    console.log("askServerForTirage dicesPossibilitiesJsoned : " + data.dicesPossibilitiesJsoned);
+                    console.log("arrayOfPossibilities : " + arrayOfPossibilities);
                     console.log("possibilities : "+ arrayOfPossibilities.length);
-                    console.log("possibilities 2 : "+ arrayOfPossibilities[0][1]);
-                    console.log("possibilities 3 : "+ arrayOfPossibilities[0][0].length);
-                    console.log("possibilities 4 : "+ arrayOfPossibilities[1][0].length);
-                    console.log("possibilities 5 : "+ arrayOfPossibilities[1][0]);
+                    console.log("possibilities 2 : "+ arrayOfPossibilities[0][0]); // doit donner 1
+                    console.log("possibilities 3 : "+ arrayOfPossibilities[0][1]); // doit donner 2
+                    console.log("possibilities 4 : "+ arrayOfPossibilities[0][0].length);
+                    console.log("possibilities 5 : "+ arrayOfPossibilities[0].length); // doit retourner 5
+                    console.log("possibilities 6 : "+ arrayOfPossibilities[1].length); // pareil
                     var rnd1 = Math.floor(Math.random() * 6) + 1;
                     console.log("rnd1 : "+rnd1);
 
