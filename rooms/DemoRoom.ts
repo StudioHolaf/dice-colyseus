@@ -319,13 +319,23 @@ export class DemoRoom extends Room {
                     //console.log("possibilities 4 : "+ arrayOfPossibilities[0][0].length);
                     console.log("possibilities 5 : "+ arrayOfPossibilities[0].length); // doit retourner 5
                     console.log("possibilities 6 : "+ arrayOfPossibilities[1].length); // pareil
-                    var rnd1 = Math.floor(Math.random() * 6) + 1;
-                    console.log("rnd1 : "+rnd1);
+                    
+                    
 
+                    /* OLD VERSION
+                    var rnd1 = Math.floor(Math.random() * 6) + 1;
                     var rnd2 = Math.floor(Math.random() * 6) + 1;
                     var rnd3 = Math.floor(Math.random() * 6) + 1;
                     var rnd4 = Math.floor(Math.random() * 6) + 1;
                     var rnd5 = Math.floor(Math.random() * 6) + 1;
+                    */
+                    var rnd1 = Math.floor(Math.random() * Math.floor(arrayOfPossibilities[0].length));
+                    var rnd2 = Math.floor(Math.random() * Math.floor(arrayOfPossibilities[1].length));
+                    var rnd3 = Math.floor(Math.random() * Math.floor(arrayOfPossibilities[2].length));
+                    var rnd4 = Math.floor(Math.random() * Math.floor(arrayOfPossibilities[3].length));
+                    var rnd5 = Math.floor(Math.random() * Math.floor(arrayOfPossibilities[4].length));
+
+                    console.log("rnd1 : "+rnd1 + " - " + rnd2 + " - " + rnd3 + " - " + rnd4 + " - " + rnd5);
 
                     if (dicesStates[0] == 0)
                         rnd1 = 0;
