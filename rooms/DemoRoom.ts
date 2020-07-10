@@ -313,7 +313,7 @@ export class DemoRoom extends Room {
                     console.log("askServerForTirage dicesPossibilitiesJsoned : " + data.dicesPossibilitiesJsoned);
                     console.log("possibilities : "+ data.dicesPossibilitiesJsoned.length[0]);
                     console.log("possibilities 2 : "+ data.dicesPossibilitiesJsoned.length[0][1]);
-                    console.log("possibilities 2 : "+ data.dicesPossibilitiesJsoned.length[0][1].length);
+                    console.log("possibilities 3 : "+ data.dicesPossibilitiesJsoned.length[0][0].length);
                     var rnd1 = Math.floor(Math.random() * data.dicesPossibilitiesJsoned[0].length); // le dé était sur 1 et n'a jamais changer en 15 rerolls
                     console.log("rnd1 : "+rnd1);
 
