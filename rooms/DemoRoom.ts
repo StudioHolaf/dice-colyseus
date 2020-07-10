@@ -310,12 +310,14 @@ export class DemoRoom extends Room {
 
                     this.resendDataTry = 0;
 
+                    var arrayOfPossibilities = [];
+                    arrayOfPossibilities = JSON.parse(data.dicesPossibilitiesJsoned);
                     console.log("askServerForTirage dicesPossibilitiesJsoned : " + data.dicesPossibilitiesJsoned);
-                    console.log("possibilities : "+ data.dicesPossibilitiesJsoned.length);
-                    console.log("possibilities 2 : "+ data.dicesPossibilitiesJsoned[0][1]);
-                    console.log("possibilities 3 : "+ data.dicesPossibilitiesJsoned[0][0].length);
-                    console.log("possibilities 4 : "+ data.dicesPossibilitiesJsoned[1][0].length);
-                    console.log("possibilities 5 : "+ data.dicesPossibilitiesJsoned[1][0]);
+                    console.log("possibilities : "+ arrayOfPossibilities.length);
+                    console.log("possibilities 2 : "+ arrayOfPossibilities[0][1]);
+                    console.log("possibilities 3 : "+ arrayOfPossibilities[0][0].length);
+                    console.log("possibilities 4 : "+ arrayOfPossibilities[1][0].length);
+                    console.log("possibilities 5 : "+ arrayOfPossibilities[1][0]);
                     var rnd1 = Math.floor(Math.random() * 6) + 1;
                     console.log("rnd1 : "+rnd1);
 
