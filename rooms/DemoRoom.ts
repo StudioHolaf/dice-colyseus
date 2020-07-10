@@ -312,13 +312,12 @@ export class DemoRoom extends Room {
 
                     var arrayOfPossibilities = [];
                     arrayOfPossibilities = JSON.parse(data.dicesPossibilitiesJsoned);
-                    console.log("arrayOfPossibilities : " + arrayOfPossibilities);
-                    console.log("possibilities : "+ arrayOfPossibilities.length);
-                    console.log("possibilities 2 : "+ arrayOfPossibilities[0][0]); // doit donner 1
-                    console.log("possibilities 3 : "+ arrayOfPossibilities[0][1]); // doit donner 2
-                    //console.log("possibilities 4 : "+ arrayOfPossibilities[0][0].length);
-                    console.log("possibilities 5 : "+ arrayOfPossibilities[0].length); // doit retourner 5
-                    console.log("possibilities 6 : "+ arrayOfPossibilities[1].length); // pareil
+                    //console.log("arrayOfPossibilities : " + arrayOfPossibilities);
+                    //console.log("possibilities : "+ arrayOfPossibilities.length);
+                    //console.log("possibilities 2 : "+ arrayOfPossibilities[0][0]); // doit donner 1
+                    //console.log("possibilities 3 : "+ arrayOfPossibilities[0][1]); // doit donner 2
+                    //console.log("possibilities 4 : "+ arrayOfPossibilities[0].length); // doit retourner 5
+                   //console.log("possibilities 5 : "+ arrayOfPossibilities[1].length); // pareil
                     
                     
 
@@ -329,13 +328,16 @@ export class DemoRoom extends Room {
                     var rnd4 = Math.floor(Math.random() * 6) + 1;
                     var rnd5 = Math.floor(Math.random() * 6) + 1;
                     */
+
+                    console.log("SIZE OF possibilities : "+arrayOfPossibilities[0].length + " - " + arrayOfPossibilities[1].length + " - " + arrayOfPossibilities[2].length + " - " + arrayOfPossibilities[3].length + " - " + arrayOfPossibilities[4].length);
+
                     var rnd1 = Math.floor(Math.random() * Math.floor(arrayOfPossibilities[0].length));
                     var rnd2 = Math.floor(Math.random() * Math.floor(arrayOfPossibilities[1].length));
                     var rnd3 = Math.floor(Math.random() * Math.floor(arrayOfPossibilities[2].length));
                     var rnd4 = Math.floor(Math.random() * Math.floor(arrayOfPossibilities[3].length));
                     var rnd5 = Math.floor(Math.random() * Math.floor(arrayOfPossibilities[4].length));
 
-                    console.log("rnd1 : "+rnd1 + " - " + rnd2 + " - " + rnd3 + " - " + rnd4 + " - " + rnd5);
+                    console.log("TIRAGES : "+rnd1 + " - " + rnd2 + " - " + rnd3 + " - " + rnd4 + " - " + rnd5);
 
                     if (dicesStates[0] == 0)
                         rnd1 = 0;
