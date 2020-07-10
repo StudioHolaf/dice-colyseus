@@ -315,7 +315,8 @@ export class DemoRoom extends Room {
                     console.log("possibilities 2 : "+ data.dicesPossibilitiesJsoned[0][1]);
                     console.log("possibilities 3 : "+ data.dicesPossibilitiesJsoned[0][0].length);
                     console.log("possibilities 4 : "+ data.dicesPossibilitiesJsoned[1][0].length);
-                    var rnd1 = Math.floor(Math.random() * data.dicesPossibilitiesJsoned[0].length); // le dé était sur 1 et n'a jamais changer en 15 rerolls
+                    console.log("possibilities 5 : "+ data.dicesPossibilitiesJsoned[1][0]);
+                    var rnd1 = Math.floor(Math.random() * 6) + 1;
                     console.log("rnd1 : "+rnd1);
 
                     var rnd2 = Math.floor(Math.random() * 6) + 1;
