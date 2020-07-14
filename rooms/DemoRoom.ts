@@ -333,18 +333,15 @@ export class DemoRoom extends Room {
                     console.log("TIRAGES : "+rnd1PosInArray + " - " + rnd2PosInArray + " - " + rnd3PosInArray + " - " + rnd4PosInArray + " - " + rnd5PosInArray);
 
 
-//if (dicesStates[0] == 0)
- //rnd1 = 0
-
-                    if (dicesStates[0] == 0)
+                    if (dicesStates[0] == 0 || arrayOfPossibilities[0].length <= 0)
                         arrayOfPossibilities[0][rnd1PosInArray] = 0;
-                    if (dicesStates[1] == 0)
+                    if (dicesStates[1] == 0 || arrayOfPossibilities[1].length <= 0)
                         arrayOfPossibilities[1][rnd2PosInArray] = 0;
-                    if (dicesStates[2] == 0)
+                    if (dicesStates[2] == 0 || arrayOfPossibilities[2].length <= 0)
                         arrayOfPossibilities[2][rnd3PosInArray] = 0;
-                    if (dicesStates[3] == 0)
+                    if (dicesStates[3] == 0 || arrayOfPossibilities[3].length <= 0)
                         arrayOfPossibilities[3][rnd4PosInArray] = 0;
-                    if (dicesStates[4] == 0)
+                    if (dicesStates[4] == 0 || arrayOfPossibilities[4].length <= 0)
                         arrayOfPossibilities[4][rnd5PosInArray] = 0;
                     
 
