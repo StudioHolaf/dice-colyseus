@@ -275,22 +275,39 @@ export class MatchmakingRoom extends Room {
 
                     this.resendDataTry = 0;
 
+                    var arrayOfPossibilities = []; // est-ce que c'est une bonne idée de reset ici ?
+                    arrayOfPossibilities = JSON.parse(data.dicesPossibilitiesJsoned);    
+                    
+                    /* OLD VERSION
                     var rnd1 = Math.floor(Math.random() * 6) + 1;
                     var rnd2 = Math.floor(Math.random() * 6) + 1;
                     var rnd3 = Math.floor(Math.random() * 6) + 1;
                     var rnd4 = Math.floor(Math.random() * 6) + 1;
                     var rnd5 = Math.floor(Math.random() * 6) + 1;
+                    */
 
-                    if (dicesStates[0] == 0)
-                        rnd1 = 0;
-                    if (dicesStates[1] == 0)
-                        rnd2 = 0;
-                    if (dicesStates[2] == 0)
-                        rnd3 = 0;
-                    if (dicesStates[3] == 0)
-                        rnd4 = 0;
-                    if (dicesStates[4] == 0)
-                        rnd5 = 0;
+                    console.log("SIZE OF possibilities : "+arrayOfPossibilities[0].length + " - " + arrayOfPossibilities[1].length + " - " + arrayOfPossibilities[2].length + " - " + arrayOfPossibilities[3].length + " - " + arrayOfPossibilities[4].length);
+
+
+                    var rnd1PosInArray = Math.floor(Math.random() * Math.floor(arrayOfPossibilities[0].length));
+                    var rnd2PosInArray = Math.floor(Math.random() * Math.floor(arrayOfPossibilities[1].length));
+                    var rnd3PosInArray = Math.floor(Math.random() * Math.floor(arrayOfPossibilities[2].length));
+                    var rnd4PosInArray = Math.floor(Math.random() * Math.floor(arrayOfPossibilities[3].length));
+                    var rnd5PosInArray = Math.floor(Math.random() * Math.floor(arrayOfPossibilities[4].length));
+
+                    console.log("TIRAGES : "+rnd1PosInArray + " - " + rnd2PosInArray + " - " + rnd3PosInArray + " - " + rnd4PosInArray + " - " + rnd5PosInArray);
+
+
+                    if (dicesStates[0] == 0 || arrayOfPossibilities[0].length <= 0)
+                        arrayOfPossibilities[0][rnd1PosInArray] = 0;
+                    if (dicesStates[1] == 0 || arrayOfPossibilities[1].length <= 0)
+                        arrayOfPossibilities[1][rnd2PosInArray] = 0;
+                    if (dicesStates[2] == 0 || arrayOfPossibilities[2].length <= 0)
+                        arrayOfPossibilities[2][rnd3PosInArray] = 0;
+                    if (dicesStates[3] == 0 || arrayOfPossibilities[3].length <= 0)
+                        arrayOfPossibilities[3][rnd4PosInArray] = 0;
+                    if (dicesStates[4] == 0 || arrayOfPossibilities[4].length <= 0)
+                        arrayOfPossibilities[4][rnd5PosInArray] = 0;
 
 
                     if (this.serverTirageData["idT1"] != client.id) //petit bout de code pour savoir si c'est le premier ou 2eme qui demande un tirage
@@ -299,11 +316,11 @@ export class MatchmakingRoom extends Room {
                     if (this.nbTirage == 1) {
                         console.log("Player pos 1 ask for roll");
                         this.serverTirageData["idT1"] = client.id;
-                        this.serverTirageData["tirageT1"] = [rnd1, rnd2, rnd3, rnd4, rnd5];
+                        this.serverTirageData["tirageT1"] = [arrayOfPossibilities[0][rnd1PosInArray], arrayOfPossibilities[1][rnd2PosInArray], arrayOfPossibilities[2][rnd3PosInArray], arrayOfPossibilities[3][rnd4PosInArray], arrayOfPossibilities[4][rnd5PosInArray]];
                     } else if (this.nbTirage == 2) {
                         console.log("Player pos 2 ask for roll");
                         this.serverTirageData["idT2"] = client.id;
-                        this.serverTirageData["tirageT2"] = [rnd1, rnd2, rnd3, rnd4, rnd5];
+                        this.serverTirageData["tirageT2"] = [arrayOfPossibilities[0][rnd1PosInArray], arrayOfPossibilities[1][rnd2PosInArray], arrayOfPossibilities[2][rnd3PosInArray], arrayOfPossibilities[3][rnd4PosInArray], arrayOfPossibilities[4][rnd5PosInArray]];
 
                         console.log("Server tirage : %o", this.serverTirageData);
                         console.log("Server tirage T1 : %o", this.serverTirageData["tirageT1"]);
