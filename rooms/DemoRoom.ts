@@ -646,7 +646,7 @@ export class DemoRoom extends Room {
             this.broadcastLobbyDatasToAllPlayers()
         }
         if (data.type == "someoneChangeHisRole") {
-            console.log("inside someoneChangeHisRole");
+            console.log("inside someoneChangeHisRole - data.PlayerID : "+data.playerID +" - data.role :"+data.role + " client.id : "+client.id);
             this.changeRoleOfThePlayer(data.playerID, data.role, client.id);
         }
         if (data.type == "kickPlayerFromLobby") {
