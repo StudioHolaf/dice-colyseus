@@ -12,8 +12,8 @@ export class LobbyClient {
 	 this.clientID = clientID;
 	 this.clientName = clientName;
 	 this.clientPlayerID = clientPlayerID;
-	 this.status = status;
-	 this.role = role;
+	 this.status = status; //ai-je terminé le chargement de la scène.
+	 this.role = role; // obs ou player
 	 this.isHost = isHost;
 	}
 }

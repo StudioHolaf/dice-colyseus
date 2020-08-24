@@ -676,6 +676,7 @@ export class DemoRoom extends Room {
     changeRoleOfThePlayer(playerID: any, role: string, clientID: string) {
         var fromAdmin = this.isCurrentClienHost(clientID);
 
+        console.log("inside changeRoleOfThePlayer - playerID : "+playerID, " - clientID : "+clientID);
         if (playerID == this.getPlayerIDInLobbyByClientID(clientID) || fromAdmin) {
             this.LobbyClients.forEach(function (item) {
                 if (item.clientPlayerID == playerID) {
