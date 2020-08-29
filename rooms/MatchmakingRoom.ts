@@ -272,7 +272,7 @@ export class MatchmakingRoom extends Room {
 
                 //var dicesStates = JSON.parse(data.states);
                 if(dicesStates.length > 0) {
-
+ 
                     this.resendDataTry = 0;
 
                     var arrayOfPossibilities = []; // est-ce que c'est une bonne idée de reset ici ?
