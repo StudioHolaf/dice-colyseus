@@ -608,6 +608,21 @@ export class MatchmakingRoom extends Room {
             else
                 this.updateGameEnd(data.winner_player_id, data.end_hp_player1, data.end_hp_player2, data.totalTour, "false");
         }
+        if(data.type == "sendDecisionOfEqualityOfVelocity") {
+            console.log("inside sendDecisionOfEqualityOfVelocity");
+            this.broadcast({
+                    type: "sendDecisionOfEqualityOfVelocityFromServer",
+                    Decision: data.decision
+                });
+        }, {except: client});
+
+                    this.send(client,
+                        {
+                            type: "PlayerDecisionOfEqualityOfVelocityAuthorization",
+                            idSender: this.getPlayerIdFromSessionID(client.id),
+                            targets: data.targets,
+                        }
+                    )
     }
 
     update(dt?:number) {
