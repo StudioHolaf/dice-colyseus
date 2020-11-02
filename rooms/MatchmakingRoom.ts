@@ -613,9 +613,7 @@ export class MatchmakingRoom extends Room {
             this.broadcast({
                     type: "sendDecisionOfEqualityOfVelocityFromServer",
                     Decision: data.decision,
-                };
-        }, {except: client});
-
+                }, {except: client});
                     this.send(client,
                         {
                             type: "PlayerDecisionOfEqualityOfVelocityAuthorization",

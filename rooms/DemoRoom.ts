@@ -665,8 +665,7 @@ export class DemoRoom extends Room {
             this.broadcast({
                     type: "sendDecisionOfEqualityOfVelocityFromServer",
                     Decision: data.decision,
-                };
-        }, {except: client});
+                }, {except: client});
 
                     this.send(client,
                         {
