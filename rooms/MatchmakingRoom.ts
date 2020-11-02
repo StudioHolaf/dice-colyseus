@@ -620,7 +620,8 @@ export class MatchmakingRoom extends Room {
                             idSender: this.getPlayerIdFromSessionID(client.id),
                             targets: data.targets,
                         }
-                    );
+                    )
+                }
 
     update(dt?:number) {
         // console.log("num clients:", Object.keys(this.clients).length);

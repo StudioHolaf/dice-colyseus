@@ -674,7 +674,7 @@ export class DemoRoom extends Room {
                             targets: data.targets,
                         }
                     )
-    }
+                }
 
 
     /* */
