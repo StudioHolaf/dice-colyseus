@@ -471,7 +471,10 @@ export class DemoRoom extends Room {
                 if (targets.launching != null && targets.launching == true)
                     launched = "true";
                 else if (targets.launching != null && targets.launching == false)
+                {
                     launched = "false";
+                    
+                }
                 var faceUsageID = Date.now();
 
                 try {
@@ -657,6 +660,21 @@ export class DemoRoom extends Room {
             console.log("inside hostStartLobby");
             this.hostStartLobby();
         }
+        if(data.type == "sendDecisionOfEqualityOfVelocity") {
+            console.log("inside sendDecisionOfEqualityOfVelocity");
+            this.broadcast({
+                    type: "sendDecisionOfEqualityOfVelocityFromServer",
+                    Decision: data.decision
+                });
+        }, {except: client});
+
+                    this.send(client,
+                        {
+                            type: "PlayerDecisionOfEqualityOfVelocityAuthorization",
+                            idSender: this.getPlayerIdFromSessionID(client.id),
+                            targets: data.targets,
+                        }
+                    )
     }
 
 
