@@ -667,14 +667,17 @@ export class DemoRoom extends Room {
                     Decision: data.decision,
                 }, {except: client});
 
-                    this.send(client,
-                        {
-                            type: "PlayerDecisionOfEqualityOfVelocityAuthorization",
-                            idSender: this.getPlayerIdFromSessionID(client.id),
-                            targets: data.targets,
-                        }
-                    )
+            this.send(client,
+                {
+                    type: "PlayerDecisionOfEqualityOfVelocityAuthorization",
+                    idSender: this.getPlayerIdFromSessionID(client.id),
+                    targets: data.targets,
                 }
+            )
+        }
+    }
+
+
 
 
     /* */

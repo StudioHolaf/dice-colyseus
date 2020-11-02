@@ -614,14 +614,15 @@ export class MatchmakingRoom extends Room {
                     type: "sendDecisionOfEqualityOfVelocityFromServer",
                     Decision: data.decision,
                 }, {except: client});
-                    this.send(client,
-                        {
-                            type: "PlayerDecisionOfEqualityOfVelocityAuthorization",
-                            idSender: this.getPlayerIdFromSessionID(client.id),
-                            targets: data.targets,
-                        }
-                    )
+            this.send(client,
+                {
+                    type: "PlayerDecisionOfEqualityOfVelocityAuthorization",
+                    idSender: this.getPlayerIdFromSessionID(client.id),
+                    targets: data.targets,
                 }
+            )
+        }
+    }
 
     update(dt?:number) {
         // console.log("num clients:", Object.keys(this.clients).length);
