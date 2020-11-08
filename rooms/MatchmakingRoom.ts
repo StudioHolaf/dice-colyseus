@@ -610,16 +610,16 @@ export class MatchmakingRoom extends Room {
         }
         if(data.type == "sendDecisionOfEqualityOfVelocity") {
             console.log("inside sendDecisionOfEqualityOfVelocity");
-            console.log("Decision : "+data.decision);
+            console.log("decision : "+data.decision);
             this.broadcast({
                     type: "sendDecisionOfEqualityOfVelocityFromServer",
-                    Decision: data.decision,
+                    decision: data.decision,
                 }, {except: client});
             this.send(client,
                 {
                     type: "PlayerDecisionOfEqualityOfVelocityAuthorization",
                     idSender: this.getPlayerIdFromSessionID(client.id),
-                    Decision: data.decision,
+                    decision: data.decision,
                     //targets: data.targets,
                 }
             )
