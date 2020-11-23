@@ -671,7 +671,8 @@ export class DemoRoom extends Room {
                 {
                     type: "PlayerDecisionOfEqualityOfVelocityAuthorization",
                     idSender: this.getPlayerIdFromSessionID(client.id),
-                    targets: data.targets,
+                    decision: data.decision,
+                    //targets: data.targets,
                 }
             )
         }
