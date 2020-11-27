@@ -660,13 +660,13 @@ export class DemoRoom extends Room {
             console.log("inside hostStartLobby");
             this.hostStartLobby();
         }
-        if(data.type == "sendDecisionOfEqualityOfVelocity") {
+        if (data.type == "sendDecisionOfEqualityOfVelocity") {
             console.log("inside sendDecisionOfEqualityOfVelocity");
+            //console.log("decision : "+data.decision);
             this.broadcast({
                     type: "sendDecisionOfEqualityOfVelocityFromServer",
-                    Decision: data.decision,
+                    decision: data.decision,
                 }, {except: client});
-
             this.send(client,
                 {
                     type: "PlayerDecisionOfEqualityOfVelocityAuthorization",
